@@ -1,0 +1,10 @@
+# machine-specific state — never commit the real one
+state.json
+beats.json
+hone_report.jsonl
+comfy_server.log
+*.wav
+*.png
+*.mp4
+__pycache__/
+*.pyc

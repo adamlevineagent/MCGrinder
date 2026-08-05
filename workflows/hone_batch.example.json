@@ -1,0 +1,10 @@
+{
+  "name": "seam_t2v_example",
+  "seam_image": "refs/location_01.png",
+  "refs": ["refs/panels/panel_01.png", "refs/location_01.png"],
+  "audio_wav": "refs/chunk_01_audio.wav",
+  "audio_mode": "pulse",
+  "width": 832, "height": 480, "length": 124, "steps": 20,
+  "seed": 424242,
+  "prompt": "Open on this exact pinned frame. [Shot description here.] Use <Picture 1> for the storyboard composition and staging, <Picture 2> for the setting. This shot spans 40 beats of the music. No lip-sync: characters never mouth the words. No music. [Style block here.]"
+}

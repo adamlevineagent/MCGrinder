@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H3 Kitchen · music video pipeline</title>
+<style>
+  :root {
+    --bg: #0d1017;
+    --bg2: #121722;
+    --card: #171d2b;
+    --card2: #1d2436;
+    --line: #263049;
+    --txt: #e8ecf4;
+    --dim: #8b95ad;
+    --faint: #5b6a8a;
+    --amber: #ffb454;
+    --coral: #ff7a59;
+    --teal: #4fd1c5;
+    --green: #57d98a;
+    --red: #ff6b6b;
+    --mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scrollbar-color: #2a3550 var(--bg); }
+  body {
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(255,122,89,.06), transparent 60%),
+      radial-gradient(900px 400px at 10% -10%, rgba(255,180,84,.05), transparent 60%),
+      var(--bg);
+    color: var(--txt);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgba(13,16,23,.82);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 26px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .brand h1 { font-size: 17px; font-weight: 650; letter-spacing: .2px; }
+  .brand h1 em { font-style: normal; color: var(--coral); }
+  .brand .sub { font-size: 11.5px; color: var(--dim); font-family: var(--mono); }
+  .statusrow { display: flex; align-items: center; gap: 18px; margin-left: auto; flex-wrap: wrap; }
+  .pill {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--dim); font-family: var(--mono);
+    padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--card);
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+  .dot.up { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot.busy { background: var(--amber); box-shadow: 0 0 8px var(--amber); animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: .45; } }
+  .gpuwrap { display: flex; align-items: center; gap: 9px; }
+  .gpubar { width: 130px; height: 6px; border-radius: 3px; background: #232c42; overflow: hidden; }
+  .gpubar i { display: block; height: 100%; width: 0%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--amber)); transition: width .8s ease; }
+  .vrambar { width: 130px; height: 6px; border-radius: 3px; background: #232c42; overflow: hidden; }
+  .vrambar i { display: block; height: 100%; width: 0%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--coral)); transition: width .8s ease; }
+
+  main { max-width: 1500px; margin: 0 auto; padding: 22px 26px 80px; }
+
+  /* ---------- cooking now ---------- */
+  #live { display: none; margin-bottom: 26px; }
+  #live.on { display: block; }
+  .livecard {
+    border: 1px solid rgba(255,180,84,.35);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,180,84,.07), rgba(255,122,89,.04)), var(--card);
+    padding: 18px 20px;
+    box-shadow: 0 0 0 1px rgba(255,180,84,.08), 0 18px 50px -20px rgba(255,122,89,.25);
+  }
+  .liverow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .liverow .tag {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; color: var(--amber);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .liverow .tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--amber); animation: pulse 1.2s infinite; }
+  .liverow .kind { font-size: 12px; font-family: var(--mono); color: var(--teal); }
+  .liverow .steps { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--dim); }
+  .pbar { height: 8px; border-radius: 4px; background: #232c42; margin: 14px 0 12px; overflow: hidden; }
+  .pbar i { display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--amber), var(--coral));
+    transition: width .5s ease; border-radius: 4px; }
+  .liveprompt { font-size: 13.5px; line-height: 1.55; color: var(--txt); max-height: 76px; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+  .livedetail { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { font-size: 11px; font-family: var(--mono); color: var(--dim);
+    background: var(--card2); border: 1px solid var(--line);
+    padding: 3px 9px; border-radius: 999px; }
+  .chip b { color: var(--txt); font-weight: 600; }
+
+  /* ---------- section headers ---------- */
+  .sect { display: flex; align-items: center; gap: 12px; margin: 30px 0 14px; }
+  .sect h2 { font-size: 13px; font-weight: 650; letter-spacing: 1.4px; text-transform: uppercase; color: var(--dim); }
+  .sect .count { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+  .sect input {
+    margin-left: auto; width: 260px; max-width: 40vw;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--txt); font-size: 12.5px; padding: 8px 12px; outline: none;
+  }
+  .sect input:focus { border-color: var(--amber); }
+
+  /* ---------- gallery ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    overflow: hidden; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: #34405f; box-shadow: 0 16px 40px -18px rgba(0,0,0,.6); }
+  .card video { width: 100%; aspect-ratio: 16/9; background: #000; display: block; cursor: pointer; }
+  .card .meta { padding: 12px 14px 10px; display: flex; align-items: center; gap: 10px; }
+  .card .name { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card .sub { font-size: 11px; font-family: var(--mono); color: var(--dim); margin-top: 2px; }
+  .badge { font-size: 9.5px; font-weight: 700; letter-spacing: .8px; padding: 3px 7px; border-radius: 6px;
+    background: rgba(79,209,197,.12); color: var(--teal); border: 1px solid rgba(79,209,197,.3); }
+  .badge.audio { background: rgba(255,180,84,.1); color: var(--amber); border-color: rgba(255,180,84,.3); }
+  .card .play { margin-left: auto; font-size: 11px; color: var(--dim); font-family: var(--mono); }
+  .card .expand {
+    border-top: 1px solid var(--line); padding: 9px 14px;
+    font-size: 11.5px; color: var(--dim); cursor: pointer; user-select: none;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .card .expand:hover { color: var(--txt); }
+  .card .expand .tri { transition: transform .18s ease; font-size: 9px; }
+  .card.open .expand .tri { transform: rotate(90deg); }
+  .card .detail { display: none; padding: 0 14px 14px; }
+  .card.open .detail { display: block; }
+  .detail .prompt { font-size: 13px; line-height: 1.6; color: var(--txt);
+    background: var(--bg2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  .params { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .params .kv { background: var(--card2); border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; }
+  .params .kv .k { font-size: 9.5px; letter-spacing: .8px; text-transform: uppercase; color: var(--faint); }
+  .params .kv .v { font-size: 11.5px; font-family: var(--mono); color: var(--txt); margin-top: 3px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .refs { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .refs .chip { color: var(--teal); }
+
+  .empty { text-align: center; color: var(--faint); padding: 60px 0; font-size: 13px; }
+  .empty .big { font-size: 34px; margin-bottom: 10px; }
+
+  footer { text-align: center; color: var(--faint); font-size: 11px; font-family: var(--mono);
+    padding: 30px 0 40px; }
+  footer a { color: var(--dim); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>H3 <em>Kitchen</em></h1>
+    <span class="sub">local · MiniMax H3 · RTX 5090</span>
+  </div>
+  <div class="statusrow">
+    <div class="pill"><span class="dot" id="comfydot"></span><span id="comfytxt">comfy …</span></div>
+    <div class="pill"><span id="queuetxt">queue 0</span></div>
+    <div class="pill gpuwrap">GPU <div class="gpubar"><i id="gpubar"></i></div><span id="gputxt">–</span></div>
+    <div class="pill gpuwrap">VRAM <div class="vrambar"><i id="vrambar"></i></div><span id="vramtxt">–</span></div>
+  </div>
+</header>
+
+<main>
+  <section id="live">
+    <div class="livecard">
+      <div class="liverow">
+        <span class="tag">COOKING</span>
+        <span class="kind" id="livekind">–</span>
+        <span class="steps" id="livesteps"></span>
+      </div>
+      <div class="pbar"><i id="livebar"></i></div>
+      <div class="liveprompt" id="liveprompt">—</div>
+      <div class="livedetail" id="livedetail"></div>
+    </div>
+  </section>
+
+  <div class="sect">
+    <h2>Renders</h2>
+    <span class="count" id="rendercount"></span>
+    <input id="search" type="search" placeholder="filter by prompt or name…">
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <div class="big">🦪</div>
+    nothing here yet — queue something up
+  </div>
+</main>
+
+<footer>
+  cooking on <a href="http://127.0.0.1:8188" target="_blank">ComfyUI :8188</a>
+  · outputs in <span>D:\ComfyUI\output</span>
+</footer>
+
+<script>
+const COMFY_WS = "ws://127.0.0.1:8188/ws";
+let state = { running: [], videos: [], pending: 0 };
+let ws = null;
+const liveState = { phase: "", step: 0, max: 0, lastNode: null, elapsedTick: 0 };
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function fmtDur(s) { return s ? s.toFixed(1) + "s" : "–"; }
+function fmtDate(t) { return new Date(t*1000).toLocaleString(); }
+function fmtSize(mb) { return mb >= 1024 ? (mb/1024).toFixed(2)+" GB" : mb.toFixed(1)+" MB"; }
+function fmtElapsed(ms) {
+  const s = Math.max(0, Math.floor(ms/1000));
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  return (h? h+"h ":"") + (h||m? m+"m ":"") + sec + "s";
+}
+
+/* ---------------- status ---------------- */
+async function pollStatus() {
+  try {
+    const r = await fetch("/api/status");
+    const d = await r.json();
+    state.running = d.running || [];
+    state.pending = d.pending || 0;
+    const up = !!d.comfy_up;
+    $("comfydot").className = "dot " + (up ? (state.running.length ? "busy" : "up") : "");
+    $("comfytxt").textContent = up ? (state.running.length ? "rendering" : "ready") : "offline";
+    $("queuetxt").textContent = "queue " + (state.running.length + state.pending);
+    if (d.gpu) {
+      $("gputxt").textContent = d.gpu.util + "%";
+      $("gpubar").style.width = d.gpu.util + "%";
+      const vp = Math.round(100 * d.gpu.vram_used_mb / d.gpu.vram_total_mb);
+      $("vramtxt").textContent = Math.round(d.gpu.vram_used_mb/1024) + "/" + Math.round(d.gpu.vram_total_mb/1024) + "G";
+      $("vrambar").style.width = vp + "%";
+    }
+    renderLive();
+  } catch (e) { /* silent */ }
+}
+
+function phaseForNode(nodeId, nodes) {
+  const ct = nodes ? (nodes[nodeId] || "") : "";
+  if (!ct) return liveState.phase || "working";
+  if (ct.startsWith("UNETLoader") || ct.startsWith("CLIPLoader") || ct.startsWith("VAELoader")
+      || ct.startsWith("LoadImage") || ct.startsWith("LoadAudio") || ct.startsWith("MiniMaxH3SigmaShift"))
+    return "loading";
+  if (ct.startsWith("MiniMaxH3")) return "sampling";
+  if (ct.startsWith("VAEDecode")) return "decoding";
+  if (ct.startsWith("CreateVideo") || ct.startsWith("SaveVideo")) return "encoding";
+  return ct;
+}
+
+function renderLive() {
+  const live = $("live");
+  if (!state.running.length) { live.classList.remove("on"); return; }
+  live.classList.add("on");
+  const job = state.running[0];
+  const s = job.summary || {};
+  const len = s.length || 0;
+  const steps = s.steps || 20;
+
+  $("livekind").textContent = (s.kind || "generating") + (s.chunk_id ? ` · chunk ${s.chunk_id}/20` : "");
+  $("liveprompt").textContent = s.prompt || "…";
+
+  // phase + progress line
+  let barPct = 0, line = "";
+  if (liveState.phase === "sampling" && liveState.max > 0) {
+    barPct = 100 * liveState.step / liveState.max;
+    const framesDone = len ? Math.round(len * liveState.step / liveState.max) : 0;
+    line = `sampling step ${liveState.step}/${liveState.max} · ~frame ${framesDone}/${len} · ${Math.round(barPct)}%`;
+  } else if (liveState.phase === "decoding") {
+    barPct = 92; line = `decoding frames → ${len} frames`;
+  } else if (liveState.phase === "encoding") {
+    barPct = 97; line = "encoding video…";
+  } else if (liveState.phase === "loading") {
+    barPct = 3; line = "loading models…";
+  } else {
+    barPct = 5; line = "working…";
+  }
+  $("livebar").style.width = barPct + "%";
+  $("livesteps").textContent = line;
+
+  const created = job.created ? job.created : null;
+  if (created) liveState.elapsedStart = created;
+  const elapsed = liveState.elapsedStart ? fmtElapsed(Date.now() - liveState.elapsedStart) : "—";
+
+  const chips = [];
+  chips.push(`<span class="chip">elapsed <b>${elapsed}</b></span>`);
+  chips.push(`<span class="chip">phase <b>${liveState.phase || "…"}</b></span>`);
+  if (len) chips.push(`<span class="chip">frames <b>${len}</b></span>`);
+  if (s.width) chips.push(`<span class="chip">res <b>${s.width}×${s.height}</b></span>`);
+  if (steps) chips.push(`<span class="chip">steps <b>${steps}</b></span>`);
+  if (s.sampler) chips.push(`<span class="chip">sampler <b>${s.sampler}</b></span>`);
+  if (s.seed) chips.push(`<span class="chip">seed <b>${s.seed}</b></span>`);
+  (s.refs||[]).forEach(r => chips.push(`<span class="chip">📷 ${esc(r)}</span>`));
+  (s.audio_refs||[]).forEach(r => chips.push(`<span class="chip">🔊 ${esc(r)}</span>`));
+  $("livedetail").innerHTML = chips.join("");
+}
+
+/* ---------------- gallery ---------------- */
+async function pollVideos() {
+  const r = await fetch("/api/videos");
+  state.videos = await r.json();
+  renderGallery();
+}
+
+function renderGallery() {
+  const q = $("search").value.trim().toLowerCase();
+  const vids = state.videos.filter(v => {
+    if (!q) return true;
+    const prompt = (v.summary && v.summary.prompt || "").toLowerCase();
+    return v.name.toLowerCase().includes(q) || prompt.includes(q);
+  });
+  $("rendercount").textContent = vids.length + " files";
+  $("empty").style.display = vids.length ? "none" : "block";
+  $("grid").innerHTML = vids.map(v => {
+    const s = v.summary || {};
+    const kind = s.kind || "H3";
+    const kindCls = kind.startsWith("R2V") ? "audio" : "";
+    const prompt = s.prompt || "";
+    const params = [
+      ["frames", s.length], ["res", s.width ? s.width+"×"+s.height : null],
+      ["steps", s.steps], ["sampler", s.sampler], ["sched", s.scheduler],
+      ["seed", s.seed], ["dur", fmtDur(v.duration)],
+      ["audio", v.audio_codec || null], ["model", s.model],
+    ].filter(p => p[1] !== null && p[1] !== undefined);
+    const refs = [...(s.refs||[]).map(r=>"📷 "+r), ...(s.audio_refs||[]).map(r=>"🔊 "+r)];
+    return `
+    <div class="card">
+      <video src="/video/${encodeURIComponent(v.rel)}" preload="metadata" muted loop playsinline></video>
+      <div class="meta">
+        <span class="badge ${kindCls}">${esc(kind)}</span>
+        <div style="min-width:0">
+          <div class="name">${esc(v.name)}</div>
+          <div class="sub">${fmtDate(v.mtime)} · ${fmtSize(v.size_mb)}</div>
+        </div>
+        <span class="play">▸ click to play</span>
+      </div>
+      <div class="expand"><span class="tri">▶</span> prompt &amp; params</div>
+      <div class="detail">
+        <div class="prompt">${esc(prompt) || "<span style='color:var(--faint)'>no prompt metadata</span>"}</div>
+        ${refs.length ? `<div class="refs">${refs.map(r=>`<span class="chip">${r}</span>`).join("")}</div>` : ""}
+        <div class="params">${params.map(p=>`<div class="kv"><div class="k">${p[0]}</div><div class="v" title="${esc(p[1])}">${esc(p[1])}</div></div>`).join("")}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ---------------- interactions ---------------- */
+document.addEventListener("click", (e) => {
+  const video = e.target.closest("video");
+  if (video) { video.muted = false; video.paused ? video.play() : video.pause(); return; }
+  const exp = e.target.closest(".expand");
+  if (exp) exp.parentElement.classList.toggle("open");
+});
+
+let wsTimer = null;
+function wsReconnect() {
+  if (wsTimer) clearTimeout(wsTimer);
+  try { if (ws) ws.close(); } catch(e) {}
+  ws = new WebSocket(COMFY_WS + "?clientId=" + Math.random().toString(36).slice(2));
+  ws.onmessage = (ev) => {
+    try {
+      const m = JSON.parse(ev.data);
+      if (m.type === "progress" && m.data) {
+        liveState.step = m.data.value || 0;
+        liveState.max = m.data.max || 1;
+        if (liveState.phase !== "decoding" && liveState.phase !== "encoding") liveState.phase = "sampling";
+      }
+      if (m.type === "executing" && m.data) {
+        const node = m.data.node;
+        if (node !== null && node !== undefined) {
+          liveState.lastNode = String(node);
+          const nodes = (state.running[0] && state.running[0].summary.nodes) || null;
+          liveState.phase = phaseForNode(String(node), nodes);
+        }
+      }
+      if (m.type === "execution_start") {
+        liveState.phase = "loading"; liveState.step = 0; liveState.max = 0;
+        liveState.elapsedStart = Date.now();
+      }
+      if (m.type === "execution_success" || m.type === "execution_error" || m.type === "execution_interrupted") {
+        liveState.phase = ""; liveState.step = 0; liveState.max = 0;
+        $("livebar").style.width = "0%";
+        pollStatus(); pollVideos();
+      }
+    } catch(e) {}
+  };
+  ws.onclose = () => { wsTimer = setTimeout(wsReconnect, 4000); };
+  ws.onerror = () => { try { ws.close(); } catch(e){} };
+}
+
+setInterval(pollStatus, 4000);
+setInterval(pollVideos, 12000);
+setInterval(() => { if (state.running.length) renderLive(); }, 1000);
+pollStatus(); pollVideos(); wsReconnect();
+</script>
+</body>
+</html>

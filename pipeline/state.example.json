@@ -1,0 +1,22 @@
+{
+  "song": {"path": "C:/path/to/your_song.mp3", "duration_s": 264.1},
+  "style_block": "Hand-drawn ink and watercolor animation style: loose pen linework with cross-hatching, dry-brush watercolor washes, muted earthy palette, vintage storybook illustration, handmade animation energy, theatrical editorial composition. No on-screen text, no subtitles.",
+  "output_dir": "D:/ComfyUI/output/video/mv",
+  "frames_dir": "D:/ComfyUI/input/mv_frames",
+  "chunks": [
+    {
+      "id": 1,
+      "name": "P1 opening shot",
+      "offset_s": 0.302,
+      "duration_s": 13.75,
+      "first_frame": "refs/location_01.png",
+      "refs": ["refs/panels/panel_01.png", "refs/location_01.png"],
+      "prompt": "Open on this exact frame: [shot description]. Use <Picture 1> for the storyboard composition and staging, <Picture 2> for the setting. No lip-sync: characters never mouth the words. No music.",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    }
+  ]
+}

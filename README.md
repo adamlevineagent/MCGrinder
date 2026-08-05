@@ -1,0 +1,119 @@
+# MCGrinder
+
+**A local, open-weights music-video production machine.**
+
+MCGrinder grinds a song into a bespoke animated music video using
+[MiniMax H3](https://huggingface.co/MiniMaxAI/MiniMax-H3) running locally in
+ComfyUI. It turns a storyboard + character sheets + locations into a
+beat-synced, seam-continuous, fully autonomous render pipeline.
+
+Built for a workflow we call **Ship of Theseus**: get the whole video down as a
+rough cut, then re-render only the chunks that aren't right — splicing fresh
+takes into the finished piece until it *is* right.
+
+## The core idea
+
+**Respect the beat. Don't lip-sync it.**
+
+Music videos need motion that lands on the music. They rarely need characters
+mouthing lyrics. MCGrinder feeds the model a *rhythm-only pulse track* (onset
+detection → synthesized percussion at the song's beat positions) as its audio
+reference — so shots move with the groove while no one mouths a word. Scenes
+with a singer can switch to the raw audio reference per-chunk.
+
+## What it does
+
+- **Chunked generation** — a song is cut into 5–15s chunks on its **beat grid**
+  (librosa onset analysis), each rendered independently
+- **Exact frame seams** — every chunk's frame 0 is *pinned* to the previous
+  chunk's final frame (VAE-keyframe conditioning, not a reference-image hint),
+  so shots knit together with true continuity
+- **Reference conditioning** — storyboard panels, character sheets and
+  locations ride along as `<Picture N>` refs per chunk, with the panel as the
+  composition authority
+- **Drift-free sync** — every chunk is trimmed to exactly its song window, so
+  the real track laid over the concat stays sample-accurate to the end
+- **The Theseus loop** — `redo.py` re-renders flagged chunks (fresh seed
+  takes, seam-aware chaining), `stitch.py` splices old + new into the cut
+- **The honing harness** — `hone.py` renders A/B test configs at low
+  resolution to tune prompts, refs and audio treatment fast
+
+## Architecture
+
+```
+song + pack (storyboard / characters / locations)
+        │
+        ▼
+ state.json (chunk plan: 20 panels → beat-snapped windows, prompts, refs)
+        │
+        ▼
+ run_chunk.py ──cron/loop──► ComfyUI (MiniMax H3 + h3_seam_kit nodes)
+        │                        │  pinned seam frame
+        │                        │  pack refs        ──► MiniMaxH3SeamToVideo
+        │                        │  pulse/raw audio
+        ▼                        ▼
+ trimmed chunk mp4s ──► stitch.py ──► final video (real song muxed)
+```
+
+### The custom node kit (`h3_seam_kit/`)
+
+| Node | Job |
+|---|---|
+| `MiniMaxH3SeamToVideo` | One-pass conditioning: **pinned** first/last keyframes + reference images + reference audio (stock nodes force a choice; this merges both channels) |
+| `BeatPulse` | Song window → rhythm-only pulse track (onsets → kick/click/shaker hits). Motion syncs, nobody lip-syncs |
+| `SongWindow` | Crop an audio window + its beat grid |
+| `SeamFrame` | Pull the exact last/first frame of a video file |
+| `BeatSnapDuration` | Snap a desired shot length onto the beat grid |
+| `PromptDoctor` | Assemble prompts from parts (shot + panel authority + beat count + anti-lip-sync clause + style) |
+
+Includes a one-line patch to ComfyUI core
+(`patches/model_base_merge.patch`) that fixes a real bug: the stock
+`MiniMaxH3.extra_conds` clobbers keyframe latents when refs are also present,
+silently dropping the pinned frame.
+
+## Install
+
+1. ComfyUI (≥ 0.30) with the MiniMax H3 open weights
+   (`Comfy-Org/MiniMax-H3` — the `pruned_fp8_scaled` diffusion models +
+   `nvfp4_awq` text encoder), Sage Attention optional but recommended
+2. `h3_seam_kit/` → `ComfyUI/custom_nodes/h3_seam_kit/`
+3. Apply `patches/model_base_merge.patch` to `comfy/model_base.py`
+4. `pip install librosa flask websocket-client` into the ComfyUI venv
+5. Point the constants at the top of `pipeline/*.py` at your machine
+   (paths are machine-specific; a config module is on the roadmap)
+
+## Usage
+
+```bash
+# 1. write the chunk plan (panels → beat-snapped song windows, prompts, refs)
+python pipeline/snap_beats.py        # after beat analysis (beats.json)
+
+# 2. run the worker on a loop (cron-friendly; one chunk per invocation)
+python pipeline/run_chunk.py
+
+# 3. when a chunk is wrong, re-render just it (fresh seed; --chain carries the seam)
+python pipeline/redo.py 3 --chain
+
+# 4. assemble: concat done chunks + mux the real song
+python pipeline/stitch.py
+
+# 5. hone prompts/refs fast at low resolution
+python pipeline/hone.py hone_batch.json
+```
+
+## Roadmap
+
+- **Stems support** — feed vocal / instrumental stems per scene; compose with
+  or without vocals as the shot needs
+- **Retimer** — hand the machine a list of exact cut timestamps; it re-snaps
+  the chunk plan and marks only the affected chunks for redo
+- **Hosted backend adapter** — same chunk plan, OpenRouter/MiniMax API
+  execution (2K, ~8× faster) for look-dev and hero shots
+- **Pack generation agents** — storyboards, character sheets and locations
+  generated by LLM agents from a song's lyrics
+- **Config module** — machine-specific paths out of the scripts
+
+## License
+
+Code: MIT. The MiniMax H3 model weights are under MiniMax's H3 community
+license — see the model card.

@@ -1,0 +1,36 @@
+diff --git a/comfy/model_base.py b/comfy/model_base.py
+--- a/comfy/model_base.py
++++ b/comfy/model_base.py
+@@ MiniMaxH3.extra_conds: merge keyframe + ref conditioning latents @@
+-        keyframes = kwargs.get("minimax_keyframes", None)
+-        if keyframes is not None:
+-            payload["keyframes"] = keyframes
+-            payload["frame_count"] = kwargs.get("minimax_frame_count", None)
+-            payload["cond_video_latents"] = [kf["latent"] for kf in keyframes]
+-        refs = kwargs.get("minimax_refs", None)
+-        if refs is not None:
+-            payload["refs"] = refs
+-            payload["cond_video_latents"] = [r["latent"] for r in refs if "latent" in r]
+-            payload["cond_audio_latents"] = [r["audio_latent"] for r in refs if r.get("audio_latent") is not None]
++        keyframes = kwargs.get("minimax_keyframes", None)
++        if keyframes is not None:
++            payload["keyframes"] = keyframes
++            payload["frame_count"] = kwargs.get("minimax_frame_count", None)
++            video_latents = [kf["latent"] for kf in keyframes]
++        else:
++            video_latents = []
++        refs = kwargs.get("minimax_refs", None)
++        if refs is not None:
++            payload["refs"] = refs
++            # merge, don't clobber: layout expects keyframe cond rows first, then ref rows
++            video_latents += [r["latent"] for r in refs if "latent" in r]
++            payload["cond_audio_latents"] = [r["audio_latent"] for r in refs if r.get("audio_latent") is not None]
++        if video_latents:
++            payload["cond_video_latents"] = video_latents
+
+Why: the stock code overwrites cond_video_latents when both minimax_keyframes
+and minimax_refs are present, dropping the pinned keyframe latents. The
+PackedLayout builds positions for BOTH segment types; without the merge the
+pinned first/last frame is silently ignored during sampling.
+
+Apply: patch -p1 < patches/model_base_merge.patch   (from the ComfyUI dir)
