@@ -117,3 +117,12 @@ python pipeline/hone.py hone_batch.json
 
 Code: MIT. The MiniMax H3 model weights are under MiniMax's H3 community
 license — see the model card.
+
+
+## Speed stack & known issues
+
+**Full-res timing is honest physics, not a bug.** A 1344x768 ref2va clip at 15s (~362 frames) samples at ~45 s/step; a 5s T2V (124 frames) at ~16 s/step — near-perfect linear scaling, and already faster than the reference baseline (NVIDIA's Sol Engine page measures ~20.9 s/step for 124 frames on a 5090). Model loads are ~9 s on NVMe.
+
+**Diagnosed, not broken:** mid-run slowdowns track system-RAM pressure (32 GB box vs a ~42 GB weight stack). More RAM is the single biggest lever.
+
+**Sol Engine** (NVIDIA, 4.52x on 5090) is not yet public. **Spectrum** (ComfyUI-Spectrum-MiniMax-H3, ~30 percent fewer real evals) engages once patches/model_patcher_wrapper_bridge.py is applied to comfy/model_patcher.py (its wrappers otherwise never reach transformer_options), but has a runtime lifecycle bug on ComfyUI 0.30.0 — leave it out of production workflows until upstream fixes it. **EasyCache** (cross-step cache) is an alternative not yet integrated here.
