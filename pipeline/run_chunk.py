@@ -128,7 +128,7 @@ def build_workflow(chunk, frame_file, wav_file, frames, style_block, refs,
     refs + song window (pulse by default, raw for singer scenes) via
     MiniMaxH3SeamToVideo. <Picture N> tags map 1:1 to refs (seam is untagged)."""
     prompt = (chunk.get("prompt_override") or chunk["prompt"]) + " " + style_block
-    audio_mode = chunk.get("audio_mode", "pulse")
+    audio_mode = chunk.get("audio_mode", "raw")  # raw = song window (music present); pulse = rhythm-only
     nid = 7
     nodes = {
         "1": {"class_type": "UNETLoader", "inputs": {"unet_name": "minimax_h3_ref2va_pruned_fp8_scaled.safetensors", "weight_dtype": "default"}},
