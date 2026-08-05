@@ -128,6 +128,8 @@ def main():
             for k, v in o.items():
                 if isinstance(v, list):
                     for item in v:
+                        if not isinstance(item, dict):
+                            continue
                         if item.get("type") == "output" and item.get("filename", "").endswith(".mp4"):
                             out = item
         rec = {"name": name, "prompt_id": pid, "status": st,

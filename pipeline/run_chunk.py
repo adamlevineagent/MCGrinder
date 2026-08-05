@@ -252,7 +252,9 @@ def poll(chunk, state):
             for k, v in o.items():
                 if isinstance(v, list):
                     for item in v:
-                        if isinstance(item, dict) and item.get("type") == "output" and item.get("filename", "").endswith(".mp4"):
+                        if not isinstance(item, dict):
+                            continue
+                        if item.get("type") == "output" and item.get("filename", "").endswith(".mp4"):
                             out = item
         if out:
             raw = Path(r"D:/ComfyUI/output") / (out.get("subfolder") or "") / out["filename"]
