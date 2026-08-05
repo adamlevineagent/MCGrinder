@@ -10,7 +10,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 STATE = HERE / "state.json"
 FFMPEG = r"C:/Users/adaml/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffmpeg.exe"
-FINAL_DIR = Path(r"D:/ComfyUI/output/video/busy_mv")
+FINAL_DIR = Path(r"C:/ComfyUI/output/video/busy_mv")
 
 
 def sh(cmd):

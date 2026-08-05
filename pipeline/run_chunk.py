@@ -21,7 +21,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 STATE = HERE / "state.json"
 COMFY = "http://127.0.0.1:8188"
-COMFY_DIR = Path(r"D:/ComfyUI")
+COMFY_DIR = Path(r"C:/ComfyUI")
 VENV_PY = COMFY_DIR / ".venv" / "Scripts" / "python.exe"
 FFMPEG = r"C:/Users/adaml/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffmpeg.exe"
 MAX_RETRIES = 2
@@ -257,7 +257,7 @@ def poll(chunk, state):
                         if item.get("type") == "output" and item.get("filename", "").endswith(".mp4"):
                             out = item
         if out:
-            raw = Path(r"D:/ComfyUI/output") / (out.get("subfolder") or "") / out["filename"]
+            raw = Path(r"C:/ComfyUI/output") / (out.get("subfolder") or "") / out["filename"]
             if raw.is_file():
                 trim_to_window(chunk, raw)
                 chunk["output"] = str(raw)
