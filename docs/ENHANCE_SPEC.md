@@ -63,3 +63,43 @@ ends at the clip length. (Punchy-cut: end each beat with `(Ends 00:SS.SSS)`.)
 - No lip-sync unless the character is the singer (mouths neutral otherwise).
 - Keep characters consistent across shots.
 - Keep every concrete detail the user gave; don't invent major new elements.
+
+## Ref2VA mode (reference assets attached — 6-section format)
+
+When reference images/videos/audio are attached (character sheets, panels, locations),
+use the official Ref2VA 6-section format (H3-Context-IR replica, from
+benjiyaya/Minimax-H3-Prompt-AgentSkill, adopted 2026-08-06):
+
+1. **subject_definitions** — one line per tracked reference: `<Subject N>` for reusable
+   visible content (bind the assets: "…whose appearance comes from <Picture 1> and whose
+   walking motion comes from <Video 1>"), `<Picture N>` ONLY for concrete frame anchors,
+   `<Audio N>` for audio roles (voice timbre, music style, beat).
+2. **summary** — one paragraph starting with a task-type prefix in square brackets:
+   `[keyframe completion]` (image is a frame anchor), `[reference generation]` (assets
+   guide generation), `[video editing]`, `[video continuation]`, `[audio reuse]`,
+   `[audio reference]` — combined with `+` when several apply, never repeated.
+3. **retention_analysis** — one line per label, fixed markers only:
+   `fully_preserved | partially_preserved | attribute_transfer | weak_reference`
+   (visual); `fully_copy | partially_copy | reference | weak_reference` (audio).
+4. **detailed_description** — the timed multi-shot body, 350-500 English words.
+5. **overall_soundscape** — 1-4 sentences, ambience + action + non-verbal sounds.
+6. **non_diegetic_music** — 1-3 sentences: instrumentation/tempo/rhythm only.
+
+## Official keyframe instruction lines (seam chunks)
+
+For chunks with a pinned first frame (i2va/fl2va), open with the EXACT trained template
+instead of paraphrases:
+
+- i2va (pinned first frame only):
+  `For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.`
+- fl2va (pinned first AND last frame):
+  `How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.`
+
+## Per-shot quality bar (every shot)
+
+- Composition: framing + angle named (wide/medium/close-up, eye-level/low/high/overhead).
+- Camera motion: type + amplitude + speed in natural English ("pushes in with small
+  amplitude at slow speed").
+- ONE dominant subject action per shot — never cram multiple actions.
+- Environment/lighting cues per shot.
+- Sound cue per shot (diegetic); score goes in non_diegetic_music.
