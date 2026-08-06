@@ -126,3 +126,15 @@ license — see the model card.
 **Diagnosed, not broken:** mid-run slowdowns track system-RAM pressure (32 GB box vs a ~42 GB weight stack). More RAM is the single biggest lever.
 
 **Sol Engine** (NVIDIA, 4.52x on 5090) is not yet public. **Spectrum** (ComfyUI-Spectrum-MiniMax-H3, ~30 percent fewer real evals) engages once patches/model_patcher_wrapper_bridge.py is applied to comfy/model_patcher.py (its wrappers otherwise never reach transformer_options), but has a runtime lifecycle bug on ComfyUI 0.30.0 — leave it out of production workflows until upstream fixes it. **EasyCache** (cross-step cache) is an alternative not yet integrated here.
+
+## Speed stack status (2026-08-06)
+
+- **Sol-Attn** (kijai triton): ~2-3x, verified lossless at tau 1.3.
+- **FirstBlockCache** (Sol Engine cache line port, nodes/h3_fbc_node.py): ~2x more
+  at threshold 0.25 on 20-step schedules (11/20 steps skipped, clean quality).
+  Chain: UNET -> SolAttn -> SigmaShift -> H3FirstBlockCache -> guider/scheduler.
+- **Spectrum**: engages with the wrapper-bridge patch but has a lifecycle bug on
+  ComfyUI 0.30.0; deferred (adds little on top of Sol+FBC at 20 steps anyway).
+- **Latent two-pass upscaler**: artifacts at 0.5 denoise; native res still wins.
+  RealESRGAN-style pixel upscale (0.5MP gen + x2) is the untested alternate.
+- **Turbo LoRA** (4-step, ~5x): early demo, no ComfyUI support yet — watch.

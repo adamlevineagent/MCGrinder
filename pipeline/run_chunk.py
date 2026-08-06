@@ -123,7 +123,7 @@ def prep_inputs(chunk, state):
 
 
 def build_workflow(chunk, frame_file, wav_file, frames, style_block, refs,
-                   width=1344, height=768):
+                   width=1344, height=768, state=None):
     """Seam-kit workflow: PINNED first frame (prev chunk's last frame) + pack
     refs + song window (pulse by default, raw for singer scenes) via
     MiniMaxH3SeamToVideo. <Picture N> tags map 1:1 to refs (seam is untagged)."""
@@ -136,8 +136,18 @@ def build_workflow(chunk, frame_file, wav_file, frames, style_block, refs,
         "3": {"class_type": "VAELoader", "inputs": {"vae_name": "minimax_h3_video_vae_fp16.safetensors"}},
         "4": {"class_type": "VAELoader", "inputs": {"vae_name": "minimax_h3_audio_vae_fp32.safetensors"}},
         "5": {"class_type": "MiniMaxH3SigmaShift", "inputs": {"model": ["1", 0], "shift_video": 12.0, "shift_audio": 3.0}},
+        "102": {"class_type": "H3FirstBlockCache", "inputs": {
+            "model": ["5", 0], "threshold": 0.25, "start_step": 2,
+            "end_dense_steps": 2, "max_consecutive_skips": 2}},
         "6": {"class_type": "LoadImage", "inputs": {"image": frame_file}},  # seam frame -> PINNED first_frame
     }
+    if state.get("sol_attn", True):  # Sol-Attn sparse attention (Kijai triton) — ~2.2x sampling
+        nodes["100"] = {"class_type": "SolAttnPatch", "inputs": {
+            "model": ["1", 0], "tau": state.get("sol_tau", 1.3), "start_percent": 0.2,
+            "end_percent": 0.9, "min_tokens": 4096, "int8_qk": True,
+            "sink_conditioning": "exact_kv", "morton": False, "morton_curve": "2d_frame",
+            "int8_pv": True, "verbose": False, "use_tma": False, "dense_blocks": ""}}
+        nodes["5"]["inputs"]["model"] = ["100", 0]
     inp = {
         "clip": ["2", 0], "vae": ["3", 0], "audio_vae": ["4", 0],
         "prompt": prompt, "width": width, "height": height, "length": frames,
@@ -161,13 +171,13 @@ def build_workflow(chunk, frame_file, wav_file, frames, style_block, refs,
     h3 = str(nid)
     nodes[h3] = {"class_type": "MiniMaxH3SeamToVideo", "inputs": inp}
     nid += 1
-    nodes[str(nid)] = {"class_type": "RandomNoise", "inputs": {"noise_seed": 1000 + chunk["id"] * 977 + chunk.get("redo", 0) * 7919}}
+    nodes[str(nid)] = {"class_type": "RandomNoise", "inputs": {"noise_seed": chunk.get("seed_override") or (1000 + chunk["id"] * 977 + chunk.get("redo", 0) * 7919)}}
     noise = str(nid); nid += 1
     nodes[str(nid)] = {"class_type": "KSamplerSelect", "inputs": {"sampler_name": "res_multistep"}}
     samp = str(nid); nid += 1
-    nodes[str(nid)] = {"class_type": "BasicScheduler", "inputs": {"model": ["5", 0], "scheduler": "simple", "steps": 20, "denoise": 1.0}}
+    nodes[str(nid)] = {"class_type": "BasicScheduler", "inputs": {"model": ["102", 0], "scheduler": "simple", "steps": 20, "denoise": 1.0}}
     sched = str(nid); nid += 1
-    nodes[str(nid)] = {"class_type": "BasicGuider", "inputs": {"model": ["5", 0], "conditioning": [h3, 0]}}
+    nodes[str(nid)] = {"class_type": "BasicGuider", "inputs": {"model": ["102", 0], "conditioning": [h3, 0]}}
     guid = str(nid); nid += 1
     nodes[str(nid)] = {"class_type": "SamplerCustomAdvanced", "inputs": {"noise": [noise, 0], "guider": [guid, 0], "sampler": [samp, 0], "sigmas": [sched, 0], "latent_image": [h3, 1]}}
     smp = str(nid); nid += 1
@@ -198,8 +208,9 @@ def submit(chunk, state):
     if not refs:
         refs = ["busy_refs/01_01_storyboard_panels_01-04_silhouette_prologue.png"]
     wf = build_workflow(chunk, frame_file, wav_file, frames, state["style_block"], refs,
-                        width=state.get("width", 1344), height=state.get("height", 768))
-    resp = http_json("/prompt", {"prompt": wf, "client_id": "busy-mv-worker"})
+                        width=state.get("width", 1344), height=state.get("height", 768),
+                        state=state)
+    resp = http_json("/prompt", {"prompt": wf, "client_id": "dashboard"})
     if not resp or "prompt_id" not in resp:
         return f"  chunk {chunk['id']}: submit failed: {str(resp)[:200]}"
     chunk["prompt_id"] = resp["prompt_id"]
@@ -262,6 +273,15 @@ def poll(chunk, state):
                 trim_to_window(chunk, raw)
                 chunk["output"] = str(raw)
                 chunk["status"] = "done"
+                # record the take (each redo = one take)
+                takes = chunk.get("takes") or []
+                take_id = chunk.get("redo", 0) or (max([t.get("id", 0) for t in takes], default=0) + 1)
+                takes.append({"id": take_id, "output": str(raw),
+                              "seed": chunk.get("seed_override") or (1000 + chunk["id"] * 977 + chunk.get("redo", 0) * 7919),
+                              "status": "done",
+                              "created": __import__("time").strftime("%Y-%m-%d %H:%M:%S")})
+                chunk["takes"] = takes
+                chunk["selected_take"] = take_id
                 save_state(state)
                 return f"  chunk {chunk['id']} DONE -> {raw.name}"
         chunk["errors"] = chunk.get("errors", 0) + 1
