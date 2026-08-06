@@ -26,9 +26,24 @@ def main():
         print("no chunks done yet")
         sys.exit(0)
     partial = len(done) < len(chunks)
+    ordered = sorted(done, key=lambda c: c["id"])
+
+    # up-to-date guard: restart ticks re-run this; skip unless something changed
+    final = FINAL_DIR / ("BUSY_music_video_preview.mp4" if partial else "BUSY_music_video.mp4")
+    if final.is_file():
+        newest_input = 0.0
+        for c in ordered:
+            p = Path(c.get("output") or "")
+            if p.is_file():
+                newest_input = max(newest_input, p.stat().st_mtime)
+        song_p = Path(state["song"]["path"])
+        if song_p.is_file():
+            newest_input = max(newest_input, song_p.stat().st_mtime)
+        if final.stat().st_mtime > newest_input:
+            print(f"up to date: {final.name} — skipping stitch")
+            sys.exit(0)
 
     # 1) concat (in storyboard order)
-    ordered = sorted(done, key=lambda c: c["id"])
     list_file = HERE / "concat.txt"
     list_file.write_text("\n".join(f"file '{c['output'].replace(chr(39), chr(39)+chr(39)+chr(39))}'"
                                    for c in ordered),
