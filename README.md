@@ -138,3 +138,20 @@ license — see the model card.
 - **Latent two-pass upscaler**: artifacts at 0.5 denoise; native res still wins.
   RealESRGAN-style pixel upscale (0.5MP gen + x2) is the untested alternate.
 - **Turbo LoRA** (4-step, ~5x): early demo, no ComfyUI support yet — watch.
+
+## Turbo LoRA — shippable recipe (from Blizaine/Maestro v1.6.1, 2026-08-06)
+
+The larryvrh MiniMax-H3-Turbo-Lora (4-step audio-video) is now proven usable:
+Maestro ships it as a managed mode with **6 inference steps at LoRA strength 0.70**
+(compatible with the FULL First&Last / Omni checkpoints; pruned-model combos are
+excluded upstream). Sampling speedup ~3.3x on top of Sol-Attn + FBC. Test recipe
+when GPU is free: full-res ref2va, 6 steps, turbo LoRA strength 0.70, A/B vs the
+20-step baseline (same seed), judge with qwen3.7-flash.
+
+## Director v2 3-pass refinement (adopted idea)
+
+Instead of one enhancement pass, split the LLM work (for the external-AI blurb loop):
+1. screenplay pass — creativity-optimized (write the story/beats freely)
+2. shot breakdown pass — structure-optimized (emit the SHOT lines as strict JSON)
+3. polish pass — model-guide-injected (apply ENHANCE_SPEC + ref2va format + LoRA notes)
+Each pass optimizes what the LLM is asked to do; the blurb stays the interchange.
