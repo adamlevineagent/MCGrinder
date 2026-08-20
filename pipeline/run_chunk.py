@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""BUSY music-video chunk worker (ref2va pipeline).
+"""Music-video chunk worker (ref2va pipeline). Paths come from config.json.
 
 Per chunk:
   - extracts the previous chunk's LAST FRAME -> becomes ref_image_0 (seam)
@@ -19,11 +19,28 @@ import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-STATE = HERE / "state.json"
-COMFY = "http://127.0.0.1:8188"
-COMFY_DIR = Path(r"C:/ComfyUI")
-VENV_PY = COMFY_DIR / ".venv" / "Scripts" / "python.exe"
-FFMPEG = r"C:/Users/adaml/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffmpeg.exe"
+sys.path.insert(0, str(HERE))
+
+from load_config import (  # noqa: E402
+    chunk_audio_mode,
+    comfy_dir,
+    comfy_output_dir,
+    comfy_url,
+    ffmpeg_path,
+    input_subdir,
+    launch_flags,
+    load_config,
+    project_slug,
+    state_path,
+    venv_python,
+)
+
+_CFG = load_config()
+STATE = state_path(_CFG)
+COMFY = comfy_url(_CFG)
+COMFY_DIR = comfy_dir(_CFG)
+VENV_PY = venv_python(_CFG)
+FFMPEG = ffmpeg_path(_CFG)
 MAX_RETRIES = 2
 
 
@@ -63,8 +80,7 @@ def start_server():
     env = dict(os.environ)
     env.pop("PYTHONPATH", None)
     log = open(HERE / "comfy_server.log", "a", encoding="utf-8")
-    subprocess.Popen([str(VENV_PY), "main.py", "--use-sage-attention", "--cache-classic",
-                      "--enable-cors-header", "*", "--port", "8188"],
+    subprocess.Popen([str(VENV_PY), "main.py", *launch_flags(_CFG)],
                      cwd=str(COMFY_DIR), env=env, stdout=log, stderr=subprocess.STDOUT,
                      creationflags=0x00000008)
     for _ in range(120):
@@ -110,7 +126,7 @@ def prep_inputs(chunk, state):
         frame_png = frames_dir / f"chunk_{chunk['id']:02d}_first.png"
         sh([FFMPEG, "-y", "-sseof", "-0.05", "-i", str(prev_mp4), "-frames:v", "1",
             "-q:v", "2", str(frame_png)])
-        frame_file = f"busy_frames/chunk_{chunk['id']:02d}_first.png"
+        frame_file = f"{input_subdir(state)}/chunk_{chunk['id']:02d}_first.png"
     else:
         frame_file = chunk["first_frame"]
 
@@ -118,7 +134,7 @@ def prep_inputs(chunk, state):
     wav = frames_dir / f"chunk_{chunk['id']:02d}_audio.wav"
     sh([FFMPEG, "-y", "-ss", str(chunk["offset_s"]), "-t", str(chunk["duration_s"]),
         "-i", state["song"]["path"], "-ar", "32000", "-ac", "2", str(wav)])
-    wav_file = f"busy_frames/chunk_{chunk['id']:02d}_audio.wav"
+    wav_file = f"{input_subdir(state)}/chunk_{chunk['id']:02d}_audio.wav"
     return frame_file, wav_file
 
 
@@ -128,7 +144,8 @@ def build_workflow(chunk, frame_file, wav_file, frames, style_block, refs,
     refs + song window (pulse by default, raw for singer scenes) via
     MiniMaxH3SeamToVideo. <Picture N> tags map 1:1 to refs (seam is untagged)."""
     prompt = (chunk.get("prompt_override") or chunk["prompt"]) + " " + style_block
-    audio_mode = chunk.get("audio_mode", "raw")  # raw = song window (music present); pulse = rhythm-only
+    # Per-chunk audio_mode wins. Config/state audio_mode_default is fallback only.
+    audio_mode = chunk_audio_mode(chunk, _CFG, state)
     nid = 7
     nodes = {
         "1": {"class_type": "UNETLoader", "inputs": {"unet_name": "minimax_h3_ref2va_pruned_fp8_scaled.safetensors", "weight_dtype": "default"}},
@@ -187,7 +204,7 @@ def build_workflow(chunk, frame_file, wav_file, frames, style_block, refs,
     deca = str(nid); nid += 1
     nodes[str(nid)] = {"class_type": "CreateVideo", "inputs": {"images": [dec, 0], "fps": 24, "audio": [deca, 0], "bit_depth": 8}}
     cv = str(nid); nid += 1
-    nodes[str(nid)] = {"class_type": "SaveVideo", "inputs": {"video": [cv, 0], "filename_prefix": f"video/busy_mv/chunk_{chunk['id']:02d}", "format": "auto", "codec": "auto"}}
+    nodes[str(nid)] = {"class_type": "SaveVideo", "inputs": {"video": [cv, 0], "filename_prefix": f"video/{project_slug(state)}/chunk_{chunk['id']:02d}", "format": "auto", "codec": "auto"}}
     return nodes
 
 
@@ -205,8 +222,6 @@ def submit(chunk, state):
     frames = align_frames(chunk["duration_s"])
     frame_file, wav_file = prep_inputs(chunk, state)
     refs = chunk.get("refs_override") or chunk.get("refs", [])
-    if not refs:
-        refs = ["busy_refs/01_01_storyboard_panels_01-04_silhouette_prologue.png"]
     wf = build_workflow(chunk, frame_file, wav_file, frames, state["style_block"], refs,
                         width=state.get("width", 1344), height=state.get("height", 768),
                         state=state)
@@ -268,7 +283,7 @@ def poll(chunk, state):
                         if item.get("type") == "output" and item.get("filename", "").endswith(".mp4"):
                             out = item
         if out:
-            raw = Path(r"C:/ComfyUI/output") / (out.get("subfolder") or "") / out["filename"]
+            raw = comfy_output_dir(_CFG) / (out.get("subfolder") or "") / out["filename"]
             if raw.is_file():
                 trim_to_window(chunk, raw)
                 chunk["output"] = str(raw)

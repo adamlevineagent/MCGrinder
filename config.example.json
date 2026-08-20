@@ -1,4 +1,5 @@
 {
+  "_comment": "Generic template. Copy to config.json (gitignored). Behem-shaped paths: config.behem.example.json.",
   "comfy": {
     "url": "http://127.0.0.1:8188",
     "dir": "D:/ComfyUI",
@@ -16,9 +17,12 @@
   "ffprobe": "C:/path/to/ffmpeg/bin/ffprobe.exe",
   "song": "C:/path/to/your_song.mp3",
   "state_file": "state.json",
+  "beats_file": "beats.json",
+  "pack": "catalog/01-dont-freak",
   "resolution": {"width": 1344, "height": 768},
   "hone_resolution": {"width": 832, "height": 480},
   "sampler": {"name": "res_multistep", "scheduler": "simple", "steps": 20},
   "audio_mode_default": "pulse",
+  "_comment_audio_mode": "Fallback only. Per-chunk / per-shot audio_mode always wins. Don't Freak sets raw on every shot so this pulse default cannot override the Unplugged intro or guitar-tight jams.",
   "pulse_defaults": {"type": "kick", "gain": 1.0}
 }

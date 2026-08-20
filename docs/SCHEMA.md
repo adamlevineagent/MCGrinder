@@ -63,3 +63,41 @@ returned `project.json` back into the app pre-populates the whole editor.
 - Resolution: native canvas is a 768px short edge (1344x768 at 16:9). Don't exceed.
 - Frames snap to H3's 17k+5 grid at 24fps; durations you set are exact cut times.
 - Prompt format: see ENHANCE_SPEC.md — the app's enhancer follows the same spec.
+
+## Repo catalog (source of packs)
+
+Songs live under `catalog/` (`index.json` + `NN-slug/`). Copy a folder for the
+next song instead of rediscovering canon. `pipeline/from_pack.py` turns
+`project.json` into the `state.json` the worker consumes.
+
+Identity stills and the master wav are operator-local (documented in each pack's
+`OPERATOR.md`). Git does not store those binaries. Optional pack fields
+`comfy_input` / `behem` map a sheet onto the machine's Comfy `input/` name and
+the Windows path. `config.audio_mode_default` is a **fallback only** — a shot's
+`audio_mode` always wins (Unplugged intros and guitar-tight jams need `raw`
+even when the machine default is `pulse`).
+
+## Optional `project.json` fields
+
+```json
+"locations": [
+  {"id": "LOC_ROOM", "name": "empty green room", "sheet": "assets/locations/green_room.png",
+   "empty": true, "comfy_input": "dont_freak/04-green-room.png"}
+],
+"lyrics": [
+  {"text": "So don't freak", "start": 46.0, "end": 47.4}
+],
+"overlays": {
+  "after_concat": true,
+  "never_in_h3_prompt": true,
+  "im": [{"text": "r u ok?", "start": 50.0, "end": 54.0, "target": "laptop in fire side-shot"}]
+}
+```
+
+- `locations` with `empty: true` are locked plates **with no character in the
+  still**. Composite portraits into them at grind time. Do not bake a new
+  "character already in the room" identity still.
+- `lyrics` must be a **list of objects** `{text, start, end}` — never a raw
+  string (Maestro crash). Overlay as SRT after concat, timed from the wav, not
+  an even grid. Do not ask H3 to write lyric or IM letters in the frame.
+- `overlays` are post-stitch only (SRT + targeted IM). They are not prompt text.

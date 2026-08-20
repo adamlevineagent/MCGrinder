@@ -5,8 +5,8 @@ inspect results, and log everything for the iteration loop.
 Usage: python hone.py <config.json>   (config: list of test dicts)
 Each test: {name, prompt, seam (mp4 path or image), refs: [files], audio: wav,
             width, height, length, steps, seed}
-Outputs go to D:/ComfyUI/output/video/hone/<name>_<ts>.mp4; a report JSON is
-appended to hone_report.jsonl with per-test frame-0 diff vs the seam frame.
+Outputs go to Comfy's video/hone/ prefix; a report JSON is appended to
+hone_report.jsonl. Comfy URL comes from config.json.
 """
 import json
 import sys
@@ -14,8 +14,13 @@ import time
 import urllib.request
 from pathlib import Path
 
-COMFY = "http://127.0.0.1:8188"
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+
+from load_config import comfy_url, load_config  # noqa: E402
+
+_CFG = load_config()
+COMFY = comfy_url(_CFG)
 REPORT = HERE / "hone_report.jsonl"
 
 NODES = {

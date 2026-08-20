@@ -1,0 +1,18 @@
+{
+  "operator": "Behem",
+  "refs_dir": "C:/Users/adaml/dont-freak-refs",
+  "wav": "C:/Project Growth/THE PLAYFUL UNiVERSE/songs-2026-08-20-part1/Don't Freak/Don't Freak.wav",
+  "comfy_dir": "C:/ComfyUI",
+  "comfy_version": "0.30.0",
+  "junction": "C:/ComfyUI/input/dont_freak -> C:/Users/adaml/dont-freak-refs",
+  "map": {
+    "assets/characters/singer_guitarist.png": "C:/Users/adaml/dont-freak-refs/01-singer-guitarist.png",
+    "assets/characters/drummer.png": "C:/Users/adaml/dont-freak-refs/02-drummer.png",
+    "assets/characters/bassist.png": "C:/Users/adaml/dont-freak-refs/03-bassist.png",
+    "assets/characters/cat_violins.png": "C:/Users/adaml/dont-freak-refs/06-cat-violins.png",
+    "assets/locations/green_room.png": "C:/Users/adaml/dont-freak-refs/04-green-room.png",
+    "assets/locations/service_hall.png": "C:/Users/adaml/dont-freak-refs/05-service-hall.png",
+    "assets/locations/unplugged_stage.png": "C:/Users/adaml/dont-freak-refs/07-unplugged-stage.png",
+    "assets/locations/apartment_fire.png": "C:/Users/adaml/dont-freak-refs/08-apartment-fire.png"
+  }
+}

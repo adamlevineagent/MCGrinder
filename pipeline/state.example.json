@@ -12,6 +12,7 @@
       "first_frame": "refs/location_01.png",
       "refs": ["refs/panels/panel_01.png", "refs/location_01.png"],
       "prompt": "Open on this exact frame: [shot description]. Use <Picture 1> for the storyboard composition and staging, <Picture 2> for the setting. No lip-sync: characters never mouth the words. No music.",
+      "audio_mode": "raw",
       "status": "pending",
       "output": null,
       "prompt_id": null,
