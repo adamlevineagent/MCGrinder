@@ -7,6 +7,7 @@
       "title": "Don't Freak",
       "pack": "catalog/01-dont-freak",
       "project": "catalog/01-dont-freak/project.json",
+      "edl": "catalog/01-dont-freak/edl.json",
       "duration_s": 211,
       "bpm": 92.3,
       "status": "canon-locked",

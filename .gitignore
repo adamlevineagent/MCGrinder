@@ -1,6 +1,7 @@
 # machine-specific state — never commit the real one
 config.json
 state.json
+plan.json
 beats.json
 hone_report.jsonl
 comfy_server.log

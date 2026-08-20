@@ -1,7 +1,12 @@
 # Node API
 
-All nodes live in `h3_seam_kit/` (ComfyUI custom nodes). Registered names
+Two ComfyUI custom-node packages, installed side by side. Registered names
 shown as node titles.
+
+- `h3_seam_kit/` — the generation nodes (pinning, audio, seams). The copy in
+  this repo is **not** a sync source for the live install on Behem.
+- `comfy_nodes/h3_edl_window/` — three nodes that read a frame-EDL plan and feed
+  the kit. New package, new folder, no overlap in registered names.
 
 ## MiniMaxH3SeamToVideo
 
@@ -82,3 +87,44 @@ Outputs: `duration_s` (FLOAT, beat-snapped, clamped), `beat_count` (INT).
 
 Output: `STRING` — assembled prompt: shot, panel note, "spans N beats",
 anti-lip-sync clause, audio note, style block.
+
+# h3_edl_window
+
+Frame-EDL plan → the kit. Full detail in
+[`comfy_nodes/h3_edl_window/README.md`](../comfy_nodes/h3_edl_window/README.md)
+and [`docs/EDL.md`](EDL.md). Plans come from `pipeline/plan_windows.py`.
+
+## H3EDLWindow
+
+| Input | Type | Notes |
+|---|---|---|
+| `plan_path` | STRING | absolute path to a `plan_schema` 1 file |
+| `window_id` | INT | 1-based, matches `windows[].id` |
+| `take` | INT (optional) | non-zero reseeds with the `run_chunk.py` policy |
+
+Outputs: `length` (INT → the seam node's `length`), `offset_s` / `duration_s`
+(FLOAT → `SongWindow`), `seed` (INT), `prompt` (STRING), `first_still` /
+`last_still` (STRING), `window_count` (INT), `summary` (STRING).
+
+## H3EDLStill
+
+| Input | Type | Notes |
+|---|---|---|
+| `plan_path` | STRING | |
+| `window_id` | INT | |
+| `which` | COMBO | `first` / `last` |
+| `input_dir` | STRING (optional) | defaults to ComfyUI's input dir |
+
+Outputs: `image` (IMAGE), `path` (STRING), `sha256` (STRING). Loads the inject
+still with no resize and no VAE round-trip, so the join stays pixel-identical.
+
+## H3EDLSeamCheck
+
+| Input | Type | Default |
+|---|---|---|
+| `image_a` / `image_b` | IMAGE | |
+| `on_mismatch` | COMBO | `error` / `warn` |
+| `tolerance` | FLOAT | 0.0 |
+
+Outputs: `image` (passthrough), `report` (STRING). Audit node: proves window N's
+last frame and window N+1's first frame are the same pixels.
