@@ -584,7 +584,7 @@ def summarize(plan) -> str:
     lines = [
         f"{plan['project']}: {totals['windows']} windows, {totals['smash_cuts']} smash cuts, "
         f"{totals['timeline_frames']} timeline frames ({totals['timeline_s']}s)",
-        f"  lengths: " + ", ".join(f"{n}x{c}" for n, c in totals["by_length"].items() if c),
+        "  lengths: " + ", ".join(f"{n}x{c}" for n, c in totals["by_length"].items() if c),
         f"  generated {totals['generated_frames']}f, trim {totals['trim_frames']}f, "
         f"hold {totals['hold_frames']}f, overhead {totals['overhead_pct']}%",
     ]
