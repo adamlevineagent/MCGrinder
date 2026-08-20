@@ -18,12 +18,11 @@ Inject stills (standing full-body / claws CU) also live only on Behem, same
 junction, names `inject-01` … `inject-09`. See `BEHEM_PATHS.json` and
 `edl.json`. Do **not** check those pngs into git — there is no LFS pattern
 here. All nine injects are on Behem; `inject-07` is the black-lab take (do not
-use the earlier yellow-lab generate). Faces are not accepted.
+use the earlier yellow-lab generate). Faces accepted 2026-08-20.
 
 Polygon cutout composites were unusable (forest fringe). The injects on disk
-are in-room generates. Faces are not accepted; `inject-02` drifted vs the
-locked 01 CU on the camera-lock hone — that is a still problem, not a window
-problem.
+are in-room generates. `inject-02` drifted vs the locked 01 CU on the
+camera-lock hone — that is a still problem, not a window problem.
 
 Do not generate a "character in this room" still as a *new identity*. The
 injects are layout plates; the locked CUs stay `<Picture N>` refs.

@@ -316,15 +316,14 @@ class PlannerTests(unittest.TestCase):
                 self.assertTrue(ref.startswith("dont_freak/"), ref)
                 self.assertNotIn("00-band-bible", ref)
 
-    def test_plan_stays_not_ready_until_faces_are_accepted(self):
+    def test_plan_is_ready_when_faces_are_accepted(self):
         self.assertEqual(self.plan["needed_stills"], [])
-        self.assertFalse(self.edl["faces_accepted"])
-        self.assertFalse(self.plan["faces_accepted"])
-        self.assertFalse(self.plan["ready"])
-        # files on disk are not enough — ready stays false until Adam accepts faces
+        self.assertTrue(self.edl["faces_accepted"])
+        self.assertTrue(self.plan["faces_accepted"])
+        self.assertTrue(self.plan["ready"])
         patched = json.loads(json.dumps(self.edl))
-        patched["faces_accepted"] = True
-        self.assertTrue(plan_windows.plan_from_edl(patched, self.project)["ready"])
+        patched["faces_accepted"] = False
+        self.assertFalse(plan_windows.plan_from_edl(patched, self.project)["ready"])
 
     def test_on_behem_injects_match_the_2026_08_20_box(self):
         stills = plan_windows.still_index(self.edl)
@@ -339,7 +338,7 @@ class PlannerTests(unittest.TestCase):
         seven = stills["INJ_BAND_CATS_STAGE_STAND"]
         self.assertIn("black lab", seven["notes"].lower())
         self.assertIn("not the yellow-lab", seven["notes"].lower())
-        self.assertIn("faces not accepted", seven["notes"].lower())
+        self.assertIn("wardrobe still not the locked", seven["notes"].lower())
 
     def test_camera_lock_proof_is_first_equals_last(self):
         proof = self.edl["camera_lock_proof"]

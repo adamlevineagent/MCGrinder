@@ -65,8 +65,8 @@ like `state.json`.
 ### Inject stills (Behem 2026-08-20) — do not check pngs into git
 
 All nine performer injects are on the box as 1344×768 in-room generates
-(polygon cutouts had forest fringe and were thrown out). The plan stays
-`ready: false` until Adam accepts the faces (`faces_accepted` in `edl.json`).
+(polygon cutouts had forest fringe and were thrown out). Adam accepted the
+faces 2026-08-20; `faces_accepted` is true and the plan is `ready`.
 
 ```
 C:\Users\adaml\dont-freak-refs\inject-01-claws-cu.png                  ON BOX (resized 1344x768)

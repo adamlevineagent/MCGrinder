@@ -282,12 +282,10 @@ git** — there is no LFS `assets/injects/` pattern; `BEHEM_PATHS.json` and
 | `INJ_BAND_CATS_HALL_STAND` | `inject-08-band-cats-standing-hall.png` | `on_behem` |
 | `INJ_SLOTH_GREEN_ROOM_STAND` | `inject-09-sloth-standing-green-room.png` | `on_behem` |
 
-`plan.example.json` reports `ready: false`. Every boundary still is `on_behem`;
-the remaining gate is `faces_accepted: false`. Adam has not accepted the faces.
-The hone already showed inject-02 drifting vs the locked 01 CU; inject-03 and
-inject-07 wardrobe still is not the locked 01–03 CUs. That is a still problem.
-
-Do not treat "file exists" as "locked picture."
+`plan.example.json` reports `ready: true`. Every boundary still is `on_behem`
+and Adam accepted the faces (2026-08-20) for the full-song build. Wardrobe on
+inject-03/07 is still not a pixel match to the locked 01–03 CUs; that is noted,
+not a ready-blocker.
 
 One consequence worth stating out loud: the catalog's lyric shots want tight
 close-ups, but a window's boundaries must be standing wides. The CU framing has
@@ -304,6 +302,6 @@ it can no longer come from the boundary frames.
   20-step schedules; at 8 steps it is untested.
 - Row 3 (22.0s, first lyric in) is `certain: false`. Force-align it from the wav
   before locking picture.
-- Faces are not accepted. Re-shoot injects (especially 03/07 wardrobe vs the
-  locked 01–03 CUs, and 02 vs the locked 01 CU) rather than hoping the window
-  will correct a still. The earlier yellow-lab take of 07 must not be used.
+- Faces accepted 2026-08-20 for the full-song build. Wardrobe on 03/07 is still
+  not a pixel match to locked 01–03 CUs; that is a still note, not a blocker.
+  The earlier yellow-lab take of 07 must not be used.

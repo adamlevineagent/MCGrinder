@@ -93,7 +93,7 @@
     }
   ],
   "warnings": [],
-  "faces_accepted": false,
+  "faces_accepted": true,
   "windows": [
     {
       "id": 1,
@@ -1006,5 +1006,5 @@
       "prompt_full": "Decelerating guitar, long last note. EMPTY green room, then EMPTY Unplugged stage. Composure. Hold. No characters in frame. Flight-case lid empty, no extra toys. No quill encore, no lyrics, no IM. <Picture 1> empty green room, <Picture 2> empty stage. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     }
   ],
-  "ready": false
+  "ready": true
 }
