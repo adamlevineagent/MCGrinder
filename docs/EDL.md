@@ -39,6 +39,39 @@ Nothing here replaces the live `h3_seam_kit`. `MiniMaxH3SeamToVideo` already
 takes `first_frame` + `last_frame` + four refs + audio in one conditioning pass;
 the planner just tells it exactly what to put there.
 
+## Camera lock is proven (Behem, 2026-08-20 1:54pm PT)
+
+`first_frame = last_frame` *is* the camera lock. A hone on Behem proved it:
+
+| | |
+|---|---|
+| `prompt_id` | `b827e600-73fd-4162-96dc-6e213056f7b9` |
+| seed | `202608205` |
+| node | live `MiniMaxH3SeamToVideo` (not a copy, not a vendor) |
+| diffusion | `minimax_h3_fl2va_pruned_fp8_scaled.safetensors` |
+| turbo LoRA | `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors` @ 1.0 |
+| steps / length / canvas | 8 / 124 / 1344×768 |
+| first = last | `inject-02-sloth-standing-stage.png`, **same `LoadImage`** |
+| LoRA load | 208 patches, **0** `lora-key-not-loaded` |
+| wall | 120s |
+
+The still reprinted as frame 0 (still→first MAE **5.83**). Frame 0 to the last
+frame moved at MAE **19.21**, and that motion is a nod plus a guitar downstroke
+— **not a push-in**. Feet stayed on the floor. One sloth.
+
+That is the whole argument of this file, measured: pin both ends to the same
+standing still and the camera holds. The collage first-frame failed because it
+gave the model a tableau to reveal; this hone gave it a plate it had to return
+to.
+
+**The face is a still problem, not a window problem.** The generated sloth
+drifts versus the locked `01-singer-guitarist` CU. `inject-02` is an in-room
+generate (polygon cutout composites came back with forest fringe and were
+thrown out), not a composite of the locked portrait. first=last held the
+camera anyway. Re-shoot or accept the inject; do not re-open the window recipe.
+
+Recorded on the EDL as `camera_lock_proof`.
+
 ## Roll or cut
 
 Each row declares what kind of join happens at its frame.
@@ -155,6 +188,9 @@ must be `role: inject` with a `body` of `standing_full`, `empty_plate` or
 `cu_object` — so a bust sheet or a collage can never become a first/last frame,
 and the validator says so by name. `status` is `on_behem` or `needed`; anything
 `needed` comes back in the plan's `needed_stills` shopping list with its brief.
+`faces_accepted` is a separate gate: files on disk are not enough. The plan
+stays `ready: false` until every boundary still is `on_behem` **and** Adam
+accepts the faces.
 
 ## `plan.json` — what the planner emits
 
@@ -168,8 +204,10 @@ editor lays over it. Seeds use the same policy as `run_chunk.py`
 
 The plan also carries what is wrong with it: `warnings` (a locked window pinned
 between two different plates, a span longer than the lattice, refs past the
-seam node's four), `needed_stills`, `uncertain_rows`, and a `ready` flag.
-`--strict` turns any warning into a non-zero exit.
+seam node's four), `needed_stills`, `uncertain_rows`, `faces_accepted`, and a
+`ready` flag. `--strict` turns any warning into a non-zero exit. `ready` is
+true only when there are no needed stills, no warnings, **and**
+`faces_accepted` is true.
 
 ```bash
 python pipeline/plan_windows.py catalog/01-dont-freak
@@ -224,18 +262,34 @@ point: the shot cannot drift off a frame it is required to end on. The 34-frame
 tail on window 19 holds STAGE_EMPTY — the catalog's "empty green room, then
 empty stage" ending, delivered by the hold rather than by a generated morph.
 
-## The catch: none of the performer injects exist yet
+## Inject stills on Behem (2026-08-20)
 
-`plan.example.json` reports `ready: false` and lists **9 stills to shoot**. This
-is the point, not an oversight. Behem has identity sheets (`01`/`02`/`03`/`06`,
-all close-ups) and empty location plates (`04`/`05`/`07`/`08`). It has no
-standing full-body composites, and CUs are identity refs only — feeding a bust
-back in as a cut frame is what produced the legless band in the first place.
+Eight of the nine performer injects now live on Behem at
+`C:\Users\adaml\dont-freak-refs\` as 1344×768 in-room generates. Polygon
+cutout composites were unusable (forest fringe). **Do not check the pngs into
+git** — there is no LFS `assets/injects/` pattern; `BEHEM_PATHS.json` and
+`edl.json` `behem` fields are the map.
 
-Every needed still carries a `brief` in `edl.json`: full-bleed 1344×768, the
-locked portrait composited into the empty plate, whole body in frame, feet on
-the floor, floor and shadow visible. Shoot those nine and the plan turns
-`ready`.
+| id | file | status |
+|---|---|---|
+| `INJ_CLAWS_CU` | `inject-01-claws-cu.png` | `on_behem` (resized to 1344×768) |
+| `INJ_SLOTH_STAGE_STAND` | `inject-02-sloth-standing-stage.png` | `on_behem` — **used in the camera-lock hone**. Standing, feet, black electric. Face drifts vs locked 01 CU. |
+| `INJ_BAND_STAGE_STAND` | `inject-03-band-standing-stage.png` | `on_behem`. Wardrobe drift: sneakers / green shirt on the lab. |
+| `INJ_SLOTH_FIRE_STAND` | `inject-04-sloth-standing-fire.png` | `on_behem` |
+| `INJ_SLOTH_HALL_STAND` | `inject-05-sloth-standing-hall.png` | `on_behem` |
+| `INJ_CATS_STAGE_STAND` | `inject-06-cats-standing-stage.png` | `on_behem`. Pair, gowns, feet. |
+| `INJ_BAND_CATS_STAGE_STAND` | `inject-07-band-cats-standing-stage.png` | **`needed`**. A generate came back as a yellow lab / wrong wardrobe. Do not mark `on_behem`. |
+| `INJ_BAND_CATS_HALL_STAND` | `inject-08-band-cats-standing-hall.png` | `on_behem` |
+| `INJ_SLOTH_GREEN_ROOM_STAND` | `inject-09-sloth-standing-green-room.png` | `on_behem` |
+
+`plan.example.json` reports `ready: false`. Two gates, both still closed:
+
+1. `inject-07` does not exist (and the failed yellow-lab take must not be used).
+2. `faces_accepted` is `false`. Adam has not accepted the faces. The hone already
+   showed inject-02 drifting vs the locked 01 CU; that is a still problem.
+
+Marking 07 `on_behem` without flipping `faces_accepted` still leaves the plan
+not-ready. Do not treat "file exists" as "locked picture."
 
 One consequence worth stating out loud: the catalog's lyric shots want tight
 close-ups, but a window's boundaries must be standing wides. The CU framing has
@@ -244,12 +298,13 @@ it can no longer come from the boundary frames.
 
 ## Verify before trusting
 
-- `model.diffusion` is `minimax_h3_fl2va_pruned_fp8_scaled.safetensors`, read off
-  the stock Comfy FL2VA graph. The current MCGrinder worker loads the *ref2va*
-  checkpoint. Whether `MiniMaxH3SeamToVideo` + the merge patch behave the same on
-  the fl2va checkpoint under the turbo LoRA is **unverified** — check on Behem
-  before a full grind.
+- The window recipe itself is proven: see **Camera lock is proven** above.
+  `MiniMaxH3SeamToVideo` + the fl2va checkpoint + the FL2V 8-step turbo LoRA at
+  strength 1.0, 8 steps, first=last, 124 frames. The old grind loop still loads
+  the *ref2va* checkpoint; do not mix the two LoRAs in one graph.
 - FBC is off in the emitted graphs. Its 0.25/start-2 tuning was measured on
   20-step schedules; at 8 steps it is untested.
 - Row 3 (22.0s, first lyric in) is `certain: false`. Force-align it from the wav
   before locking picture.
+- Faces are not accepted. Re-shoot injects (especially 03 wardrobe, 07 missing,
+  02 vs the locked 01 CU) rather than hoping the window will correct a still.

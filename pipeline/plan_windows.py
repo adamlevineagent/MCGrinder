@@ -475,13 +475,16 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
         "uncertain_rows": uncertain,
         "smash_cuts": smash_cuts,
         "warnings": warnings,
+        "faces_accepted": bool(edl.get("faces_accepted")),
         "windows": windows,
     }
     by_id = {window["id"]: window for window in windows}
     for smash in smash_cuts:
         if smash["inside_window"]:
             by_id[smash["inside_window"]]["smash_rows"].append(smash["row"])
-    plan["ready"] = not plan["needed_stills"] and not warnings
+    # Files on disk are not enough: Adam has to accept the faces on the injects.
+    plan["ready"] = (not plan["needed_stills"] and not warnings
+                     and plan["faces_accepted"])
     return plan
 
 
@@ -591,6 +594,8 @@ def summarize(plan) -> str:
     if plan["needed_stills"]:
         lines.append(f"  NOT READY: {len(plan['needed_stills'])} inject stills to shoot: "
                      + ", ".join(s["id"] for s in plan["needed_stills"]))
+    if not plan.get("faces_accepted"):
+        lines.append("  NOT READY: faces not accepted")
     for note in plan["warnings"]:
         lines.append(f"  warn: {note}")
     for row in plan["uncertain_rows"]:

@@ -13,6 +13,16 @@
     "assets/locations/green_room.png": "C:/Users/adaml/dont-freak-refs/04-green-room.png",
     "assets/locations/service_hall.png": "C:/Users/adaml/dont-freak-refs/05-service-hall.png",
     "assets/locations/unplugged_stage.png": "C:/Users/adaml/dont-freak-refs/07-unplugged-stage.png",
-    "assets/locations/apartment_fire.png": "C:/Users/adaml/dont-freak-refs/08-apartment-fire.png"
-  }
+    "assets/locations/apartment_fire.png": "C:/Users/adaml/dont-freak-refs/08-apartment-fire.png",
+    "assets/injects/claws_cu.png": "C:/Users/adaml/dont-freak-refs/inject-01-claws-cu.png",
+    "assets/injects/sloth_standing_stage.png": "C:/Users/adaml/dont-freak-refs/inject-02-sloth-standing-stage.png",
+    "assets/injects/band_standing_stage.png": "C:/Users/adaml/dont-freak-refs/inject-03-band-standing-stage.png",
+    "assets/injects/sloth_standing_fire.png": "C:/Users/adaml/dont-freak-refs/inject-04-sloth-standing-fire.png",
+    "assets/injects/sloth_standing_hall.png": "C:/Users/adaml/dont-freak-refs/inject-05-sloth-standing-hall.png",
+    "assets/injects/cats_standing_stage.png": "C:/Users/adaml/dont-freak-refs/inject-06-cats-standing-stage.png",
+    "assets/injects/band_cats_standing_stage.png": "C:/Users/adaml/dont-freak-refs/inject-07-band-cats-standing-stage.png",
+    "assets/injects/band_cats_standing_hall.png": "C:/Users/adaml/dont-freak-refs/inject-08-band-cats-standing-hall.png",
+    "assets/injects/sloth_standing_green_room.png": "C:/Users/adaml/dont-freak-refs/inject-09-sloth-standing-green-room.png"
+  },
+  "injects_note": "Binaries stay on Behem. No git LFS. inject-07 is MISSING (yellow-lab generate — do not use). inject-02 was the 2026-08-20 camera-lock hone still."
 }

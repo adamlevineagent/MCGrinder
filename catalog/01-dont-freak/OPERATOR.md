@@ -62,30 +62,32 @@ python pipeline/plan_windows.py catalog/01-dont-freak --audio-input "dont_freak/
 `plan.example.json` is the checked-in reference plan; `plan.json` is gitignored
 like `state.json`.
 
-### Nine inject stills to shoot first
+### Inject stills (Behem 2026-08-20) — do not check pngs into git
 
-The plan reports `ready: false` on purpose. Behem has identity CUs
-(`01`/`02`/`03`/`06`) and empty plates (`04`/`05`/`07`/`08`) — it has no standing
-full-body composites, and a CU used as a cut frame is what produced the legless
-band. Each of these needs a full-bleed 1344x768 still, locked portrait
-composited into the empty plate, whole body in frame, **both feet on the floor**,
-floor and shadow visible. Briefs are in `edl.json` under `stills[]`.
+Eight of nine performer injects are on the box as 1344×768 in-room generates
+(polygon cutouts had forest fringe and were thrown out). The plan stays
+`ready: false` until `inject-07` exists **and** Adam accepts the faces
+(`faces_accepted` in `edl.json`).
 
 ```
-C:\Users\adaml\dont-freak-refs\inject-01-claws-cu.png                  (claws on the neck; no face, no torso)
-C:\Users\adaml\dont-freak-refs\inject-02-sloth-standing-stage.png
-C:\Users\adaml\dont-freak-refs\inject-03-band-standing-stage.png
-C:\Users\adaml\dont-freak-refs\inject-04-sloth-standing-fire.png
-C:\Users\adaml\dont-freak-refs\inject-05-sloth-standing-hall.png
-C:\Users\adaml\dont-freak-refs\inject-06-cats-standing-stage.png       (pair, gowns, never one cat)
-C:\Users\adaml\dont-freak-refs\inject-07-band-cats-standing-stage.png
-C:\Users\adaml\dont-freak-refs\inject-08-band-cats-standing-hall.png
-C:\Users\adaml\dont-freak-refs\inject-09-sloth-standing-green-room.png
+C:\Users\adaml\dont-freak-refs\inject-01-claws-cu.png                  ON BOX (resized 1344x768)
+C:\Users\adaml\dont-freak-refs\inject-02-sloth-standing-stage.png      ON BOX — used in the camera-lock hone
+C:\Users\adaml\dont-freak-refs\inject-03-band-standing-stage.png       ON BOX (lab wardrobe drift: sneakers/green shirt)
+C:\Users\adaml\dont-freak-refs\inject-04-sloth-standing-fire.png       ON BOX
+C:\Users\adaml\dont-freak-refs\inject-05-sloth-standing-hall.png       ON BOX
+C:\Users\adaml\dont-freak-refs\inject-06-cats-standing-stage.png       ON BOX (pair, gowns, feet)
+C:\Users\adaml\dont-freak-refs\inject-07-band-cats-standing-stage.png  MISSING — yellow-lab generate, do not use
+C:\Users\adaml\dont-freak-refs\inject-08-band-cats-standing-hall.png   ON BOX
+C:\Users\adaml\dont-freak-refs\inject-09-sloth-standing-green-room.png ON BOX
 ```
 
 The existing junction already exposes them as `dont_freak/inject-NN-....png`.
 Never use `00-band-bible-from-portraits.png` as a first frame, a last frame or a
 layout — the EDL lists it as `role: forbidden` and a test enforces it.
+
+Camera lock is proven with inject-02 as first=last. See `docs/EDL.md` and
+`edl.json` `camera_lock_proof`. The face drift vs locked `01-singer-guitarist`
+is a still problem, not a window problem.
 
 ### Wav into Comfy input (for SongWindow)
 
@@ -118,12 +120,25 @@ A later PR can diff them. This pack does not touch nodes or Comfy patches.
 
 ## Hone that already succeeded (do not reroll identity)
 
+Older look-dev (ref2va / 20-step, do not treat as the window recipe):
+
 - 5.167s sloth + **empty** green room
 - `prompt_id` `1d8bd592-7ae2-4cb3-bfa9-3a54e5901110`
-- 1344×768, Sol-Attn tau 1.3 + FBC 0.25, 20 steps (turbo LoRA is not on disk)
+- 1344×768, Sol-Attn tau 1.3 + FBC 0.25, 20 steps (turbo LoRA was not on disk)
 - ~140s wall
 - Extra planet-toys appeared on the flight case — prompts now say the room is
   empty of extra props
+
+**Camera-lock hone (the window recipe, 2026-08-20 1:54pm PT):**
+
+- `prompt_id` `b827e600-73fd-4162-96dc-6e213056f7b9`, seed `202608205`
+- live `MiniMaxH3SeamToVideo` + `minimax_h3_fl2va_pruned_fp8_scaled` +
+  `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16` @ 1.0, 8 steps, 124 frames
+- `first_frame = last_frame = inject-02-sloth-standing-stage.png` (same LoadImage)
+- 208 patches, 0 lora-key-not-loaded, wall 120s
+- still→first MAE 5.83 (reprint); first→last MAE 19.21 is nod+downstroke, not a
+  push-in. Feet on the floor. One sloth.
+- Face drifts vs locked 01 CU — re-shoot the still, do not change the window.
 
 Reproduce look-dev with `hone_batch.example.json`. Do not add a full-song fire
 button. After hone, `from_pack.py` → copy beats → `snap_beats.py` → `run_chunk.py`.

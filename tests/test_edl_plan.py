@@ -316,15 +316,61 @@ class PlannerTests(unittest.TestCase):
                 self.assertTrue(ref.startswith("dont_freak/"), ref)
                 self.assertNotIn("00-band-bible", ref)
 
-    def test_plan_reports_the_stills_that_do_not_exist_yet(self):
+    def test_plan_stays_not_ready_until_07_and_faces(self):
         needed = {still["id"] for still in self.plan["needed_stills"]}
-        self.assertEqual(len(needed), 9)
-        self.assertIn("INJ_SLOTH_STAGE_STAND", needed)
-        self.assertNotIn("INJ_STAGE_EMPTY", needed)
+        self.assertEqual(needed, {"INJ_BAND_CATS_STAGE_STAND"})
+        self.assertFalse(self.edl["faces_accepted"])
+        self.assertFalse(self.plan["faces_accepted"])
         self.assertFalse(self.plan["ready"])
         for still in self.plan["needed_stills"]:
             self.assertTrue(still["windows"])
             self.assertTrue(still["brief"])
+        # files on disk are not enough — flip every still to on_behem and ready
+        # still stays false until Adam accepts the faces
+        patched = json.loads(json.dumps(self.edl))
+        for still in patched["stills"]:
+            if still["role"] == "inject":
+                still["status"] = "on_behem"
+        almost = plan_windows.plan_from_edl(patched, self.project)
+        self.assertEqual(almost["needed_stills"], [])
+        self.assertFalse(almost["ready"])
+        patched["faces_accepted"] = True
+        self.assertTrue(plan_windows.plan_from_edl(patched, self.project)["ready"])
+
+    def test_on_behem_injects_match_the_2026_08_20_box(self):
+        stills = plan_windows.still_index(self.edl)
+        on_box = (
+            "INJ_CLAWS_CU", "INJ_SLOTH_STAGE_STAND", "INJ_BAND_STAGE_STAND",
+            "INJ_SLOTH_FIRE_STAND", "INJ_SLOTH_HALL_STAND", "INJ_CATS_STAGE_STAND",
+            "INJ_BAND_CATS_HALL_STAND", "INJ_SLOTH_GREEN_ROOM_STAND",
+        )
+        for still_id in on_box:
+            self.assertEqual(stills[still_id]["status"], "on_behem", still_id)
+        missing = stills["INJ_BAND_CATS_STAGE_STAND"]
+        self.assertEqual(missing["status"], "needed")
+        self.assertIn("yellow lab", missing["notes"].lower())
+        self.assertNotEqual(missing["status"], "on_behem")
+
+    def test_camera_lock_proof_is_first_equals_last(self):
+        proof = self.edl["camera_lock_proof"]
+        self.assertEqual(proof["prompt_id"], "b827e600-73fd-4162-96dc-6e213056f7b9")
+        self.assertEqual(proof["seed"], 202608205)
+        self.assertEqual(proof["node"], "MiniMaxH3SeamToVideo")
+        self.assertEqual(proof["diffusion"], "minimax_h3_fl2va_pruned_fp8_scaled.safetensors")
+        self.assertEqual(proof["turbo_lora"], FL2V_TURBO)
+        self.assertEqual(proof["lora_strength"], 1.0)
+        self.assertEqual(proof["steps"], 8)
+        self.assertEqual(proof["nframes"], 124)
+        self.assertEqual((proof["width"], proof["height"]), (1344, 768))
+        self.assertEqual(proof["first_frame"], proof["last_frame"])
+        self.assertTrue(proof["same_loadimage"])
+        self.assertEqual(proof["lora_key_not_loaded"], 0)
+        self.assertEqual(proof["patches"], 208)
+        self.assertLess(proof["still_to_first_mae"], proof["first_to_last_mae"])
+        self.assertIn("not a push-in", proof["first_to_last_motion"])
+        self.assertTrue(proof["feet_on_floor"])
+        self.assertIn("still problem", proof["identity_note"])
+        self.assertNotIn("h3_seam_kit", proof["node"])
 
     def test_uncertain_lyric_in_is_flagged(self):
         uncertain = self.plan["uncertain_rows"]

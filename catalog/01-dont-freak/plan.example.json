@@ -43,7 +43,7 @@
     "conditioning": "first_frame + last_frame (+ pack refs + raw song window) in one pass via the live h3_seam_kit MiniMaxH3SeamToVideo",
     "diffusion": "minimax_h3_fl2va_pruned_fp8_scaled.safetensors",
     "diffusion_alt": "minimax_h3_ref2va_pruned_fp8_scaled.safetensors",
-    "diffusion_note": "HUNCH, verify on Behem: the stock FL2VA graph (user/default/workflows/video_minimax_h3_i2v.json) loads the fl2va checkpoint. The MCGrinder ref2va checkpoint is what the current worker loads. Do not assume they are interchangeable under the turbo LoRA.",
+    "diffusion_note": "PROVEN 2026-08-20 on Behem: MiniMaxH3SeamToVideo + this fl2va checkpoint + the FL2V 8-step turbo LoRA at strength 1.0, 8 steps, 124 frames. See camera_lock_proof. The MCGrinder worker still loads the ref2va checkpoint for the old grind loop; do not mix the two LoRAs in one graph.",
     "turbo_lora": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
     "steps": 8,
     "lora_strength": 1.0,
@@ -72,18 +72,6 @@
   },
   "needed_stills": [
     {
-      "id": "INJ_BAND_CATS_HALL_STAND",
-      "name": "band + cat pair standing full body, service hall",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-08-band-cats-standing-hall.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-08-band-cats-standing-hall.png",
-      "brief": "Full-bleed 1344x768. Sparse breakdown staging: band plus the gowned cat pair standing whole-body with feet on the service-hall floor. Composite 01 / 02 / 03 / 06 into the empty 05 plate.",
-      "windows": [
-        11
-      ]
-    },
-    {
       "id": "INJ_BAND_CATS_STAGE_STAND",
       "name": "band + cat pair standing full body, Unplugged stage",
       "status": "needed",
@@ -96,97 +84,6 @@
         13,
         14,
         16
-      ]
-    },
-    {
-      "id": "INJ_BAND_STAGE_STAND",
-      "name": "band standing full body, Unplugged stage",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-03-band-standing-stage.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-03-band-standing-stage.png",
-      "brief": "Full-bleed 1344x768. Sloth and black lab standing whole-body with feet on the stage floor, grizzly seated behind the kit with legs and pedals visible. Composite 01 / 02 / 03 into the empty 07 stage plate. Every performer meets the floor.",
-      "windows": [
-        9
-      ]
-    },
-    {
-      "id": "INJ_CATS_STAGE_STAND",
-      "name": "gowned cat-violin pair standing full body, Unplugged stage",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-06-cats-standing-stage.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-06-cats-standing-stage.png",
-      "brief": "Full-bleed 1344x768. BOTH black cats, matching black evening gowns, standing whole-body with feet on the stage floor, violins up. Composite the locked 06-cat-violins pair into the empty 07 plate. Never one cat alone; do not regenerate their faces.",
-      "windows": [
-        10
-      ]
-    },
-    {
-      "id": "INJ_CLAWS_CU",
-      "name": "claws on the guitar neck (CU plate)",
-      "status": "needed",
-      "body": "cu_object",
-      "comfy_input": "dont_freak/inject-01-claws-cu.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-01-claws-cu.png",
-      "brief": "Full-bleed 1344x768. Three-fingered felt claws on the black electric guitar neck, dim Unplugged stage behind. No face, no torso, no shoulders in frame - a hand/instrument plate, so there is no body for the model to amputate.",
-      "windows": [
-        1,
-        2
-      ]
-    },
-    {
-      "id": "INJ_SLOTH_FIRE_STAND",
-      "name": "sloth standing full body, burning apartment",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-04-sloth-standing-fire.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-04-sloth-standing-fire.png",
-      "brief": "Full-bleed 1344x768. Sloth standing whole-body at a mic in the burning apartment hallway, both feet on the hall floor. Composite 01 into the empty 08 plate. Laptop stays a blank glowing rectangle.",
-      "windows": [
-        5,
-        6,
-        15
-      ]
-    },
-    {
-      "id": "INJ_SLOTH_GREEN_ROOM_STAND",
-      "name": "sloth standing full body, green room",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-09-sloth-standing-green-room.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-09-sloth-standing-green-room.png",
-      "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the green-room floor. Composite 01 into the empty 04 plate. Flight-case lid empty, no extra toys, no readable paper.",
-      "windows": [
-        17,
-        18
-      ]
-    },
-    {
-      "id": "INJ_SLOTH_HALL_STAND",
-      "name": "sloth standing full body, service hall",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-05-sloth-standing-hall.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-05-sloth-standing-hall.png",
-      "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the service-hall floor. Composite 01 into the empty 05 plate.",
-      "windows": [
-        7
-      ]
-    },
-    {
-      "id": "INJ_SLOTH_STAGE_STAND",
-      "name": "sloth standing full body, Unplugged stage",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-02-sloth-standing-stage.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-02-sloth-standing-stage.png",
-      "brief": "Full-bleed 1344x768. Needle-felt sloth standing at the mic on the empty Unplugged stage, guitar in hands, WHOLE BODY IN FRAME WITH BOTH FEET ON THE STAGE FLOOR, floor and shadow visible. Composite the locked 01-singer-guitarist identity into the empty 07 stage plate. Not a cutout, not a portrait on a blank field.",
-      "windows": [
-        2,
-        3,
-        4,
-        8
       ]
     }
   ],
@@ -212,6 +109,7 @@
     }
   ],
   "warnings": [],
+  "faces_accepted": false,
   "windows": [
     {
       "id": 1,
@@ -233,8 +131,8 @@
       "last_still_id": "INJ_CLAWS_CU",
       "first_still": "dont_freak/inject-01-claws-cu.png",
       "last_still": "dont_freak/inject-01-claws-cu.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -280,8 +178,8 @@
       "last_still_id": "INJ_SLOTH_STAGE_STAND",
       "first_still": "dont_freak/inject-01-claws-cu.png",
       "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "zoom_out",
@@ -329,8 +227,8 @@
       "last_still_id": "INJ_SLOTH_STAGE_STAND",
       "first_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -376,8 +274,8 @@
       "last_still_id": "INJ_SLOTH_STAGE_STAND",
       "first_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -424,8 +322,8 @@
       "last_still_id": "INJ_SLOTH_FIRE_STAND",
       "first_still": "dont_freak/inject-04-sloth-standing-fire.png",
       "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -471,8 +369,8 @@
       "last_still_id": "INJ_SLOTH_FIRE_STAND",
       "first_still": "dont_freak/inject-04-sloth-standing-fire.png",
       "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -518,8 +416,8 @@
       "last_still_id": "INJ_SLOTH_HALL_STAND",
       "first_still": "dont_freak/inject-05-sloth-standing-hall.png",
       "last_still": "dont_freak/inject-05-sloth-standing-hall.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -565,8 +463,8 @@
       "last_still_id": "INJ_SLOTH_STAGE_STAND",
       "first_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -612,8 +510,8 @@
       "last_still_id": "INJ_BAND_STAGE_STAND",
       "first_still": "dont_freak/inject-03-band-standing-stage.png",
       "last_still": "dont_freak/inject-03-band-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -661,8 +559,8 @@
       "last_still_id": "INJ_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-06-cats-standing-stage.png",
       "last_still": "dont_freak/inject-06-cats-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -710,8 +608,8 @@
       "last_still_id": "INJ_BAND_CATS_HALL_STAND",
       "first_still": "dont_freak/inject-08-band-cats-standing-hall.png",
       "last_still": "dont_freak/inject-08-band-cats-standing-hall.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -906,8 +804,8 @@
       "last_still_id": "INJ_SLOTH_FIRE_STAND",
       "first_still": "dont_freak/inject-04-sloth-standing-fire.png",
       "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -1002,8 +900,8 @@
       "last_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
       "first_still": "dont_freak/inject-09-sloth-standing-green-room.png",
       "last_still": "dont_freak/inject-09-sloth-standing-green-room.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -1049,8 +947,8 @@
       "last_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
       "first_still": "dont_freak/inject-09-sloth-standing-green-room.png",
       "last_still": "dont_freak/inject-09-sloth-standing-green-room.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",

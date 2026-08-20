@@ -14,5 +14,16 @@ assets/locations/unplugged_stage.png     ← 07-unplugged-stage.png (EMPTY)
 assets/locations/apartment_fire.png      ← 08-apartment-fire.png (EMPTY)
 ```
 
-Do not generate a "character in this room" still. Composite at grind time.
+Inject stills (standing full-body / claws CU) also live only on Behem, same
+junction, names `inject-01` … `inject-09`. See `BEHEM_PATHS.json` and
+`edl.json`. Do **not** check those pngs into git — there is no LFS pattern
+here. `inject-07-band-cats-standing-stage.png` is still missing.
+
+Polygon cutout composites were unusable (forest fringe). The injects on disk
+are in-room generates. Faces are not accepted; `inject-02` drifted vs the
+locked 01 CU on the camera-lock hone — that is a still problem, not a window
+problem.
+
+Do not generate a "character in this room" still as a *new identity*. The
+injects are layout plates; the locked CUs stay `<Picture N>` refs.
 Do not use album art as identity.

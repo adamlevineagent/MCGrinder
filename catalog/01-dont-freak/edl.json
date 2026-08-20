@@ -34,7 +34,7 @@
     "conditioning": "first_frame + last_frame (+ pack refs + raw song window) in one pass via the live h3_seam_kit MiniMaxH3SeamToVideo",
     "diffusion": "minimax_h3_fl2va_pruned_fp8_scaled.safetensors",
     "diffusion_alt": "minimax_h3_ref2va_pruned_fp8_scaled.safetensors",
-    "diffusion_note": "HUNCH, verify on Behem: the stock FL2VA graph (user/default/workflows/video_minimax_h3_i2v.json) loads the fl2va checkpoint. The MCGrinder ref2va checkpoint is what the current worker loads. Do not assume they are interchangeable under the turbo LoRA.",
+    "diffusion_note": "PROVEN 2026-08-20 on Behem: MiniMaxH3SeamToVideo + this fl2va checkpoint + the FL2V 8-step turbo LoRA at strength 1.0, 8 steps, 124 frames. See camera_lock_proof. The MCGrinder worker still loads the ref2va checkpoint for the old grind loop; do not mix the two LoRAs in one graph.",
     "turbo_lora": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
     "steps": 8,
     "lora_strength": 1.0,
@@ -43,6 +43,33 @@
     "do_not_mix_with": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
     "mix_note": "Ref2V 4-step is the multi-ref identity LoRA. FL2V 8-step is the window-boundary LoRA. One graph, one LoRA."
   },
+  "camera_lock_proof": {
+    "date": "2026-08-20",
+    "time_pt": "13:54",
+    "prompt_id": "b827e600-73fd-4162-96dc-6e213056f7b9",
+    "seed": 202608205,
+    "node": "MiniMaxH3SeamToVideo",
+    "diffusion": "minimax_h3_fl2va_pruned_fp8_scaled.safetensors",
+    "turbo_lora": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+    "lora_strength": 1.0,
+    "steps": 8,
+    "nframes": 124,
+    "width": 1344,
+    "height": 768,
+    "first_frame": "dont_freak/inject-02-sloth-standing-stage.png",
+    "last_frame": "dont_freak/inject-02-sloth-standing-stage.png",
+    "same_loadimage": true,
+    "patches": 208,
+    "lora_key_not_loaded": 0,
+    "wall_s": 120,
+    "still_to_first_mae": 5.83,
+    "first_to_last_mae": 19.21,
+    "first_to_last_motion": "nod + guitar downstroke, not a push-in",
+    "feet_on_floor": true,
+    "cast": "one sloth",
+    "identity_note": "The generated sloth drifts vs the locked 01-singer-guitarist CU. That is a still problem (inject-02 is an in-room generate, not a composite of the locked portrait), not a window problem. first=last held the camera."
+  },
+  "faces_accepted": false,
   "defaults": {
     "camera": "locked",
     "audio_mode": "raw",
@@ -97,67 +124,72 @@
       "name": "claws on the guitar neck (CU plate)",
       "role": "inject",
       "body": "cu_object",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/claws_cu.png",
       "comfy_input": "dont_freak/inject-01-claws-cu.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-01-claws-cu.png",
       "brief": "Full-bleed 1344x768. Three-fingered felt claws on the black electric guitar neck, dim Unplugged stage behind. No face, no torso, no shoulders in frame - a hand/instrument plate, so there is no body for the model to amputate.",
-      "notes": "The only non-standing inject in this EDL. Allowed because no body is implied."
+      "notes": "On Behem 2026-08-20; resized to 1344x768. The only non-standing inject in this EDL. Allowed because no body is implied. In-room generate, not a polygon cutout (those had forest fringe)."
     },
     {
       "id": "INJ_SLOTH_STAGE_STAND",
       "name": "sloth standing full body, Unplugged stage",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/sloth_standing_stage.png",
       "comfy_input": "dont_freak/inject-02-sloth-standing-stage.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-02-sloth-standing-stage.png",
-      "brief": "Full-bleed 1344x768. Needle-felt sloth standing at the mic on the empty Unplugged stage, guitar in hands, WHOLE BODY IN FRAME WITH BOTH FEET ON THE STAGE FLOOR, floor and shadow visible. Composite the locked 01-singer-guitarist identity into the empty 07 stage plate. Not a cutout, not a portrait on a blank field."
+      "brief": "Full-bleed 1344x768. Needle-felt sloth standing at the mic on the empty Unplugged stage, guitar in hands, WHOLE BODY IN FRAME WITH BOTH FEET ON THE STAGE FLOOR, floor and shadow visible. Composite the locked 01-singer-guitarist identity into the empty 07 stage plate. Not a cutout, not a portrait on a blank field.",
+      "notes": "USED in the 2026-08-20 camera-lock hone (prompt_id b827e600-73fd-4162-96dc-6e213056f7b9): standing, feet on the floor, black electric. In-room generate. Face drifts vs locked 01 CU — still problem, not a window problem. Faces not accepted."
     },
     {
       "id": "INJ_BAND_STAGE_STAND",
       "name": "band standing full body, Unplugged stage",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/band_standing_stage.png",
       "comfy_input": "dont_freak/inject-03-band-standing-stage.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-03-band-standing-stage.png",
-      "brief": "Full-bleed 1344x768. Sloth and black lab standing whole-body with feet on the stage floor, grizzly seated behind the kit with legs and pedals visible. Composite 01 / 02 / 03 into the empty 07 stage plate. Every performer meets the floor."
+      "brief": "Full-bleed 1344x768. Sloth and black lab standing whole-body with feet on the stage floor, grizzly seated behind the kit with legs and pedals visible. Composite 01 / 02 / 03 into the empty 07 stage plate. Every performer meets the floor.",
+      "notes": "On Behem 2026-08-20. Wardrobe drift: sneakers / green shirt on the lab (canon is charcoal jacket, navy shirt, reddish-brown paw gloves). Faces not accepted."
     },
     {
       "id": "INJ_SLOTH_FIRE_STAND",
       "name": "sloth standing full body, burning apartment",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/sloth_standing_fire.png",
       "comfy_input": "dont_freak/inject-04-sloth-standing-fire.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-04-sloth-standing-fire.png",
-      "brief": "Full-bleed 1344x768. Sloth standing whole-body at a mic in the burning apartment hallway, both feet on the hall floor. Composite 01 into the empty 08 plate. Laptop stays a blank glowing rectangle."
+      "brief": "Full-bleed 1344x768. Sloth standing whole-body at a mic in the burning apartment hallway, both feet on the hall floor. Composite 01 into the empty 08 plate. Laptop stays a blank glowing rectangle.",
+      "notes": "On Behem 2026-08-20. In-room generate. Faces not accepted."
     },
     {
       "id": "INJ_SLOTH_HALL_STAND",
       "name": "sloth standing full body, service hall",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/sloth_standing_hall.png",
       "comfy_input": "dont_freak/inject-05-sloth-standing-hall.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-05-sloth-standing-hall.png",
-      "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the service-hall floor. Composite 01 into the empty 05 plate."
+      "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the service-hall floor. Composite 01 into the empty 05 plate.",
+      "notes": "On Behem 2026-08-20. In-room generate. Faces not accepted."
     },
     {
       "id": "INJ_CATS_STAGE_STAND",
       "name": "gowned cat-violin pair standing full body, Unplugged stage",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/cats_standing_stage.png",
       "comfy_input": "dont_freak/inject-06-cats-standing-stage.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-06-cats-standing-stage.png",
-      "brief": "Full-bleed 1344x768. BOTH black cats, matching black evening gowns, standing whole-body with feet on the stage floor, violins up. Composite the locked 06-cat-violins pair into the empty 07 plate. Never one cat alone; do not regenerate their faces."
+      "brief": "Full-bleed 1344x768. BOTH black cats, matching black evening gowns, standing whole-body with feet on the stage floor, violins up. Composite the locked 06-cat-violins pair into the empty 07 plate. Never one cat alone; do not regenerate their faces.",
+      "notes": "On Behem 2026-08-20: pair, gowns, feet. In-room generate. Faces not accepted."
     },
     {
       "id": "INJ_BAND_CATS_STAGE_STAND",
@@ -168,29 +200,32 @@
       "sheet": "assets/injects/band_cats_standing_stage.png",
       "comfy_input": "dont_freak/inject-07-band-cats-standing-stage.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-07-band-cats-standing-stage.png",
-      "brief": "Full-bleed 1344x768. Full band plus the gowned cat pair, all standing whole-body with feet on the stage floor (grizzly seated at the kit, legs visible). Composite 01 / 02 / 03 / 06 into the empty 07 plate."
+      "brief": "Full-bleed 1344x768. Full band plus the gowned cat pair, all standing whole-body with feet on the stage floor (grizzly seated at the kit, legs visible). Composite 01 / 02 / 03 / 06 into the empty 07 plate.",
+      "notes": "STILL MISSING. A generate came back as a yellow lab / wrong wardrobe. Do not mark on_behem and do not use that take as a first/last frame."
     },
     {
       "id": "INJ_BAND_CATS_HALL_STAND",
       "name": "band + cat pair standing full body, service hall",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/band_cats_standing_hall.png",
       "comfy_input": "dont_freak/inject-08-band-cats-standing-hall.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-08-band-cats-standing-hall.png",
-      "brief": "Full-bleed 1344x768. Sparse breakdown staging: band plus the gowned cat pair standing whole-body with feet on the service-hall floor. Composite 01 / 02 / 03 / 06 into the empty 05 plate."
+      "brief": "Full-bleed 1344x768. Sparse breakdown staging: band plus the gowned cat pair standing whole-body with feet on the service-hall floor. Composite 01 / 02 / 03 / 06 into the empty 05 plate.",
+      "notes": "On Behem 2026-08-20 at this canonical name. In-room generate. Faces not accepted."
     },
     {
       "id": "INJ_SLOTH_GREEN_ROOM_STAND",
       "name": "sloth standing full body, green room",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/sloth_standing_green_room.png",
       "comfy_input": "dont_freak/inject-09-sloth-standing-green-room.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-09-sloth-standing-green-room.png",
-      "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the green-room floor. Composite 01 into the empty 04 plate. Flight-case lid empty, no extra toys, no readable paper."
+      "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the green-room floor. Composite 01 into the empty 04 plate. Flight-case lid empty, no extra toys, no readable paper.",
+      "notes": "On Behem 2026-08-20. In-room generate. Faces not accepted."
     },
     {
       "id": "REF_SLOTH",
