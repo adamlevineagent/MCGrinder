@@ -1,0 +1,17 @@
+{
+  "catalog_schema": 1,
+  "songs": [
+    {
+      "id": "01-dont-freak",
+      "number": 1,
+      "title": "Don't Freak",
+      "pack": "catalog/01-dont-freak",
+      "project": "catalog/01-dont-freak/project.json",
+      "duration_s": 211,
+      "bpm": 92.3,
+      "status": "canon-locked",
+      "canon_date": "2026-08-20",
+      "notes": "Felt-animal Unplugged band. They do not freak. Stills and wav stay on Behem."
+    }
+  ]
+}

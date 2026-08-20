@@ -1,0 +1,22 @@
+{
+  "after_concat": true,
+  "never_in_h3_prompt": true,
+  "lyrics_srt": {
+    "source": "lyrics.json",
+    "rule": "list of {text, start, end}; timed from the wav, not an even grid"
+  },
+  "im": [
+    {
+      "text": "r u ok?",
+      "start": 50.0,
+      "end": 54.0,
+      "target": "laptop in the apartment-fire side-shot only"
+    },
+    {
+      "text": "its cool man",
+      "start": 54.0,
+      "end": 62.0,
+      "target": "laptop in the apartment-fire side-shot only"
+    }
+  ]
+}

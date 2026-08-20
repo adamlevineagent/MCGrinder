@@ -1,0 +1,32 @@
+{
+  "_comment": "Behem (Windows) profile. Copy to config.json. Live Comfy is C:\\ComfyUI v0.30.0 — not D:/ComfyUI. Do not overwrite C:\\ComfyUI\\custom_nodes\\h3_seam_kit from this repo.",
+  "comfy": {
+    "url": "http://127.0.0.1:8188",
+    "dir": "C:/ComfyUI",
+    "venv_python": "C:/ComfyUI/.venv/Scripts/python.exe",
+    "output_dir": "C:/ComfyUI/output",
+    "version": "0.30.0",
+    "launch_flags": ["--use-sage-attention", "--cache-classic", "--enable-cors-header", "*", "--port", "8188"]
+  },
+  "models": {
+    "diffusion": "minimax_h3_ref2va_pruned_fp8_scaled.safetensors",
+    "text_encoder": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "video_vae": "minimax_h3_video_vae_fp16.safetensors",
+    "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+  },
+  "ffmpeg": "C:/Users/adaml/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffmpeg.exe",
+  "ffprobe": "C:/Users/adaml/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffprobe.exe",
+  "song": "C:/Project Growth/THE PLAYFUL UNiVERSE/songs-2026-08-20-part1/Don't Freak/Don't Freak.wav",
+  "state_file": "catalog/01-dont-freak/state.json",
+  "beats_file": "catalog/01-dont-freak/beats.json",
+  "pack": "catalog/01-dont-freak",
+  "refs_dir": "C:/Users/adaml/dont-freak-refs",
+  "frames_dir": "C:/ComfyUI/input/dont_freak_frames",
+  "output_dir": "C:/ComfyUI/output/video/dont_freak",
+  "resolution": {"width": 1344, "height": 768},
+  "hone_resolution": {"width": 832, "height": 480},
+  "sampler": {"name": "res_multistep", "scheduler": "simple", "steps": 20},
+  "audio_mode_default": "pulse",
+  "_comment_audio_mode": "Fallback only. Don't Freak pack shots all set audio_mode=raw.",
+  "pulse_defaults": {"type": "kick", "gain": 1.0}
+}

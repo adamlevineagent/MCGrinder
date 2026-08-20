@@ -1,0 +1,394 @@
+{
+  "project": "Don't Freak",
+  "slug": "dont_freak",
+  "song": {
+    "path": "C:/Project Growth/THE PLAYFUL UNiVERSE/songs-2026-08-20-part1/Don't Freak/Don't Freak.wav",
+    "duration_s": 211,
+    "bpm": 92.3
+  },
+  "style_block": "Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case).",
+  "output_dir": "C:/ComfyUI/output/video/dont_freak",
+  "frames_dir": "C:/ComfyUI/input/dont_freak_frames",
+  "width": 1344,
+  "height": 768,
+  "sol_attn": true,
+  "sol_tau": 1.3,
+  "audio_mode_default": "raw",
+  "chunks": [
+    {
+      "id": 1,
+      "name": "claws fade-up Unplugged",
+      "offset_s": 0.0,
+      "duration_s": 11.0,
+      "first_frame": "dont_freak/01-singer-guitarist.png",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/07-unplugged-stage.png"
+      ],
+      "prompt": "Fade up from black, tight on the sloth's three-fingered felt claws on a black electric guitar. 1990s MTV Unplugged VHS/CRT. Real guitar audio. No sung words yet. <Picture 1> is the sloth identity. <Picture 2> is the empty Unplugged stage — keep it a dim studio, no extra players. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 2,
+      "name": "jump-land band Unplugged",
+      "offset_s": 11.0,
+      "duration_s": 11.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/07-unplugged-stage.png",
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/03-bassist.png",
+        "dont_freak/02-drummer.png"
+      ],
+      "prompt": "At the open, a jerky zoom-out: the sloth and the black lab jump-land as they play. Dramatic Unplugged lights. Grizzly on the kit in the green cap, green hoodie, purple pants. Hold the Unplugged stage until the intro instrumental ends. No cats. No lyrics. <Picture 1> empty stage, <Picture 2> sloth, <Picture 3> lab, <Picture 4> grizzly. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 3,
+      "name": "verse 1 lyric CU",
+      "offset_s": 22.0,
+      "duration_s": 12.0,
+      "first_frame": "dont_freak/01-singer-guitarist.png",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/07-unplugged-stage.png"
+      ],
+      "prompt": "First sung lines of the song. Unplugged stage behind the sloth. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. Do not write any words in the picture. Overlay will add lyrics later.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 4,
+      "name": "verse 1 + first disaster cutaways",
+      "offset_s": 34.0,
+      "duration_s": 12.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/07-unplugged-stage.png",
+        "dont_freak/08-apartment-fire.png"
+      ],
+      "prompt": "Keep returning to a sloth-only lyric CU on the mic, then intercut first disaster cutaways (hint of smoke, a room starting to go wrong) while the band looks unaware and happy. Empty apartment-fire plate is a location ref only — composite the sloth in at grind time. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 5,
+      "name": "So don't freak / fire apartment lyric CU",
+      "offset_s": 46.0,
+      "duration_s": 9.0,
+      "first_frame": "dont_freak/08-apartment-fire.png",
+      "refs": [
+        "dont_freak/08-apartment-fire.png",
+        "dont_freak/01-singer-guitarist.png"
+      ],
+      "prompt": "Open on the empty apartment-on-fire hallway. Composite the sloth into this empty room, side or tight, pressed into a mic, first chorus. Fire at the far door, smoke, knocked chair. Laptop on the table stays a blank glowing rectangle — do not write chat on it. <Picture 1> empty fire apartment (composition), <Picture 2> sloth identity. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 6,
+      "name": "chorus continue fire / dance",
+      "offset_s": 55.0,
+      "duration_s": 9.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/08-apartment-fire.png",
+        "dont_freak/01-singer-guitarist.png"
+      ],
+      "prompt": "Stay with the sloth lyric CU in the burning apartment. Casual, unfazed. Laptop remains unreadable. No IM letters in the image. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 7,
+      "name": "shit might look bad / medium disasters",
+      "offset_s": 64.0,
+      "duration_s": 10.0,
+      "first_frame": "dont_freak/05-service-hall.png",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/05-service-hall.png"
+      ],
+      "prompt": "Chunka jam. Lyric CU on the sloth, then medium disaster cutaways: quicksand, a stuck elevator, ice. Worlds escalate; the sloth is having fun. Composite identity from the still. Empty service hall is a plate, not a new face. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 8,
+      "name": "dance our way / build to ahhh",
+      "offset_s": 74.0,
+      "duration_s": 8.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/07-unplugged-stage.png"
+      ],
+      "prompt": "Sloth-only lyric CU building toward a sustained vocal. Real wav, not a pulse. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 9,
+      "name": "ahhh + jump-around jam",
+      "offset_s": 82.0,
+      "duration_s": 13.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/03-bassist.png",
+        "dont_freak/02-drummer.png",
+        "dont_freak/07-unplugged-stage.png"
+      ],
+      "prompt": "Singer sustained ahhh, then a long jump-around jam. Burning roof is OK. Condition on the real wav. Guitar-tight and full-body motion. No cats yet. Not a lyric tableau of the whole band mouthing words — jam energy, sloth can stay on the mic for the ahhh only. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 10,
+      "name": "twin cat violinists enter",
+      "offset_s": 95.0,
+      "duration_s": 11.0,
+      "first_frame": "dont_freak/06-cat-violins.png",
+      "refs": [
+        "dont_freak/06-cat-violins.png",
+        "dont_freak/07-unplugged-stage.png",
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/03-bassist.png"
+      ],
+      "prompt": "From 1:35: twin black-cat violinists, always together, never one cat alone. Small wooden violins, felt black cats, Unplugged stage. Real wav (strings + band). <Picture 1> the locked cat pair. Do not split them. No humans. No extra members. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 11,
+      "name": "breakdown sparse world",
+      "offset_s": 106.0,
+      "duration_s": 9.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/06-cat-violins.png",
+        "dont_freak/03-bassist.png",
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/02-drummer.png"
+      ],
+      "prompt": "Breakdown: violins plus long slow bass and guitar; drums metronomic. Sparse world — airlock or ice. Cats stay a pair. Real wav, not a click track. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 12,
+      "name": "don't freak 1:55 lyric CU",
+      "offset_s": 115.0,
+      "duration_s": 5.0,
+      "first_frame": "dont_freak/01-singer-guitarist.png",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/08-apartment-fire.png"
+      ],
+      "prompt": "Lyric CU only: sloth on the mic in the fire apartment. Raw vocal. Laptop blank. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 13,
+      "name": "this one + band and violins return",
+      "offset_s": 120.0,
+      "duration_s": 11.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/03-bassist.png",
+        "dont_freak/02-drummer.png",
+        "dont_freak/06-cat-violins.png"
+      ],
+      "prompt": "Sustained vocal on 'this one'; the word 'one' lands at the end as the full band plus the cat violin pair return. Sloth-only on the sustained vowel; then widen to the Unplugged stage. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 14,
+      "name": "jam to 2:26",
+      "offset_s": 131.0,
+      "duration_s": 15.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/07-unplugged-stage.png",
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/03-bassist.png",
+        "dont_freak/06-cat-violins.png"
+      ],
+      "prompt": "Instrumental jam to the crescendo. Guitar-tight allowed. Real wav, not pulse. Cats remain a pair. The late letter tell is not in this shot. No readable text. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 15,
+      "name": "crescendo drop",
+      "offset_s": 146.0,
+      "duration_s": 7.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/07-unplugged-stage.png"
+      ],
+      "prompt": "Crescendo, then everything drops. Hold composure. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 16,
+      "name": "future is cool / present sucks",
+      "offset_s": 153.0,
+      "duration_s": 12.0,
+      "first_frame": "dont_freak/01-singer-guitarist.png",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/08-apartment-fire.png"
+      ],
+      "prompt": "Lyric CU on the sloth. Cutaways: flooded subway versus volcano are OK. Drums pound on the repeat then drop again. Worlds escalate; faces stay locked. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 17,
+      "name": "peak just don't freak worlds",
+      "offset_s": 165.0,
+      "duration_s": 13.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/03-bassist.png",
+        "dont_freak/02-drummer.png",
+        "dont_freak/06-cat-violins.png"
+      ],
+      "prompt": "Peak: when words are sung, cut to a sloth-only side/tight mic CU — never a band-wide lyric tableau. Then the craziest coherent MV worlds (plane down, tornado, collapse) without breaking puppet identity. No readable fake text on wreckage. Cats stay a pair when they appear. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 18,
+      "name": "wind-down quill letter",
+      "offset_s": 178.0,
+      "duration_s": 12.0,
+      "first_frame": "dont_freak/04-green-room.png",
+      "refs": [
+        "dont_freak/04-green-room.png",
+        "dont_freak/01-singer-guitarist.png"
+      ],
+      "prompt": "Wind-down. Slow intricate guitar. FIRST and only reveal of a quill letter — the late silliness tell. The page is never readable: no letters, no words, no heading. Empty green room plate: forest-green walls, lamp on the mini-fridge, Saturn neon already on the shelf, flight-case lid EMPTY, no extra toys or planet props on the case. Composite the sloth in; do not invent furniture. <Picture 1> empty green room, <Picture 2> sloth. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 19,
+      "name": "forgiven yourself recently",
+      "offset_s": 190.0,
+      "duration_s": 10.0,
+      "first_frame": "prev_last",
+      "refs": [
+        "dont_freak/01-singer-guitarist.png",
+        "dont_freak/04-green-room.png"
+      ],
+      "prompt": "Lyric CU: sloth on the mic. The last word stretches. Empty green room, no extra props. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    },
+    {
+      "id": 20,
+      "name": "empty green room / empty stage hold",
+      "offset_s": 200.0,
+      "duration_s": 11.0,
+      "first_frame": "dont_freak/04-green-room.png",
+      "refs": [
+        "dont_freak/04-green-room.png",
+        "dont_freak/07-unplugged-stage.png"
+      ],
+      "prompt": "Decelerating guitar, long last note. EMPTY green room, then EMPTY Unplugged stage. Composure. Hold. No characters in frame. Flight-case lid empty, no extra toys. No quill encore, no lyrics, no IM. <Picture 1> empty green room, <Picture 2> empty stage. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
+      "audio_mode": "raw",
+      "status": "pending",
+      "output": null,
+      "prompt_id": null,
+      "errors": 0,
+      "redo": 0
+    }
+  ]
+}
