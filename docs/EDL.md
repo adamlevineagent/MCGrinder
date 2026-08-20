@@ -21,17 +21,16 @@ said what frame 0 and the final frame must actually be.**
 
 The EDL owns the cut. Every picture change is a row at an exact frame, and each
 row names an **inject still** we already own. The planner pairs consecutive rows
-into H3 windows, and each window is generated with its opening still pinned as
-`first_frame` and its closing still pinned as `last_frame`. The last frame of
-window N *is* the first frame of window N+1 — the same file, the same bytes.
+into H3 windows, and each window is generated with a pinned `first_frame` and a
+pinned `last_frame`.
 
 That buys three things at once:
 
 1. **The cuts land on the music**, because the frame numbers come from the ear
    and never move.
-2. **The camera holds**, because both ends of every window are fixed pixels. On
-   a window whose first and last still are the *same* plate, the shot is
-   physically obliged to come back to where it started; text never had to be
+2. **The camera holds**, because both ends of every window are fixed pixels. 18
+   of Don't Freak's 19 windows open and close on the *same* plate, so the shot
+   is physically obliged to come back to where it started. Text never had to be
    trusted.
 3. **Identity holds**, because the character sheets ride as `<Picture N>` refs
    where they belong instead of as the frame the model copies.
@@ -39,6 +38,28 @@ That buys three things at once:
 Nothing here replaces the live `h3_seam_kit`. `MiniMaxH3SeamToVideo` already
 takes `first_frame` + `last_frame` + four refs + audio in one conditioning pass;
 the planner just tells it exactly what to put there.
+
+## Roll or cut
+
+Each row declares what kind of join happens at its frame.
+
+- **`roll`** — the window ends on the *next* row's still. The two windows share
+  a frame: the same file, the same bytes, so the join is seamless and the edit
+  can drop the duplicate. Use it when the picture genuinely continues.
+- **`cut`** — the window ends on its *own* opening still, and the next window
+  starts fresh on the new one. The picture change is a hard cut.
+
+`cut` is not a detail. 13 of Don't Freak's 20 joins change the room or who is in
+frame — the Unplugged stage to a burning apartment, a sloth alone to the full
+band, a green room with a sloth in it to an empty one. Rolling those would pin a
+window between two different pictures and ask H3 to get from one to the other
+over ten seconds, which is a morph, not a cut. Ending the window on its own
+opening plate gives a locked shot *and* a hard cut at the next hit, for free.
+
+The one window that legitimately crosses is #2: it opens on the claws plate and
+ends on the sloth standing wide, because that is the 0:11–0:12 jerky zoom-out the
+canon asks for. It is the only window not tagged `camera: locked`, and the
+planner asserts that relationship — a locked window must be pinned to one plate.
 
 ## The lattice, and why the fit is never free
 
@@ -120,6 +141,7 @@ itself and records `auto_demoted: true`.
 |---|---|
 | `t_sec` / `frame_24` | the cut. `frame_24` must equal `round(t_sec * fps)`; the validator enforces it |
 | `kind` | `inject` = window boundary · `hold` = boundary that may span a smash · `smash` = still insert, **no window** · `end` = terminal boundary, opens nothing |
+| `transition` | `roll` = the previous window ends on this row's still (shared frame) · `cut` = it ends on its own opening still and this is a hard cut. Absent on row 1, which has no incoming join |
 | `still` | id from `stills[]`. Must have `role: "inject"` |
 | `refs` | `[]` inherits the catalog shot's refs; non-empty overrides |
 | `camera` | `locked` appends the no-move clause to the prompt; anything else is named in the prompt as the only move allowed |
@@ -137,11 +159,17 @@ and the validator says so by name. `status` is `on_behem` or `needed`; anything
 ## `plan.json` — what the planner emits
 
 One job per window: `first_still` / `last_still` (as ComfyUI input names),
-`nframes`, `span_frames`, `trim_tail_frames` / `hold_tail_frames`,
-`audio_start_s` / `duration_s` / `audio_start_sample` / `audio_end_sample`,
-`seed`, `steps`, `turbo_lora`, `refs`, `prompt_full`, plus `smash_rows` for the
-inserts the editor lays over it. Seeds use the same policy as `run_chunk.py`
+`nframes`, `span_frames`, `trim_tail_frames` / `hold_tail_frames` (with
+`hold_still`, the plate to hold on), `out_transition`, `pin`, `audio_start_s` /
+`duration_s` / `audio_start_sample` / `audio_end_sample`, `seed`, `steps`,
+`turbo_lora`, `refs`, `prompt_full`, plus `smash_rows` for the inserts the
+editor lays over it. Seeds use the same policy as `run_chunk.py`
 (`1000 + id*977 + take*7919`), so `--take 1` is a fresh take of every window.
+
+The plan also carries what is wrong with it: `warnings` (a locked window pinned
+between two different plates, a span longer than the lattice, refs past the
+seam node's four), `needed_stills`, `uncertain_rows`, and a `ready` flag.
+`--strict` turns any warning into a non-zero exit.
 
 ```bash
 python pipeline/plan_windows.py catalog/01-dont-freak
@@ -163,33 +191,38 @@ LoraLoaderModelOnly` (FL2V 8-step) → `MiniMaxH3SigmaShift` → sampler at 8 st
 
 21 rows → 19 windows + 1 smash cut, covering all 5076 frames.
 
-| # | rows | frames | span | length | fit | pin | audio window | first → last still |
-|---|---|---|---|---|---|---|---|---|
-| 1 | 1→2 | 0–264 | 264 | **362** | trim 97 | cross | 0.000–15.083s | CLAWS_CU → BAND_STAGE_STAND |
-| 2 | 2→3 | 264–528 | 264 | **362** | trim 97 | cross | 11.000–26.083s | BAND_STAGE_STAND → SLOTH_STAGE_STAND |
-| 3 | 3→4 | 528–816 | 288 | **362** | trim 73 | same | 22.000–37.083s | SLOTH_STAGE_STAND → SLOTH_STAGE_STAND |
-| 4 | 4→5 | 816–1104 | 288 | **362** | trim 73 | cross | 34.000–49.083s | SLOTH_STAGE_STAND → SLOTH_FIRE_STAND |
-| 5 | 5→6 | 1104–1320 | 216 | **243** | trim 26 | same | 46.000–56.125s | SLOTH_FIRE_STAND → SLOTH_FIRE_STAND |
-| 6 | 6→7 | 1320–1536 | 216 | **243** | trim 26 | cross | 55.000–65.125s | SLOTH_FIRE_STAND → SLOTH_HALL_STAND |
-| 7 | 7→8 | 1536–1776 | 240 | **243** | trim 2 | cross | 64.000–74.125s | SLOTH_HALL_STAND → SLOTH_STAGE_STAND |
-| 8 | 8→9 | 1776–1968 | 192 | **243** | trim 50 | cross | 74.000–84.125s | SLOTH_STAGE_STAND → BAND_STAGE_STAND |
-| 9 | 9→10 | 1968–2280 | 312 | **362** | trim 49 | cross | 82.000–97.083s | BAND_STAGE_STAND → CATS_STAGE_STAND |
-| 10 | 10→11 | 2280–2544 | 264 | **362** | trim 97 | cross | 95.000–110.083s | CATS_STAGE_STAND → BAND_CATS_HALL_STAND |
-| 11 | 11→13 | 2544–2880 | 336 | **362** | trim 25 | cross | 106.000–121.083s | BAND_CATS_HALL_STAND → BAND_CATS_STAGE_STAND |
-| 12 | 13→14 | 2880–3144 | 264 | **362** | trim 97 | same | 120.000–135.083s | BAND_CATS_STAGE_STAND → BAND_CATS_STAGE_STAND |
-| 13 | 14→15 | 3144–3504 | 360 | **362** | trim 1 | same | 131.000–146.083s | BAND_CATS_STAGE_STAND → BAND_CATS_STAGE_STAND |
-| 14 | 15→16 | 3504–3672 | 168 | **243** | trim 74 | cross | 146.000–156.125s | BAND_CATS_STAGE_STAND → SLOTH_FIRE_STAND |
-| 15 | 16→17 | 3672–3960 | 288 | **362** | trim 73 | cross | 153.000–168.083s | SLOTH_FIRE_STAND → BAND_CATS_STAGE_STAND |
-| 16 | 17→18 | 3960–4272 | 312 | **362** | trim 49 | cross | 165.000–180.083s | BAND_CATS_STAGE_STAND → SLOTH_GREEN_ROOM_STAND |
-| 17 | 18→19 | 4272–4560 | 288 | **362** | trim 73 | same | 178.000–193.083s | SLOTH_GREEN_ROOM_STAND → SLOTH_GREEN_ROOM_STAND |
-| 18 | 19→20 | 4560–4800 | 240 | **243** | trim 2 | cross | 190.000–200.125s | SLOTH_GREEN_ROOM_STAND → GREEN_ROOM_EMPTY |
-| 19 | 20→21 | 4800–5076 | 276 | **243** | hold 34 (wav end) | cross | 200.000–210.125s | GREEN_ROOM_EMPTY → STAGE_EMPTY |
+| # | rows | frames | span | length | fit | join | pinned still(s) |
+|---|---|---|---|---|---|---|---|
+| 1 | 1→2 | 0–264 | 264 | **362** | trim 97 | roll | CLAWS_CU (locked) |
+| 2 | 2→3 | 264–528 | 264 | **362** | trim 97 | roll | CLAWS_CU → SLOTH_STAGE_STAND |
+| 3 | 3→4 | 528–816 | 288 | **362** | trim 73 | roll | SLOTH_STAGE_STAND (locked) |
+| 4 | 4→5 | 816–1104 | 288 | **362** | trim 73 | **cut** | SLOTH_STAGE_STAND (locked) |
+| 5 | 5→6 | 1104–1320 | 216 | **243** | trim 26 | roll | SLOTH_FIRE_STAND (locked) |
+| 6 | 6→7 | 1320–1536 | 216 | **243** | trim 26 | **cut** | SLOTH_FIRE_STAND (locked) |
+| 7 | 7→8 | 1536–1776 | 240 | **243** | trim 2 | **cut** | SLOTH_HALL_STAND (locked) |
+| 8 | 8→9 | 1776–1968 | 192 | **243** | trim 50 | **cut** | SLOTH_STAGE_STAND (locked) |
+| 9 | 9→10 | 1968–2280 | 312 | **362** | trim 49 | **cut** | BAND_STAGE_STAND (locked) |
+| 10 | 10→11 | 2280–2544 | 264 | **362** | trim 97 | **cut** | CATS_STAGE_STAND (locked) |
+| 11 | 11→13 | 2544–2880 | 336 | **362** | trim 25 | **cut** | BAND_CATS_HALL_STAND (locked) |
+| 12 | 13→14 | 2880–3144 | 264 | **362** | trim 97 | roll | BAND_CATS_STAGE_STAND (locked) |
+| 13 | 14→15 | 3144–3504 | 360 | **362** | trim 1 | roll | BAND_CATS_STAGE_STAND (locked) |
+| 14 | 15→16 | 3504–3672 | 168 | **243** | trim 74 | **cut** | BAND_CATS_STAGE_STAND (locked) |
+| 15 | 16→17 | 3672–3960 | 288 | **362** | trim 73 | **cut** | SLOTH_FIRE_STAND (locked) |
+| 16 | 17→18 | 3960–4272 | 312 | **362** | trim 49 | **cut** | BAND_CATS_STAGE_STAND (locked) |
+| 17 | 18→19 | 4272–4560 | 288 | **362** | trim 73 | roll | SLOTH_GREEN_ROOM_STAND (locked) |
+| 18 | 19→20 | 4560–4800 | 240 | **243** | trim 2 | **cut** | SLOTH_GREEN_ROOM_STAND (locked) |
+| 19 | 20→21 | 4800–5076 | 276 | **243** | hold 34 (wav end) | **cut** | GREEN_ROOM_EMPTY (locked) |
+
+Audio windows run `start_frame / 24` for `nframes / 24` seconds — window 1 is
+0.000–15.083s, window 19 is 200.000–210.125s — sliced from the real wav, never
+past 211.479979s.
 
 Smash cut: row 12, 115.0s, frame 2760, inside window 11.
 
-Five windows open and close on the same plate (`same`): 3, 5, 12, 13, 17. Those
-are the hardest camera locks in the piece — the shot is pinned to return to its
-own first frame.
+Eighteen of nineteen windows are pinned to a single plate, which is the whole
+point: the shot cannot drift off a frame it is required to end on. The 34-frame
+tail on window 19 holds STAGE_EMPTY — the catalog's "empty green room, then
+empty stage" ending, delivered by the hold rather than by a generated morph.
 
 ## The catch: none of the performer injects exist yet
 

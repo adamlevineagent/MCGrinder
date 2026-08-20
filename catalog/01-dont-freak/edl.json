@@ -8,7 +8,11 @@
   "video": {
     "width": 1344,
     "height": 768,
-    "lattice": [124, 243, 362],
+    "lattice": [
+      124,
+      243,
+      362
+    ],
     "lattice_note": "H3 clip lengths are the 17k+5 grid. At 24fps: 124 = 5.167s, 243 = 10.125s, 362 = 15.083s. A window of n frames supplies n-1 NEW frames plus the boundary frame it shares with the next window."
   },
   "audio": {
@@ -43,7 +47,8 @@
     "camera": "locked",
     "audio_mode": "raw",
     "fit": "cover",
-    "min_fill_frames": 124
+    "min_fill_frames": 124,
+    "transition": "roll"
   },
   "stills": [
     {
@@ -267,14 +272,15 @@
       "t_sec": 11.0,
       "frame_24": 264,
       "kind": "inject",
-      "still": "INJ_BAND_STAGE_STAND",
+      "transition": "roll",
+      "still": "INJ_CLAWS_CU",
       "refs": [],
       "camera": "zoom_out",
       "shot": 2,
       "framing": "wide",
       "source": "adam-ear",
       "certain": true,
-      "notes": "Adam's ear: 11.0-12.0. The cut frame is locked to 11.0; the jerky zoom-out lives inside the window."
+      "notes": "Adam's ear: 11.0-12.0. At 11.0 the picture is still the claws plate; the jerky zoom-out that reveals the jump-land runs inside the next window. Rolls, so the join is seamless."
     },
     {
       "id": 3,
@@ -282,6 +288,7 @@
       "t_sec": 22.0,
       "frame_24": 528,
       "kind": "inject",
+      "transition": "roll",
       "still": "INJ_SLOTH_STAGE_STAND",
       "refs": [],
       "camera": "locked",
@@ -297,6 +304,7 @@
       "t_sec": 34.0,
       "frame_24": 816,
       "kind": "inject",
+      "transition": "roll",
       "still": "INJ_SLOTH_STAGE_STAND",
       "refs": [],
       "camera": "locked",
@@ -312,13 +320,15 @@
       "t_sec": 46.0,
       "frame_24": 1104,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_SLOTH_FIRE_STAND",
       "refs": [],
       "camera": "locked",
       "shot": 5,
       "framing": "lyric_cu",
       "source": "adam-ear",
-      "certain": true
+      "certain": true,
+      "notes": "Hard cut: the Unplugged stage does not morph into a burning apartment."
     },
     {
       "id": 6,
@@ -326,6 +336,7 @@
       "t_sec": 55.0,
       "frame_24": 1320,
       "kind": "inject",
+      "transition": "roll",
       "still": "INJ_SLOTH_FIRE_STAND",
       "refs": [],
       "camera": "locked",
@@ -341,13 +352,15 @@
       "t_sec": 64.0,
       "frame_24": 1536,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_SLOTH_HALL_STAND",
       "refs": [],
       "camera": "locked",
       "shot": 7,
       "framing": "lyric_cu",
       "source": "adam-ear",
-      "certain": true
+      "certain": true,
+      "notes": "Hard cut into the service hall."
     },
     {
       "id": 8,
@@ -355,13 +368,15 @@
       "t_sec": 74.0,
       "frame_24": 1776,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_SLOTH_STAGE_STAND",
       "refs": [],
       "camera": "locked",
       "shot": 8,
       "framing": "lyric_cu",
       "source": "catalog",
-      "certain": true
+      "certain": true,
+      "notes": "Hard cut back to the stage."
     },
     {
       "id": 9,
@@ -369,6 +384,7 @@
       "t_sec": 82.0,
       "frame_24": 1968,
       "kind": "hold",
+      "transition": "cut",
       "still": "INJ_BAND_STAGE_STAND",
       "refs": [],
       "camera": "locked",
@@ -376,7 +392,7 @@
       "framing": "wide",
       "source": "adam-ear",
       "certain": true,
-      "notes": "Adam's ear: 82-85 ahhh, then the long jam. Held performance span - it may absorb an intermediate smash."
+      "notes": "Hard cut from the sloth to the full band on the ahhh. Held performance span - it may absorb an intermediate smash."
     },
     {
       "id": 10,
@@ -384,6 +400,7 @@
       "t_sec": 95.0,
       "frame_24": 2280,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_CATS_STAGE_STAND",
       "refs": [],
       "camera": "locked",
@@ -391,7 +408,7 @@
       "framing": "wide",
       "source": "adam-ear",
       "certain": true,
-      "notes": "cast_rules.cats_from_s = 95.0. Never earlier, always a pair."
+      "notes": "cast_rules.cats_from_s = 95.0. Never earlier, always a pair. Hard cut: the pair is revealed, not grown out of the previous frame."
     },
     {
       "id": 11,
@@ -399,6 +416,7 @@
       "t_sec": 106.0,
       "frame_24": 2544,
       "kind": "hold",
+      "transition": "cut",
       "still": "INJ_BAND_CATS_HALL_STAND",
       "refs": [],
       "camera": "locked",
@@ -406,7 +424,7 @@
       "framing": "wide",
       "source": "adam-ear",
       "certain": true,
-      "notes": "Held span. The 115.0 smash sits inside it - that is what 'hold' authorises."
+      "notes": "Hard cut into the sparse breakdown world. Held span. The 115.0 smash sits inside it - that is what 'hold' authorises."
     },
     {
       "id": 12,
@@ -414,6 +432,7 @@
       "t_sec": 115.0,
       "frame_24": 2760,
       "kind": "smash",
+      "transition": "cut",
       "still": "INJ_SLOTH_FIRE_STAND",
       "refs": [],
       "camera": "locked",
@@ -429,6 +448,7 @@
       "t_sec": 120.0,
       "frame_24": 2880,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_BAND_CATS_STAGE_STAND",
       "refs": [],
       "camera": "widen",
@@ -436,7 +456,7 @@
       "framing": "wide",
       "source": "adam-ear",
       "certain": true,
-      "notes": "\"one\" lands at 130-131, i.e. the end of this window."
+      "notes": "\"one\" lands at 130-131, i.e. the end of this window. Hard cut back to the stage."
     },
     {
       "id": 14,
@@ -444,6 +464,7 @@
       "t_sec": 131.0,
       "frame_24": 3144,
       "kind": "inject",
+      "transition": "roll",
       "still": "INJ_BAND_CATS_STAGE_STAND",
       "refs": [],
       "camera": "locked",
@@ -458,6 +479,7 @@
       "t_sec": 146.0,
       "frame_24": 3504,
       "kind": "inject",
+      "transition": "roll",
       "still": "INJ_BAND_CATS_STAGE_STAND",
       "refs": [],
       "camera": "locked",
@@ -473,13 +495,15 @@
       "t_sec": 153.0,
       "frame_24": 3672,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_SLOTH_FIRE_STAND",
       "refs": [],
       "camera": "locked",
       "shot": 16,
       "framing": "lyric_cu",
       "source": "adam-ear",
-      "certain": true
+      "certain": true,
+      "notes": "Hard cut to the fire apartment."
     },
     {
       "id": 17,
@@ -487,13 +511,15 @@
       "t_sec": 165.0,
       "frame_24": 3960,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_BAND_CATS_STAGE_STAND",
       "refs": [],
       "camera": "locked",
       "shot": 17,
       "framing": "wide",
       "source": "catalog",
-      "certain": true
+      "certain": true,
+      "notes": "Hard cut back to the stage."
     },
     {
       "id": 18,
@@ -501,6 +527,7 @@
       "t_sec": 178.0,
       "frame_24": 4272,
       "kind": "inject",
+      "transition": "cut",
       "still": "INJ_SLOTH_GREEN_ROOM_STAND",
       "refs": [],
       "camera": "locked",
@@ -508,7 +535,7 @@
       "framing": "wide",
       "source": "catalog",
       "certain": true,
-      "notes": "cast_rules.quill_letter_not_before_s = 187.0 -> the quill may not appear before frame 4488, which is inside this window. The page is never readable."
+      "notes": "Hard cut to the green room. cast_rules.quill_letter_not_before_s = 187.0 -> the quill may not appear before frame 4488, which is inside this window. The page is never readable."
     },
     {
       "id": 19,
@@ -516,6 +543,7 @@
       "t_sec": 190.0,
       "frame_24": 4560,
       "kind": "inject",
+      "transition": "roll",
       "still": "INJ_SLOTH_GREEN_ROOM_STAND",
       "refs": [],
       "camera": "locked",
@@ -530,6 +558,7 @@
       "t_sec": 200.0,
       "frame_24": 4800,
       "kind": "hold",
+      "transition": "cut",
       "still": "INJ_GREEN_ROOM_EMPTY",
       "refs": [],
       "camera": "locked",
@@ -538,7 +567,7 @@
       "source": "adam-ear",
       "certain": true,
       "fit": "under",
-      "notes": "No characters in frame. 'under' fit: generate 243 and hold the last still to the end rather than overrun the wav."
+      "notes": "No characters in frame. Hard cut - the sloth leaves on the cut, he does not dissolve out. 'under' fit: generate 243 and hold rather than overrun the wav."
     },
     {
       "id": 21,
@@ -546,6 +575,7 @@
       "t_sec": 211.479979,
       "frame_24": 5076,
       "kind": "end",
+      "transition": "cut",
       "still": "INJ_STAGE_EMPTY",
       "refs": [],
       "camera": "locked",
@@ -553,7 +583,7 @@
       "framing": "plate",
       "source": "probe",
       "certain": true,
-      "notes": "Terminal boundary: no window opens here. The final window pins empty green room -> empty stage, which is the catalog's 'green room, then empty stage'. If that reads as a morph rather than a change, add a smash row instead of a second window."
+      "notes": "Terminal boundary: no window opens here. Hard cut - this empty-stage plate is the card held over the last 34 frames the wav has left after the final window, which is the catalog's 'empty green room, then empty stage'."
     }
   ]
 }

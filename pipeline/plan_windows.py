@@ -5,6 +5,12 @@ The EDL owns the cut frames. Every picture change is a row at an exact frame;
 every window's FIRST and LAST frame is one of those rows' inject stills, so the
 edit cuts on frames we already own instead of hoping the model invents a cut.
 
+A row's `transition` decides what the join is. `roll` ends the window on the
+next row's still, so the two windows share a frame and the join is seamless.
+`cut` ends the window on its OWN opening still, so a locked shot returns to
+where it started and the picture change is a hard cut — which is what you want
+whenever the next row is in a different room.
+
 Usage:
   python pipeline/plan_windows.py catalog/01-dont-freak
   python pipeline/plan_windows.py catalog/01-dont-freak --stdout
@@ -34,6 +40,7 @@ FPS = 24
 LATTICE = (124, 243, 362)
 BOUNDARY_KINDS = ("inject", "hold", "end")
 ROW_KINDS = ("inject", "hold", "smash", "end")
+TRANSITIONS = ("roll", "cut")
 INJECT_BODIES = ("standing_full", "empty_plate", "cu_object")
 FIT_MODES = ("cover", "under", "nearest")
 MAX_REFS = 4
@@ -113,6 +120,9 @@ def validate_edl(edl, project=None) -> list:
         kind = row.get("kind")
         if kind not in ROW_KINDS:
             problems.append(f"{tag}: kind must be one of {ROW_KINDS}, got {kind!r}")
+        if row.get("transition") not in (None,) + TRANSITIONS:
+            problems.append(
+                f"{tag}: transition must be one of {TRANSITIONS}, got {row['transition']!r}")
         want = frame_for(row.get("t_sec", 0), fps)
         if row.get("frame_24") != want:
             problems.append(
@@ -290,8 +300,14 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
         nframes, clamped = choose_length(span, row_fit, room)
         residual = (nframes - 1) - span
 
+        # A window rolls onto the next one's opening still only when the join is
+        # seamless. A `cut` join ends the window on its OWN opening still, so a
+        # locked shot returns to where it started and the picture change at the
+        # next row is a hard cut instead of a 10-second morph between rooms.
+        transition = close_row.get("transition") or defaults.get("transition") or "roll"
         first = stills.get(open_row.get("still")) or {}
-        last = stills.get(close_row.get("still")) or {}
+        last = stills.get((close_row if transition == "roll" else open_row).get("still")) or {}
+        incoming = stills.get(close_row.get("still")) or {}
         shot = shots.get(open_row.get("shot")) or {}
         refs = resolve_refs(shot, characters, locations) if shot else []
         if len(refs) > MAX_REFS:
@@ -320,6 +336,7 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
             "hold_tail_frames": max(0, -residual),
             "clamped_by_song_end": bool(clamped),
             "fit": row_fit,
+            "out_transition": transition,
             "pin": "same_still" if same_still else "cross",
             "first_still_id": first.get("id"),
             "last_still_id": last.get("id"),
@@ -327,6 +344,8 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
             "last_still": last.get("comfy_input"),
             "first_still_status": first.get("status"),
             "last_still_status": last.get("status"),
+            "hold_still_id": incoming.get("id") if residual < 0 else None,
+            "hold_still": incoming.get("comfy_input") if residual < 0 else None,
             "camera": open_row.get("camera") or defaults.get("camera") or "locked",
             "audio_mode": open_row.get("audio_mode") or defaults.get("audio_mode") or "raw",
             "audio_start_s": round(start_s, 6),
@@ -356,6 +375,12 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
             warnings.append(
                 f"window {index}: span {span}f is longer than the {max(LATTICE)}-frame lattice, "
                 f"so the tail holds for {-residual}f — split it with another inject"
+            )
+        if window["camera"] == "locked" and not same_still:
+            warnings.append(
+                f"window {index}: camera is locked but it is pinned between "
+                f"{first.get('id')} and {last.get('id')} — a locked frame cannot get from "
+                "one to the other. Name the move, or make the closing row a cut"
             )
         if song_end_s and window["audio_end_s"] > song_end_s + 1e-9:
             warnings.append(
@@ -389,7 +414,7 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
 
     needed = {}
     for window in windows:
-        for key in ("first", "last"):
+        for key in ("first", "last", "hold"):
             still = stills.get(window[f"{key}_still_id"]) or {}
             if still and still.get("status") != "on_behem":
                 entry = needed.setdefault(still["id"], {

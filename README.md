@@ -60,9 +60,10 @@ song + pack (storyboard / characters / locations)
 Prompt-led clips let the model decide where a shot begins and ends. The frame
 EDL takes that back: every picture change is a row at an exact frame naming a
 still we already own, and the planner turns consecutive rows into H3 windows
-whose **first and last frames are those stills**. The last frame of window N is
-the same file as the first frame of window N+1, so the edit cuts on frames that
-were timed to the music instead of wherever the model happened to land.
+whose **first and last frames are those stills**. Rows declare their join —
+`roll` shares a frame with the next window, `cut` ends the window on its own
+opening plate — so cuts land where the ear put them, and a locked shot is pinned
+to a frame it must come back to rather than to a sentence asking it not to move.
 
 ```bash
 python pipeline/plan_windows.py catalog/01-dont-freak          # EDL -> window jobs

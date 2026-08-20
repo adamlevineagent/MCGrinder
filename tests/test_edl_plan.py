@@ -100,6 +100,15 @@ class EdlFileTests(unittest.TestCase):
         self.assertEqual(self.edl["rows"][-1]["frame_24"], 5076)
         self.assertEqual(self.edl["rows"][-1]["kind"], "end")
 
+    def test_every_join_declares_roll_or_cut(self):
+        for row in self.edl["rows"][1:]:
+            self.assertIn(row["transition"], plan_windows.TRANSITIONS, row["text"])
+        self.assertNotIn("transition", self.edl["rows"][0],
+                         "the first row has no incoming join")
+        kinds = [row["transition"] for row in self.edl["rows"][1:]]
+        self.assertEqual(kinds.count("cut"), 13)
+        self.assertEqual(kinds.count("roll"), 7)
+
     def test_rows_ride_the_catalog_timeline(self):
         """No parallel timeline: rows are the pack's 20 shots plus the end."""
         starts = [shot["start_s"] for shot in self.project["shots"]]
@@ -176,12 +185,36 @@ class PlannerTests(unittest.TestCase):
             self.assertIn(window["nframes"], plan_windows.LATTICE, window["name"])
             self.assertEqual(window["nframes"] % 17, 5, window["name"])
 
-    def test_windows_roll_first_frame_onto_last_frame(self):
+    def test_a_roll_join_shares_a_frame_and_a_cut_join_does_not(self):
         windows = self.plan["windows"]
         for before, after in zip(windows, windows[1:]):
             self.assertEqual(before["end_frame"], after["start_frame"])
-            self.assertEqual(before["last_still_id"], after["first_still_id"])
-            self.assertEqual(before["last_still"], after["first_still"])
+            if before["out_transition"] == "roll":
+                self.assertEqual(before["last_still_id"], after["first_still_id"])
+                self.assertEqual(before["last_still"], after["first_still"])
+            else:
+                # a hard cut: the outgoing shot returns to its own opening plate
+                # instead of morphing into the next room
+                self.assertEqual(before["last_still_id"], before["first_still_id"])
+
+    def test_almost_every_window_is_pinned_to_one_plate(self):
+        """First frame == last frame is the camera lock that text could not buy."""
+        pins = [w["pin"] for w in self.plan["windows"]]
+        self.assertEqual(pins.count("same_still"), 18)
+        cross = [w for w in self.plan["windows"] if w["pin"] == "cross"]
+        self.assertEqual(len(cross), 1)
+        self.assertEqual(cross[0]["camera"], "zoom_out")
+        self.assertNotEqual(cross[0]["camera"], "locked")
+        for window in self.plan["windows"]:
+            if window["camera"] == "locked":
+                self.assertEqual(window["pin"], "same_still", window["name"])
+
+    def test_a_short_window_holds_the_still_it_is_cutting_to(self):
+        last = self.plan["windows"][-1]
+        self.assertEqual(last["hold_tail_frames"], 34)
+        self.assertEqual(last["hold_still_id"], "INJ_STAGE_EMPTY")
+        for window in self.plan["windows"][:-1]:
+            self.assertIsNone(window["hold_still_id"], window["name"])
 
     def test_windows_cover_the_whole_song(self):
         windows = self.plan["windows"]
@@ -373,6 +406,21 @@ class PackingTests(unittest.TestCase):
         self.assertEqual(window["hold_tail_frames"], 119)
         self.assertFalse(window["clamped_by_song_end"])
         self.assertTrue(any("longer than the 362-frame lattice" in w for w in plan["warnings"]))
+
+    def test_a_locked_window_pinned_between_two_plates_warns(self):
+        edl = synthetic_edl([(0.0, "inject")], 10.0)
+        edl["stills"].append({"id": "OTHER", "name": "other plate", "role": "inject",
+                              "body": "empty_plate", "status": "on_behem",
+                              "comfy_input": "synth/other.png"})
+        edl["rows"][1]["still"] = "OTHER"
+        plan = plan_windows.plan_from_edl(edl, {})
+        self.assertEqual(plan["windows"][0]["pin"], "cross")
+        self.assertTrue(any("camera is locked but it is pinned" in w
+                            for w in plan["warnings"]))
+        edl["rows"][1]["transition"] = "cut"
+        cut = plan_windows.plan_from_edl(edl, {})
+        self.assertEqual(cut["windows"][0]["pin"], "same_still")
+        self.assertEqual(cut["warnings"], [])
 
     def test_a_lower_floor_keeps_short_hits_as_windows(self):
         edl = synthetic_edl([(0.0, "inject"), (10.0, "inject"), (12.5, "inject"),
@@ -573,27 +621,24 @@ class NodePackTests(unittest.TestCase):
     def test_still_resolution_and_seam_identity(self):
         """The pin: window N's last still is the same file as N+1's first."""
         with tempfile.TemporaryDirectory() as tmp:
-            tmp = Path(tmp)
-            input_dir = tmp / "input"
-            names = {}
-            for window in self.plan["windows"][:3]:
-                for key in ("first_still", "last_still"):
-                    names[window[key]] = window[f"{key}_id"]
+            input_dir = Path(tmp) / "input"
+            names = sorted({window[key] for window in self.plan["windows"]
+                            for key in ("first_still", "last_still")})
             self.assertGreaterEqual(len(names), 3)
-            for i, name in enumerate(sorted(names)):
+            for i, name in enumerate(names):
                 path = input_dir / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_bytes(png_bytes(rgb=(10 * i, 20 * i, 30 * i)))
+                path.write_bytes(png_bytes(rgb=(7 * i % 256, 23 * i % 256, 5 * i % 256)))
 
-            first_window = self.plan["windows"][0]
-            second_window = self.plan["windows"][1]
-            last_of_first = plan_io.resolve_still(
-                plan_io.still_name(first_window, "last"), input_dir)
-            first_of_second = plan_io.resolve_still(
-                plan_io.still_name(second_window, "first"), input_dir)
-            self.assertEqual(last_of_first, first_of_second)
-            self.assertEqual(plan_io.sha256_file(last_of_first),
-                             plan_io.sha256_file(first_of_second))
+            rolls = [(before, after)
+                     for before, after in zip(self.plan["windows"], self.plan["windows"][1:])
+                     if before["out_transition"] == "roll"]
+            self.assertTrue(rolls)
+            for before, after in rolls:
+                out = plan_io.resolve_still(plan_io.still_name(before, "last"), input_dir)
+                into = plan_io.resolve_still(plan_io.still_name(after, "first"), input_dir)
+                self.assertEqual(out, into)
+                self.assertEqual(plan_io.sha256_file(out), plan_io.sha256_file(into))
 
             with self.assertRaises(ValueError):
                 plan_io.resolve_still("dont_freak/nope.png", input_dir)
@@ -644,6 +689,12 @@ class EdlValidationTests(unittest.TestCase):
         project = {"shots": [{"id": 2, "start_s": 11.0}]}
         problems = plan_windows.validate_edl(edl, project)
         self.assertTrue(any("parallel one" in p for p in problems))
+
+    def test_an_unknown_transition_is_caught(self):
+        edl = self._edl()
+        edl["rows"][1]["transition"] = "dissolve"
+        problems = plan_windows.validate_edl(edl)
+        self.assertTrue(any("transition must be one of" in p for p in problems))
 
     def test_a_missing_end_row_is_caught(self):
         edl = self._edl()

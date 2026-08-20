@@ -80,7 +80,6 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-08-band-cats-standing-hall.png",
       "brief": "Full-bleed 1344x768. Sparse breakdown staging: band plus the gowned cat pair standing whole-body with feet on the service-hall floor. Composite 01 / 02 / 03 / 06 into the empty 05 plate.",
       "windows": [
-        10,
         11
       ]
     },
@@ -93,11 +92,9 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-07-band-cats-standing-stage.png",
       "brief": "Full-bleed 1344x768. Full band plus the gowned cat pair, all standing whole-body with feet on the stage floor (grizzly seated at the kit, legs visible). Composite 01 / 02 / 03 / 06 into the empty 07 plate.",
       "windows": [
-        11,
         12,
         13,
         14,
-        15,
         16
       ]
     },
@@ -110,9 +107,6 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-03-band-standing-stage.png",
       "brief": "Full-bleed 1344x768. Sloth and black lab standing whole-body with feet on the stage floor, grizzly seated behind the kit with legs and pedals visible. Composite 01 / 02 / 03 into the empty 07 stage plate. Every performer meets the floor.",
       "windows": [
-        1,
-        2,
-        8,
         9
       ]
     },
@@ -125,7 +119,6 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-06-cats-standing-stage.png",
       "brief": "Full-bleed 1344x768. BOTH black cats, matching black evening gowns, standing whole-body with feet on the stage floor, violins up. Composite the locked 06-cat-violins pair into the empty 07 plate. Never one cat alone; do not regenerate their faces.",
       "windows": [
-        9,
         10
       ]
     },
@@ -138,7 +131,8 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-01-claws-cu.png",
       "brief": "Full-bleed 1344x768. Three-fingered felt claws on the black electric guitar neck, dim Unplugged stage behind. No face, no torso, no shoulders in frame - a hand/instrument plate, so there is no body for the model to amputate.",
       "windows": [
-        1
+        1,
+        2
       ]
     },
     {
@@ -150,10 +144,8 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-04-sloth-standing-fire.png",
       "brief": "Full-bleed 1344x768. Sloth standing whole-body at a mic in the burning apartment hallway, both feet on the hall floor. Composite 01 into the empty 08 plate. Laptop stays a blank glowing rectangle.",
       "windows": [
-        4,
         5,
         6,
-        14,
         15
       ]
     },
@@ -166,7 +158,6 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-09-sloth-standing-green-room.png",
       "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the green-room floor. Composite 01 into the empty 04 plate. Flight-case lid empty, no extra toys, no readable paper.",
       "windows": [
-        16,
         17,
         18
       ]
@@ -180,7 +171,6 @@
       "behem": "C:/Users/adaml/dont-freak-refs/inject-05-sloth-standing-hall.png",
       "brief": "Full-bleed 1344x768. Sloth standing whole-body with feet on the service-hall floor. Composite 01 into the empty 05 plate.",
       "windows": [
-        6,
         7
       ]
     },
@@ -196,7 +186,6 @@
         2,
         3,
         4,
-        7,
         8
       ]
     }
@@ -238,13 +227,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "roll",
+      "pin": "same_still",
       "first_still_id": "INJ_CLAWS_CU",
-      "last_still_id": "INJ_BAND_STAGE_STAND",
+      "last_still_id": "INJ_CLAWS_CU",
       "first_still": "dont_freak/inject-01-claws-cu.png",
-      "last_still": "dont_freak/inject-03-band-standing-stage.png",
+      "last_still": "dont_freak/inject-01-claws-cu.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 0.0,
@@ -266,7 +258,7 @@
       "prompt": "Fade up from black, tight on the sloth's three-fingered felt claws on a black electric guitar. 1990s MTV Unplugged VHS/CRT. Real guitar audio. No sung words yet. <Picture 1> is the sloth identity. <Picture 2> is the empty Unplugged stage — keep it a dim studio, no extra players. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Fade up from black, tight on the sloth's three-fingered felt claws on a black electric guitar. 1990s MTV Unplugged VHS/CRT. Real guitar audio. No sung words yet. <Picture 1> is the sloth identity. <Picture 2> is the empty Unplugged stage — keep it a dim studio, no extra players. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Fade up from black, tight on the sloth's three-fingered felt claws on a black electric guitar. 1990s MTV Unplugged VHS/CRT. Real guitar audio. No sung words yet. <Picture 1> is the sloth identity. <Picture 2> is the empty Unplugged stage — keep it a dim studio, no extra players. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 2,
@@ -282,13 +274,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
+      "out_transition": "roll",
       "pin": "cross",
-      "first_still_id": "INJ_BAND_STAGE_STAND",
+      "first_still_id": "INJ_CLAWS_CU",
       "last_still_id": "INJ_SLOTH_STAGE_STAND",
-      "first_still": "dont_freak/inject-03-band-standing-stage.png",
+      "first_still": "dont_freak/inject-01-claws-cu.png",
       "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "zoom_out",
       "audio_mode": "raw",
       "audio_start_s": 11.0,
@@ -328,6 +323,7 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
+      "out_transition": "roll",
       "pin": "same_still",
       "first_still_id": "INJ_SLOTH_STAGE_STAND",
       "last_still_id": "INJ_SLOTH_STAGE_STAND",
@@ -335,6 +331,8 @@
       "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 22.0,
@@ -372,13 +370,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_SLOTH_STAGE_STAND",
-      "last_still_id": "INJ_SLOTH_FIRE_STAND",
+      "last_still_id": "INJ_SLOTH_STAGE_STAND",
       "first_still": "dont_freak/inject-02-sloth-standing-stage.png",
-      "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
+      "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 34.0,
@@ -401,7 +402,7 @@
       "prompt": "Keep returning to a sloth-only lyric CU on the mic, then intercut first disaster cutaways (hint of smoke, a room starting to go wrong) while the band looks unaware and happy. Empty apartment-fire plate is a location ref only — composite the sloth in at grind time. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Keep returning to a sloth-only lyric CU on the mic, then intercut first disaster cutaways (hint of smoke, a room starting to go wrong) while the band looks unaware and happy. Empty apartment-fire plate is a location ref only — composite the sloth in at grind time. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Keep returning to a sloth-only lyric CU on the mic, then intercut first disaster cutaways (hint of smoke, a room starting to go wrong) while the band looks unaware and happy. Empty apartment-fire plate is a location ref only — composite the sloth in at grind time. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 5,
@@ -417,6 +418,7 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
+      "out_transition": "roll",
       "pin": "same_still",
       "first_still_id": "INJ_SLOTH_FIRE_STAND",
       "last_still_id": "INJ_SLOTH_FIRE_STAND",
@@ -424,6 +426,8 @@
       "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 46.0,
@@ -461,13 +465,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_SLOTH_FIRE_STAND",
-      "last_still_id": "INJ_SLOTH_HALL_STAND",
+      "last_still_id": "INJ_SLOTH_FIRE_STAND",
       "first_still": "dont_freak/inject-04-sloth-standing-fire.png",
-      "last_still": "dont_freak/inject-05-sloth-standing-hall.png",
+      "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 55.0,
@@ -489,7 +496,7 @@
       "prompt": "Stay with the sloth lyric CU in the burning apartment. Casual, unfazed. Laptop remains unreadable. No IM letters in the image. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Stay with the sloth lyric CU in the burning apartment. Casual, unfazed. Laptop remains unreadable. No IM letters in the image. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Stay with the sloth lyric CU in the burning apartment. Casual, unfazed. Laptop remains unreadable. No IM letters in the image. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 7,
@@ -505,13 +512,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_SLOTH_HALL_STAND",
-      "last_still_id": "INJ_SLOTH_STAGE_STAND",
+      "last_still_id": "INJ_SLOTH_HALL_STAND",
       "first_still": "dont_freak/inject-05-sloth-standing-hall.png",
-      "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
+      "last_still": "dont_freak/inject-05-sloth-standing-hall.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 64.0,
@@ -533,7 +543,7 @@
       "prompt": "Chunka jam. Lyric CU on the sloth, then medium disaster cutaways: quicksand, a stuck elevator, ice. Worlds escalate; the sloth is having fun. Composite identity from the still. Empty service hall is a plate, not a new face. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Chunka jam. Lyric CU on the sloth, then medium disaster cutaways: quicksand, a stuck elevator, ice. Worlds escalate; the sloth is having fun. Composite identity from the still. Empty service hall is a plate, not a new face. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Chunka jam. Lyric CU on the sloth, then medium disaster cutaways: quicksand, a stuck elevator, ice. Worlds escalate; the sloth is having fun. Composite identity from the still. Empty service hall is a plate, not a new face. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 8,
@@ -549,13 +559,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_SLOTH_STAGE_STAND",
-      "last_still_id": "INJ_BAND_STAGE_STAND",
+      "last_still_id": "INJ_SLOTH_STAGE_STAND",
       "first_still": "dont_freak/inject-02-sloth-standing-stage.png",
-      "last_still": "dont_freak/inject-03-band-standing-stage.png",
+      "last_still": "dont_freak/inject-02-sloth-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 74.0,
@@ -577,7 +590,7 @@
       "prompt": "Sloth-only lyric CU building toward a sustained vocal. Real wav, not a pulse. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Sloth-only lyric CU building toward a sustained vocal. Real wav, not a pulse. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Sloth-only lyric CU building toward a sustained vocal. Real wav, not a pulse. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 9,
@@ -593,13 +606,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_BAND_STAGE_STAND",
-      "last_still_id": "INJ_CATS_STAGE_STAND",
+      "last_still_id": "INJ_BAND_STAGE_STAND",
       "first_still": "dont_freak/inject-03-band-standing-stage.png",
-      "last_still": "dont_freak/inject-06-cats-standing-stage.png",
+      "last_still": "dont_freak/inject-03-band-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 82.0,
@@ -623,7 +639,7 @@
       "prompt": "Singer sustained ahhh, then a long jump-around jam. Burning roof is OK. Condition on the real wav. Guitar-tight and full-body motion. No cats yet. Not a lyric tableau of the whole band mouthing words — jam energy, sloth can stay on the mic for the ahhh only. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Singer sustained ahhh, then a long jump-around jam. Burning roof is OK. Condition on the real wav. Guitar-tight and full-body motion. No cats yet. Not a lyric tableau of the whole band mouthing words — jam energy, sloth can stay on the mic for the ahhh only. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Singer sustained ahhh, then a long jump-around jam. Burning roof is OK. Condition on the real wav. Guitar-tight and full-body motion. No cats yet. Not a lyric tableau of the whole band mouthing words — jam energy, sloth can stay on the mic for the ahhh only. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 10,
@@ -639,13 +655,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_CATS_STAGE_STAND",
-      "last_still_id": "INJ_BAND_CATS_HALL_STAND",
+      "last_still_id": "INJ_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-06-cats-standing-stage.png",
-      "last_still": "dont_freak/inject-08-band-cats-standing-hall.png",
+      "last_still": "dont_freak/inject-06-cats-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 95.0,
@@ -669,7 +688,7 @@
       "prompt": "From 1:35: the locked cat-violinist pair — two black felt cats in matching tasteful black evening gowns, sly expressive eyes, Chicago Symphony after-hours side-gig energy. Always together, never one cat alone. Wooden violins. Unplugged stage. Real wav (strings + band). <Picture 1> is the locked pair still. Do not split them. Do not use the retired unclothed standing-cats identity. Do not regenerate cat faces or invent a new look. No humans. No extra members. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "From 1:35: the locked cat-violinist pair — two black felt cats in matching tasteful black evening gowns, sly expressive eyes, Chicago Symphony after-hours side-gig energy. Always together, never one cat alone. Wooden violins. Unplugged stage. Real wav (strings + band). <Picture 1> is the locked pair still. Do not split them. Do not use the retired unclothed standing-cats identity. Do not regenerate cat faces or invent a new look. No humans. No extra members. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "From 1:35: the locked cat-violinist pair — two black felt cats in matching tasteful black evening gowns, sly expressive eyes, Chicago Symphony after-hours side-gig energy. Always together, never one cat alone. Wooden violins. Unplugged stage. Real wav (strings + band). <Picture 1> is the locked pair still. Do not split them. Do not use the retired unclothed standing-cats identity. Do not regenerate cat faces or invent a new look. No humans. No extra members. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 11,
@@ -685,13 +704,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_BAND_CATS_HALL_STAND",
-      "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
+      "last_still_id": "INJ_BAND_CATS_HALL_STAND",
       "first_still": "dont_freak/inject-08-band-cats-standing-hall.png",
-      "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
+      "last_still": "dont_freak/inject-08-band-cats-standing-hall.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 106.0,
@@ -717,7 +739,7 @@
         12
       ],
       "status": "pending",
-      "prompt_full": "Breakdown: violins plus long slow bass and guitar; drums metronomic. Sparse world — airlock or ice. Cats stay a pair in the locked black evening gowns. Real wav, not a click track. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Breakdown: violins plus long slow bass and guitar; drums metronomic. Sparse world — airlock or ice. Cats stay a pair in the locked black evening gowns. Real wav, not a click track. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 12,
@@ -733,6 +755,7 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
+      "out_transition": "roll",
       "pin": "same_still",
       "first_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
@@ -740,6 +763,8 @@
       "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "widen",
       "audio_mode": "raw",
       "audio_start_s": 120.0,
@@ -779,6 +804,7 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
+      "out_transition": "roll",
       "pin": "same_still",
       "first_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
@@ -786,6 +812,8 @@
       "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 131.0,
@@ -825,13 +853,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_BAND_CATS_STAGE_STAND",
-      "last_still_id": "INJ_SLOTH_FIRE_STAND",
+      "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
+      "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 146.0,
@@ -853,7 +884,7 @@
       "prompt": "Crescendo, then everything drops. Hold composure. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Crescendo, then everything drops. Hold composure. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Crescendo, then everything drops. Hold composure. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 15,
@@ -869,13 +900,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_SLOTH_FIRE_STAND",
-      "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
+      "last_still_id": "INJ_SLOTH_FIRE_STAND",
       "first_still": "dont_freak/inject-04-sloth-standing-fire.png",
-      "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
+      "last_still": "dont_freak/inject-04-sloth-standing-fire.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 153.0,
@@ -897,7 +931,7 @@
       "prompt": "Lyric CU on the sloth. Cutaways: flooded subway versus volcano are OK. Drums pound on the repeat then drop again. Worlds escalate; faces stay locked. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Lyric CU on the sloth. Cutaways: flooded subway versus volcano are OK. Drums pound on the repeat then drop again. Worlds escalate; faces stay locked. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Lyric CU on the sloth. Cutaways: flooded subway versus volcano are OK. Drums pound on the repeat then drop again. Worlds escalate; faces stay locked. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 16,
@@ -913,13 +947,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_BAND_CATS_STAGE_STAND",
-      "last_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
+      "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "last_still": "dont_freak/inject-09-sloth-standing-green-room.png",
+      "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 165.0,
@@ -943,7 +980,7 @@
       "prompt": "Peak: when words are sung, cut to a sloth-only side/tight mic CU — never a band-wide lyric tableau. Then the craziest coherent MV worlds (plane down, tornado, collapse) without breaking puppet identity. No readable fake text on wreckage. Cats stay a pair in the locked black evening gowns when they appear. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Peak: when words are sung, cut to a sloth-only side/tight mic CU — never a band-wide lyric tableau. Then the craziest coherent MV worlds (plane down, tornado, collapse) without breaking puppet identity. No readable fake text on wreckage. Cats stay a pair in the locked black evening gowns when they appear. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Peak: when words are sung, cut to a sloth-only side/tight mic CU — never a band-wide lyric tableau. Then the craziest coherent MV worlds (plane down, tornado, collapse) without breaking puppet identity. No readable fake text on wreckage. Cats stay a pair in the locked black evening gowns when they appear. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 17,
@@ -959,6 +996,7 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
+      "out_transition": "roll",
       "pin": "same_still",
       "first_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
       "last_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
@@ -966,6 +1004,8 @@
       "last_still": "dont_freak/inject-09-sloth-standing-green-room.png",
       "first_still_status": "needed",
       "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 178.0,
@@ -1003,13 +1043,16 @@
       "hold_tail_frames": 0,
       "clamped_by_song_end": false,
       "fit": "cover",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
-      "last_still_id": "INJ_GREEN_ROOM_EMPTY",
+      "last_still_id": "INJ_SLOTH_GREEN_ROOM_STAND",
       "first_still": "dont_freak/inject-09-sloth-standing-green-room.png",
-      "last_still": "dont_freak/04-green-room.png",
+      "last_still": "dont_freak/inject-09-sloth-standing-green-room.png",
       "first_still_status": "needed",
-      "last_still_status": "on_behem",
+      "last_still_status": "needed",
+      "hold_still_id": null,
+      "hold_still": null,
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 190.0,
@@ -1031,7 +1074,7 @@
       "prompt": "Lyric CU: sloth on the mic. The last word stretches. Empty green room, no extra props. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Lyric CU: sloth on the mic. The last word stretches. Empty green room, no extra props. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Lyric CU: sloth on the mic. The last word stretches. Empty green room, no extra props. ONLY the sloth, side or tight close-up, pressed into a microphone. Never a band-wide lyric tableau. Mouth may follow the raw vocal. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     },
     {
       "id": 19,
@@ -1047,13 +1090,16 @@
       "hold_tail_frames": 34,
       "clamped_by_song_end": true,
       "fit": "under",
-      "pin": "cross",
+      "out_transition": "cut",
+      "pin": "same_still",
       "first_still_id": "INJ_GREEN_ROOM_EMPTY",
-      "last_still_id": "INJ_STAGE_EMPTY",
+      "last_still_id": "INJ_GREEN_ROOM_EMPTY",
       "first_still": "dont_freak/04-green-room.png",
-      "last_still": "dont_freak/07-unplugged-stage.png",
+      "last_still": "dont_freak/04-green-room.png",
       "first_still_status": "on_behem",
       "last_still_status": "on_behem",
+      "hold_still_id": "INJ_STAGE_EMPTY",
+      "hold_still": "dont_freak/07-unplugged-stage.png",
       "camera": "locked",
       "audio_mode": "raw",
       "audio_start_s": 200.0,
@@ -1075,7 +1121,7 @@
       "prompt": "Decelerating guitar, long last note. EMPTY green room, then EMPTY Unplugged stage. Composure. Hold. No characters in frame. Flight-case lid empty, no extra toys. No quill encore, no lyrics, no IM. <Picture 1> empty green room, <Picture 2> empty stage. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles.",
       "smash_rows": [],
       "status": "pending",
-      "prompt_full": "Decelerating guitar, long last note. EMPTY green room, then EMPTY Unplugged stage. Composure. Hold. No characters in frame. Flight-case lid empty, no extra toys. No quill encore, no lyrics, no IM. <Picture 1> empty green room, <Picture 2> empty stage. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
+      "prompt_full": "Decelerating guitar, long last note. EMPTY green room, then EMPTY Unplugged stage. Composure. Hold. No characters in frame. Flight-case lid empty, no extra toys. No quill encore, no lyrics, no IM. <Picture 1> empty green room, <Picture 2> empty stage. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles. Locked camera: the frame does not move. No push-in, no pull-back, no dolly, no orbit, no handheld drift. The first and last frames of this window are fixed plates and the camera stays exactly where they put it. The first and last frame of this window are the same plate: the shot ends exactly where it started. Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case)."
     }
   ],
   "ready": false
