@@ -316,24 +316,13 @@ class PlannerTests(unittest.TestCase):
                 self.assertTrue(ref.startswith("dont_freak/"), ref)
                 self.assertNotIn("00-band-bible", ref)
 
-    def test_plan_stays_not_ready_until_07_and_faces(self):
-        needed = {still["id"] for still in self.plan["needed_stills"]}
-        self.assertEqual(needed, {"INJ_BAND_CATS_STAGE_STAND"})
+    def test_plan_stays_not_ready_until_faces_are_accepted(self):
+        self.assertEqual(self.plan["needed_stills"], [])
         self.assertFalse(self.edl["faces_accepted"])
         self.assertFalse(self.plan["faces_accepted"])
         self.assertFalse(self.plan["ready"])
-        for still in self.plan["needed_stills"]:
-            self.assertTrue(still["windows"])
-            self.assertTrue(still["brief"])
-        # files on disk are not enough — flip every still to on_behem and ready
-        # still stays false until Adam accepts the faces
+        # files on disk are not enough — ready stays false until Adam accepts faces
         patched = json.loads(json.dumps(self.edl))
-        for still in patched["stills"]:
-            if still["role"] == "inject":
-                still["status"] = "on_behem"
-        almost = plan_windows.plan_from_edl(patched, self.project)
-        self.assertEqual(almost["needed_stills"], [])
-        self.assertFalse(almost["ready"])
         patched["faces_accepted"] = True
         self.assertTrue(plan_windows.plan_from_edl(patched, self.project)["ready"])
 
@@ -342,14 +331,15 @@ class PlannerTests(unittest.TestCase):
         on_box = (
             "INJ_CLAWS_CU", "INJ_SLOTH_STAGE_STAND", "INJ_BAND_STAGE_STAND",
             "INJ_SLOTH_FIRE_STAND", "INJ_SLOTH_HALL_STAND", "INJ_CATS_STAGE_STAND",
-            "INJ_BAND_CATS_HALL_STAND", "INJ_SLOTH_GREEN_ROOM_STAND",
+            "INJ_BAND_CATS_STAGE_STAND", "INJ_BAND_CATS_HALL_STAND",
+            "INJ_SLOTH_GREEN_ROOM_STAND",
         )
         for still_id in on_box:
             self.assertEqual(stills[still_id]["status"], "on_behem", still_id)
-        missing = stills["INJ_BAND_CATS_STAGE_STAND"]
-        self.assertEqual(missing["status"], "needed")
-        self.assertIn("yellow lab", missing["notes"].lower())
-        self.assertNotEqual(missing["status"], "on_behem")
+        seven = stills["INJ_BAND_CATS_STAGE_STAND"]
+        self.assertIn("black lab", seven["notes"].lower())
+        self.assertIn("not the yellow-lab", seven["notes"].lower())
+        self.assertIn("faces not accepted", seven["notes"].lower())
 
     def test_camera_lock_proof_is_first_equals_last(self):
         proof = self.edl["camera_lock_proof"]

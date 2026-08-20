@@ -64,10 +64,9 @@ like `state.json`.
 
 ### Inject stills (Behem 2026-08-20) — do not check pngs into git
 
-Eight of nine performer injects are on the box as 1344×768 in-room generates
+All nine performer injects are on the box as 1344×768 in-room generates
 (polygon cutouts had forest fringe and were thrown out). The plan stays
-`ready: false` until `inject-07` exists **and** Adam accepts the faces
-(`faces_accepted` in `edl.json`).
+`ready: false` until Adam accepts the faces (`faces_accepted` in `edl.json`).
 
 ```
 C:\Users\adaml\dont-freak-refs\inject-01-claws-cu.png                  ON BOX (resized 1344x768)
@@ -76,7 +75,7 @@ C:\Users\adaml\dont-freak-refs\inject-03-band-standing-stage.png       ON BOX (l
 C:\Users\adaml\dont-freak-refs\inject-04-sloth-standing-fire.png       ON BOX
 C:\Users\adaml\dont-freak-refs\inject-05-sloth-standing-hall.png       ON BOX
 C:\Users\adaml\dont-freak-refs\inject-06-cats-standing-stage.png       ON BOX (pair, gowns, feet)
-C:\Users\adaml\dont-freak-refs\inject-07-band-cats-standing-stage.png  MISSING — yellow-lab generate, do not use
+C:\Users\adaml\dont-freak-refs\inject-07-band-cats-standing-stage.png  ON BOX (black lab, not the yellow-lab take; wardrobe still not locked 01-03)
 C:\Users\adaml\dont-freak-refs\inject-08-band-cats-standing-hall.png   ON BOX
 C:\Users\adaml\dont-freak-refs\inject-09-sloth-standing-green-room.png ON BOX
 ```

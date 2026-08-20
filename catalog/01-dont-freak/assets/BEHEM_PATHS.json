@@ -24,5 +24,5 @@
     "assets/injects/band_cats_standing_hall.png": "C:/Users/adaml/dont-freak-refs/inject-08-band-cats-standing-hall.png",
     "assets/injects/sloth_standing_green_room.png": "C:/Users/adaml/dont-freak-refs/inject-09-sloth-standing-green-room.png"
   },
-  "injects_note": "Binaries stay on Behem. No git LFS. inject-07 is MISSING (yellow-lab generate — do not use). inject-02 was the 2026-08-20 camera-lock hone still."
+  "injects_note": "Binaries stay on Behem. No git LFS. All nine injects are on the box; inject-07 is the black-lab take (not the yellow-lab generate). inject-02 was the 2026-08-20 camera-lock hone still. Faces not accepted."
 }

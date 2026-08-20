@@ -17,7 +17,8 @@ assets/locations/apartment_fire.png      ← 08-apartment-fire.png (EMPTY)
 Inject stills (standing full-body / claws CU) also live only on Behem, same
 junction, names `inject-01` … `inject-09`. See `BEHEM_PATHS.json` and
 `edl.json`. Do **not** check those pngs into git — there is no LFS pattern
-here. `inject-07-band-cats-standing-stage.png` is still missing.
+here. All nine injects are on Behem; `inject-07` is the black-lab take (do not
+use the earlier yellow-lab generate). Faces are not accepted.
 
 Polygon cutout composites were unusable (forest fringe). The injects on disk
 are in-room generates. Faces are not accepted; `inject-02` drifted vs the

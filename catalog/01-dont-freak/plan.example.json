@@ -70,23 +70,7 @@
       "362": 12
     }
   },
-  "needed_stills": [
-    {
-      "id": "INJ_BAND_CATS_STAGE_STAND",
-      "name": "band + cat pair standing full body, Unplugged stage",
-      "status": "needed",
-      "body": "standing_full",
-      "comfy_input": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "behem": "C:/Users/adaml/dont-freak-refs/inject-07-band-cats-standing-stage.png",
-      "brief": "Full-bleed 1344x768. Full band plus the gowned cat pair, all standing whole-body with feet on the stage floor (grizzly seated at the kit, legs visible). Composite 01 / 02 / 03 / 06 into the empty 07 plate.",
-      "windows": [
-        12,
-        13,
-        14,
-        16
-      ]
-    }
-  ],
+  "needed_stills": [],
   "uncertain_rows": [
     {
       "row": 3,
@@ -659,8 +643,8 @@
       "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "widen",
@@ -708,8 +692,8 @@
       "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -757,8 +741,8 @@
       "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",
@@ -851,8 +835,8 @@
       "last_still_id": "INJ_BAND_CATS_STAGE_STAND",
       "first_still": "dont_freak/inject-07-band-cats-standing-stage.png",
       "last_still": "dont_freak/inject-07-band-cats-standing-stage.png",
-      "first_still_status": "needed",
-      "last_still_status": "needed",
+      "first_still_status": "on_behem",
+      "last_still_status": "on_behem",
       "hold_still_id": null,
       "hold_still": null,
       "camera": "locked",

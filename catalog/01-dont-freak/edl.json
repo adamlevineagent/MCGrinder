@@ -196,12 +196,12 @@
       "name": "band + cat pair standing full body, Unplugged stage",
       "role": "inject",
       "body": "standing_full",
-      "status": "needed",
+      "status": "on_behem",
       "sheet": "assets/injects/band_cats_standing_stage.png",
       "comfy_input": "dont_freak/inject-07-band-cats-standing-stage.png",
       "behem": "C:/Users/adaml/dont-freak-refs/inject-07-band-cats-standing-stage.png",
       "brief": "Full-bleed 1344x768. Full band plus the gowned cat pair, all standing whole-body with feet on the stage floor (grizzly seated at the kit, legs visible). Composite 01 / 02 / 03 / 06 into the empty 07 plate.",
-      "notes": "STILL MISSING. A generate came back as a yellow lab / wrong wardrobe. Do not mark on_behem and do not use that take as a first/last frame."
+      "notes": "On Behem 2026-08-20: black lab (not the yellow-lab take), rust-red hands, cream bass, sloth with black electric, grizzly green hoodie/purple pants, two gowned cats, feet on the floor. Wardrobe still not the locked 01-03 CUs. Faces not accepted. Do not use the earlier yellow-lab generate."
     },
     {
       "id": "INJ_BAND_CATS_HALL_STAND",

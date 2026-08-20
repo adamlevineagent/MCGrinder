@@ -264,7 +264,7 @@ empty stage" ending, delivered by the hold rather than by a generated morph.
 
 ## Inject stills on Behem (2026-08-20)
 
-Eight of the nine performer injects now live on Behem at
+All nine performer injects now live on Behem at
 `C:\Users\adaml\dont-freak-refs\` as 1344×768 in-room generates. Polygon
 cutout composites were unusable (forest fringe). **Do not check the pngs into
 git** — there is no LFS `assets/injects/` pattern; `BEHEM_PATHS.json` and
@@ -278,18 +278,16 @@ git** — there is no LFS `assets/injects/` pattern; `BEHEM_PATHS.json` and
 | `INJ_SLOTH_FIRE_STAND` | `inject-04-sloth-standing-fire.png` | `on_behem` |
 | `INJ_SLOTH_HALL_STAND` | `inject-05-sloth-standing-hall.png` | `on_behem` |
 | `INJ_CATS_STAGE_STAND` | `inject-06-cats-standing-stage.png` | `on_behem`. Pair, gowns, feet. |
-| `INJ_BAND_CATS_STAGE_STAND` | `inject-07-band-cats-standing-stage.png` | **`needed`**. A generate came back as a yellow lab / wrong wardrobe. Do not mark `on_behem`. |
+| `INJ_BAND_CATS_STAGE_STAND` | `inject-07-band-cats-standing-stage.png` | `on_behem`. Black lab (not the yellow-lab take), rust-red hands, cream bass, sloth with black electric, grizzly green hoodie/purple pants, two gowned cats, feet on the floor. Wardrobe still not the locked 01–03 CUs. |
 | `INJ_BAND_CATS_HALL_STAND` | `inject-08-band-cats-standing-hall.png` | `on_behem` |
 | `INJ_SLOTH_GREEN_ROOM_STAND` | `inject-09-sloth-standing-green-room.png` | `on_behem` |
 
-`plan.example.json` reports `ready: false`. Two gates, both still closed:
+`plan.example.json` reports `ready: false`. Every boundary still is `on_behem`;
+the remaining gate is `faces_accepted: false`. Adam has not accepted the faces.
+The hone already showed inject-02 drifting vs the locked 01 CU; inject-03 and
+inject-07 wardrobe still is not the locked 01–03 CUs. That is a still problem.
 
-1. `inject-07` does not exist (and the failed yellow-lab take must not be used).
-2. `faces_accepted` is `false`. Adam has not accepted the faces. The hone already
-   showed inject-02 drifting vs the locked 01 CU; that is a still problem.
-
-Marking 07 `on_behem` without flipping `faces_accepted` still leaves the plan
-not-ready. Do not treat "file exists" as "locked picture."
+Do not treat "file exists" as "locked picture."
 
 One consequence worth stating out loud: the catalog's lyric shots want tight
 close-ups, but a window's boundaries must be standing wides. The CU framing has
@@ -306,5 +304,6 @@ it can no longer come from the boundary frames.
   20-step schedules; at 8 steps it is untested.
 - Row 3 (22.0s, first lyric in) is `certain: false`. Force-align it from the wav
   before locking picture.
-- Faces are not accepted. Re-shoot injects (especially 03 wardrobe, 07 missing,
-  02 vs the locked 01 CU) rather than hoping the window will correct a still.
+- Faces are not accepted. Re-shoot injects (especially 03/07 wardrobe vs the
+  locked 01–03 CUs, and 02 vs the locked 01 CU) rather than hoping the window
+  will correct a still. The earlier yellow-lab take of 07 must not be used.
