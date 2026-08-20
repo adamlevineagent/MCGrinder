@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import struct
 import sys
 import tempfile
@@ -365,6 +366,14 @@ class PackingTests(unittest.TestCase):
         self.assertEqual([s["frame_24"] for s in plan["smash_cuts"]], [672])
         self.assertTrue(plan["smash_cuts"][0]["auto_demoted"])
 
+    def test_a_span_longer_than_the_lattice_warns_instead_of_freezing_quietly(self):
+        plan = self._plan([(0.0, "inject"), (20.0, "inject")], duration_s=60.0)
+        window = plan["windows"][0]
+        self.assertEqual(window["nframes"], 362)
+        self.assertEqual(window["hold_tail_frames"], 119)
+        self.assertFalse(window["clamped_by_song_end"])
+        self.assertTrue(any("longer than the 362-frame lattice" in w for w in plan["warnings"]))
+
     def test_a_lower_floor_keeps_short_hits_as_windows(self):
         edl = synthetic_edl([(0.0, "inject"), (10.0, "inject"), (12.5, "inject"),
                              (30.0, "inject")], 60.0, min_fill_frames=48)
@@ -649,6 +658,33 @@ class EdlValidationTests(unittest.TestCase):
         edl["rows"][1]["still"] = "INJ_CATS"
         problems = plan_windows.validate_edl(edl, {"cast_rules": {"cats_from_s": 95.0}})
         self.assertTrue(any("cats at" in p for p in problems))
+
+    def test_the_cli_fails_loudly_instead_of_tracing_back(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / "edl.json").write_text(
+                json.dumps(synthetic_edl([(0.0, "inject"), (10.0, "inject")], 60.0)),
+                encoding="utf-8")
+            (tmp / "junk.wav").write_bytes(b"not a riff header at all")
+            (tmp / "cfg.json").write_text("{}", encoding="utf-8")
+            previous = os.environ.get("MCGRINDER_CONFIG")
+            os.environ["MCGRINDER_CONFIG"] = str(tmp / "cfg.json")
+            try:
+                # a wav the stdlib cannot read
+                self.assertEqual(
+                    plan_windows.main([str(tmp), "--wav", str(tmp / "junk.wav"),
+                                       "--out", str(tmp / "plan.json")]), 2)
+                # nowhere to write
+                self.assertEqual(plan_windows.main(["--edl", str(tmp / "edl.json")]), 2)
+                # graphs with no audio_input to hand LoadAudio
+                self.assertEqual(
+                    plan_windows.main([str(tmp), "--out", str(tmp / "plan.json"),
+                                       "--emit-graph", str(tmp / "graphs")]), 2)
+            finally:
+                if previous is None:
+                    os.environ.pop("MCGRINDER_CONFIG", None)
+                else:
+                    os.environ["MCGRINDER_CONFIG"] = previous
 
     def test_the_real_edl_survives_a_cli_round_trip(self):
         with tempfile.TemporaryDirectory() as tmp:

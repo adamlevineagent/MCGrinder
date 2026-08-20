@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import wave
 from pathlib import Path
@@ -165,7 +166,8 @@ def validate_edl(edl, project=None) -> list:
     if cats_from is not None:
         for row in rows:
             still = stills.get(row.get("still")) or {}
-            if "cat" in (still.get("id", "") + still.get("name", "")).lower():
+            label = f"{still.get('id', '')} {still.get('name', '')}".lower()
+            if re.search(r"\bcats?\b", label.replace("_", " ").replace("-", " ")):
                 if float(row.get("t_sec", 0)) < float(cats_from):
                     problems.append(
                         f"row {row.get('id')}: cats at {row.get('t_sec')}s, never before {cats_from}s"
@@ -263,7 +265,6 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
     settings = (project or {}).get("settings") or {}
     stills = still_index(edl)
     rows = edl.get("rows") or []
-    rows_by_id = {r["id"]: r for r in rows}
     shots = {s.get("id"): s for s in ((project or {}).get("shots") or [])}
     characters = index_by_id((project or {}).get("characters") or [])
     locations = index_by_id((project or {}).get("locations") or [])
@@ -350,6 +351,16 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
             warnings.append(
                 f"window {index}: span {span}f is under the {min_fill}f floor and could not be "
                 "demoted (hold row) — it trims hard"
+            )
+        if residual < 0 and row_fit == "cover" and not clamped:
+            warnings.append(
+                f"window {index}: span {span}f is longer than the {max(LATTICE)}-frame lattice, "
+                f"so the tail holds for {-residual}f — split it with another inject"
+            )
+        if song_end_s and window["audio_end_s"] > song_end_s + 1e-9:
+            warnings.append(
+                f"window {index}: audio window ends at {window['audio_end_s']}s, past the "
+                f"{song_end_s}s wav"
             )
         windows.append(window)
 
@@ -441,9 +452,10 @@ def plan_from_edl(edl, project, fit=None, audio_input=None, take=0) -> dict:
         "warnings": warnings,
         "windows": windows,
     }
+    by_id = {window["id"]: window for window in windows}
     for smash in smash_cuts:
         if smash["inside_window"]:
-            windows[smash["inside_window"] - 1]["smash_rows"].append(smash["row"])
+            by_id[smash["inside_window"]]["smash_rows"].append(smash["row"])
     plan["ready"] = not plan["needed_stills"] and not warnings
     return plan
 
@@ -591,7 +603,12 @@ def main(argv=None):
             project = load_project(project_path)
 
     if args.wav:
-        probed = probe_wav(args.wav)
+        try:
+            probed = probe_wav(args.wav)
+        except (wave.Error, EOFError, OSError) as exc:
+            print(f"  could not probe {args.wav}: {exc} (stdlib wave reads PCM only)",
+                  file=sys.stderr)
+            return 2
         before = dict(edl.get("audio") or {})
         edl.setdefault("audio", {}).update(probed)
         end_row = edl["rows"][-1]
@@ -615,7 +632,7 @@ def main(argv=None):
 
     if args.stdout:
         sys.stdout.write(text)
-    else:
+    elif args.out or pack is not None:
         out = Path(args.out) if args.out else (pack / "plan.json")
         if not out.is_absolute():
             out = resolve_path(out)
@@ -623,16 +640,23 @@ def main(argv=None):
         out.write_text(text, encoding="utf-8")
         print(f"wrote {out}")
         print(summarize(plan))
+    else:
+        print("nowhere to write the plan: pass --out or --stdout", file=sys.stderr)
+        return 2
 
     if args.emit_graph:
         graph_dir = Path(args.emit_graph)
         graph_dir.mkdir(parents=True, exist_ok=True)
-        for window in plan["windows"]:
-            graph = build_window_graph(plan, window)
-            path = graph_dir / f"w{window['id']:02d}.json"
-            path.write_text(json.dumps(graph, indent=2, ensure_ascii=False) + "\n",
-                            encoding="utf-8")
-        print(f"  wrote {len(plan['windows'])} graphs to {graph_dir}")
+        try:
+            graphs = {window["id"]: build_window_graph(plan, window)
+                      for window in plan["windows"]}
+        except ValueError as exc:
+            print(f"  cannot build graphs: {exc}", file=sys.stderr)
+            return 2
+        for window_id, graph in graphs.items():
+            (graph_dir / f"w{window_id:02d}.json").write_text(
+                json.dumps(graph, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"  wrote {len(graphs)} graphs to {graph_dir}")
 
     if args.strict and plan["warnings"]:
         return 1
