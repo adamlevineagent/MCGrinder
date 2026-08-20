@@ -151,6 +151,21 @@ class SchemaPackTests(unittest.TestCase):
             if "CHAR_CATS" in (shot.get("characters") or []):
                 self.assertGreaterEqual(shot["start_s"], 95.0, shot["name"])
 
+    def test_cat_recast_is_gowned_pair(self):
+        cats = next(c for c in self.project["characters"] if c["id"] == "CHAR_CATS")
+        desc = cats["description"].lower()
+        self.assertIn("evening gown", desc)
+        self.assertIn("always a pair", desc)
+        self.assertIn("do not regenerate", desc)
+        self.assertEqual(cats["behem"], "C:/Users/adaml/dont-freak-refs/06-cat-violins.png")
+        retired = ("pink inner", "chest stitch", "standing on a rug", "in nothing")
+        blob = json.dumps(self.project).lower()
+        for phrase in retired:
+            self.assertNotIn(phrase, blob)
+        enter = next(s for s in self.project["shots"] if s["id"] == 10)
+        self.assertIn("evening gown", enter["prompt"].lower())
+        self.assertIn("do not regenerate cat faces", enter["prompt"].lower())
+
     def test_quill_is_late(self):
         reveal = [s for s in self.project["shots"] if "quill letter" in s["prompt"].lower()]
         self.assertTrue(reveal)

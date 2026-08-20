@@ -15,7 +15,7 @@ C:\Users\adaml\dont-freak-refs\02-drummer.png
 C:\Users\adaml\dont-freak-refs\03-bassist.png
 C:\Users\adaml\dont-freak-refs\04-green-room.png
 C:\Users\adaml\dont-freak-refs\05-service-hall.png
-C:\Users\adaml\dont-freak-refs\06-cat-violins.png
+C:\Users\adaml\dont-freak-refs\06-cat-violins.png   ← recast: gowned pair (not the retired unclothed standing-cats still)
 C:\Users\adaml\dont-freak-refs\07-unplugged-stage.png
 C:\Users\adaml\dont-freak-refs\08-apartment-fire.png
 ```

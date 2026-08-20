@@ -7,7 +7,7 @@ Behem — see `OPERATOR.md` and `BEHEM_PATHS.json`.
 assets/characters/singer_guitarist.png   ← 01-singer-guitarist.png
 assets/characters/drummer.png            ← 02-drummer.png
 assets/characters/bassist.png            ← 03-bassist.png
-assets/characters/cat_violins.png        ← 06-cat-violins.png
+assets/characters/cat_violins.png        ← 06-cat-violins.png (gowned pair; not the retired unclothed standing-cats identity)
 assets/locations/green_room.png          ← 04-green-room.png (EMPTY)
 assets/locations/service_hall.png        ← 05-service-hall.png (EMPTY)
 assets/locations/unplugged_stage.png     ← 07-unplugged-stage.png (EMPTY)

@@ -15,7 +15,7 @@ still drifts the face; that already burned.
 | CHAR_SLOTH | Singer-guitarist. Needle-felt sloth, dark dreadlocks, charcoal jacket, droopy calm face. | `01-singer-guitarist.png` |
 | CHAR_GRIZZLY | Drummer. Green baseball cap, green hoodie, purple pants, felt grizzly. | `02-drummer.png` (confirm filename; sits between 01 and 03) |
 | CHAR_LAB | Bassist. Black lab, charcoal jacket, cream bass, reddish-brown paw "gloves". | `03-bassist.png` |
-| CHAR_CATS | Twin black-cat violinists, **always a pair**. From **1:35 only**. | `06-cat-violins.png` |
+| CHAR_CATS | Twin black-cat violinists, **always a pair**. Matching tasteful black evening gowns, sly expressive eyes, Chicago Symphony after-hours side-gig energy. From **1:35 only**. Recast — do **not** use the retired unclothed standing-cats identity. Do not regenerate faces. | `06-cat-violins.png` |
 
 ## Empty locations (no character in the still)
 
@@ -55,7 +55,7 @@ write. Overlay after concat.
 - **0:46** first "So don't freak" — lyric CU, fire apartment.
 - **1:04** chunka jam / "shit might look bad, but we'll dance our way out of this one" — medium disasters (quicksand, elevator, ice).
 - **1:22–1:25** singer sustained ahhh; **1:24** long jump-around jam (burning roof OK), real wav.
-- **1:35** twin black cats with violins, always together.
+- **1:35** twin black-cat violinists in matching black evening gowns, always together. Locked still `06-cat-violins.png` — do not regenerate faces.
 - **1:46** breakdown: violins + long slow bass/guitar; drums metronomic. Sparse world (airlock / ice).
 - **1:55–2:00** "don't freak, don't freak, yeah we'll dance our way out of this one".
 - **2:00–2:11** sustained "Thiiiiisssssss one"; "one" lands 2:10–2:11 as full band+violins return; jam to 2:26.

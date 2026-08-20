@@ -6,7 +6,7 @@
   "song_path": "C:/Project Growth/THE PLAYFUL UNiVERSE/songs-2026-08-20-part1/Don't Freak/Don't Freak.wav",
   "song_duration_s": 211,
   "bpm": 92.3,
-  "style_block": "Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case).",
+  "style_block": "Needle-felted wool puppet music video, tactile Muppet-like felt animals, visible fiber texture, 1990s MTV Unplugged VHS/CRT stage lighting, warm practicals, shallow depth of field, film grain, slight CRT softness. Never humans. Never extra band members except the twin black-cat violinists in matching black evening gowns. No on-screen text, no subtitles, no lyrics, no captions, no readable paper, no invented signage, no IM chat letters drawn by the model. Empty location stills stay empty of extra novelty props (no planet-toys on the flight case).",
   "settings": {
     "width": 1344,
     "height": 768,
@@ -57,7 +57,7 @@
       "sheet": "assets/characters/cat_violins.png",
       "comfy_input": "dont_freak/06-cat-violins.png",
       "behem": "C:/Users/adaml/dont-freak-refs/06-cat-violins.png",
-      "description": "Two identical felt black cats, always a pair, small wooden violins. Appear from 1:35 only. Never one cat alone."
+      "description": "Two black felt cats, always a pair, matching tasteful black evening gowns (deep V, draped waist), sly expressive eyes (one green, one blue-grey), Chicago Symphony after-hours side-gig energy, wooden violins. Locked still 06-cat-violins.png. Recast: do not use the retired unclothed standing-cats identity. Do not regenerate faces. From 1:35 only. Never one cat alone."
     }
   ],
   "locations": [
@@ -510,7 +510,7 @@
       "seam": "none",
       "first_frame_img": "assets/characters/cat_violins.png",
       "audio_mode": "raw",
-      "prompt": "From 1:35: twin black-cat violinists, always together, never one cat alone. Small wooden violins, felt black cats, Unplugged stage. Real wav (strings + band). <Picture 1> the locked cat pair. Do not split them. No humans. No extra members. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
+      "prompt": "From 1:35: the locked cat-violinist pair — two black felt cats in matching tasteful black evening gowns, sly expressive eyes, Chicago Symphony after-hours side-gig energy. Always together, never one cat alone. Wooden violins. Unplugged stage. Real wav (strings + band). <Picture 1> is the locked pair still. Do not split them. Do not use the retired unclothed standing-cats identity. Do not regenerate cat faces or invent a new look. No humans. No extra members. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
     },
     {
       "id": 11,
@@ -533,7 +533,7 @@
       ],
       "seam": "prev",
       "audio_mode": "raw",
-      "prompt": "Breakdown: violins plus long slow bass and guitar; drums metronomic. Sparse world — airlock or ice. Cats stay a pair. Real wav, not a click track. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
+      "prompt": "Breakdown: violins plus long slow bass and guitar; drums metronomic. Sparse world — airlock or ice. Cats stay a pair in the locked black evening gowns. Real wav, not a click track. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
     },
     {
       "id": 12,
@@ -575,7 +575,7 @@
       ],
       "seam": "prev",
       "audio_mode": "raw",
-      "prompt": "Sustained vocal on 'this one'; the word 'one' lands at the end as the full band plus the cat violin pair return. Sloth-only on the sustained vowel; then widen to the Unplugged stage. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
+      "prompt": "Sustained vocal on 'this one'; the word 'one' lands at the end as the full band plus the gowned cat-violin pair return. Sloth-only on the sustained vowel; then widen to the Unplugged stage. Real wav. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
     },
     {
       "id": 14,
@@ -598,7 +598,7 @@
       ],
       "seam": "prev",
       "audio_mode": "raw",
-      "prompt": "Instrumental jam to the crescendo. Guitar-tight allowed. Real wav, not pulse. Cats remain a pair. The late letter tell is not in this shot. No readable text. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
+      "prompt": "Instrumental jam to the crescendo. Guitar-tight allowed. Real wav, not pulse. Cats remain a pair in the locked black evening gowns. The late letter tell is not in this shot. No readable text. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
     },
     {
       "id": 15,
@@ -661,7 +661,7 @@
       ],
       "seam": "prev",
       "audio_mode": "raw",
-      "prompt": "Peak: when words are sung, cut to a sloth-only side/tight mic CU — never a band-wide lyric tableau. Then the craziest coherent MV worlds (plane down, tornado, collapse) without breaking puppet identity. No readable fake text on wreckage. Cats stay a pair when they appear. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
+      "prompt": "Peak: when words are sung, cut to a sloth-only side/tight mic CU — never a band-wide lyric tableau. Then the craziest coherent MV worlds (plane down, tornado, collapse) without breaking puppet identity. No readable fake text on wreckage. Cats stay a pair in the locked black evening gowns when they appear. Lock faces from the character stills. Composite locked portraits into empty rooms; do not invent a new face or a new 'character already in the room' still. They look unaware and like they are having a good time. They do not freak. No on-screen text, no subtitles, no burned-in lyrics, no readable signs, no readable lettering on paper, no IM bubbles."
     },
     {
       "id": 18,
