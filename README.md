@@ -55,6 +55,26 @@ song + pack (storyboard / characters / locations)
  trimmed chunk mp4s ──► stitch.py ──► final video (real song muxed)
 ```
 
+### Frame EDL: owning the cut instead of hoping for it
+
+Prompt-led clips let the model decide where a shot begins and ends. The frame
+EDL takes that back: every picture change is a row at an exact frame naming a
+still we already own, and the planner turns consecutive rows into H3 windows
+whose **first and last frames are those stills**. The last frame of window N is
+the same file as the first frame of window N+1, so the edit cuts on frames that
+were timed to the music instead of wherever the model happened to land.
+
+```bash
+python pipeline/plan_windows.py catalog/01-dont-freak          # EDL -> window jobs
+python pipeline/plan_windows.py catalog/01-dont-freak --wav "C:/.../song.wav"
+```
+
+Windows snap to the 17k+5 lattice (124 / 243 / 362 frames); hits closer together
+than 124 frames become smash-cut stills laid over the window that spans them.
+Read [`docs/EDL.md`](docs/EDL.md) for the schema, the fit policies and the
+worked Don't Freak cut sheet — including why a collage first-frame produced a
+legless band and an ignored camera lock.
+
 ### The custom node kit (`h3_seam_kit/`)
 
 | Node | Job |
@@ -65,6 +85,19 @@ song + pack (storyboard / characters / locations)
 | `SeamFrame` | Pull the exact last/first frame of a video file |
 | `BeatSnapDuration` | Snap a desired shot length onto the beat grid |
 | `PromptDoctor` | Assemble prompts from parts (shot + panel authority + beat count + anti-lip-sync clause + style) |
+
+### The EDL node pack (`comfy_nodes/h3_edl_window/`)
+
+| Node | Job |
+|---|---|
+| `H3EDLWindow` | read one window out of `plan.json` — length, audio offsets, seed, prompt |
+| `H3EDLStill` | load that window's inject still as pixels, unresized and un-round-tripped |
+| `H3EDLSeamCheck` | prove window N's last frame and N+1's first frame are the same pixels |
+
+A separate package that **feeds** the seam kit rather than replacing it: audio
+cropping stays `SongWindow`, pinning stays `MiniMaxH3SeamToVideo`, frame
+extraction stays `SeamFrame`. Copy it to `ComfyUI/custom_nodes/h3_edl_window/`
+as a new folder and leave the live `h3_seam_kit` alone.
 
 Includes a one-line patch to ComfyUI core
 (`patches/model_base_merge.patch`) that fixes a real bug: the stock
